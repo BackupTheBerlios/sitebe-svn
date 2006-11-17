@@ -1,0 +1,12 @@
+/* Zones grises */
+.grayZone
+{
+	padding : 5px 5px 5px 5px ;
+	border-color : #777777 ;
+	border-style : solid ;
+	border-width : 1px ;
+	background-color : #E5E5E5 ;
+	margin : 10px 0 10px 0 ;
+}
+
+

@@ -1,0 +1,119 @@
+img
+{
+	border : 0px ;
+}
+
+th
+{
+	font-family : Verdana, Arial, sans-serif ; 
+	font-size : 11px ;
+	border-style : solid ;
+	border-width : 1px ;
+	border-color : #000000 ;
+}
+
+td
+{
+	font-family : Verdana, Arial, sans-serif ;
+	font-size : 11px ;
+}
+
+/* container de la partie administration */
+#mainContainer
+{
+	font-size : 11px ;
+	font-family : Verdana, Arial, sans-serif ;
+	background : #FFFFFF ;
+	font-weight : 700 ;
+	color : #000000 ;
+}
+
+
+a:link, a:visited, a:active
+{
+	font-family : Verdana, Arial, sans-serif ; 
+	text-decoration : none ;
+	color : #6633CC ;
+}
+
+a:hover
+{
+	font-family : Verdana, Arial, sans-serif ; 
+	text-decoration : underline ;
+	color : #2080FF ;
+}
+
+
+/* couleur de fond pour les differents champs */
+.defaultInput
+{
+	font-family : Verdana, Arial, sans-serif ; 
+	font-size : 11px ;
+	font-weight : 800 ;
+	color : #FFFFFF ;
+	background-color : #80A0FF ;
+	border-style : solid ;
+	border-width : 1px ;
+	border-color : #000000 ;
+}
+
+/* forme des boutons */
+.defaultButton
+{
+	font-size : 10px ;
+	font-family : Verdana, Arial, sans-serif ;
+	font-weight : 800 ;
+	width : 100px ;
+}
+
+.toolButton
+{
+	font-size : 11px ;
+	font-family : Verdana, Arial, sans-serif ;
+	font-weight : 700 ;
+	width : 60px ;
+}
+
+.toolBox
+{
+	border-style : solid ;
+	border-width : 1px ;
+	border-color : #000000 ;
+	padding : 1px 1px 1px 1px ;
+}
+
+.largeToolButton
+{
+	font-size : 11px ;
+	font-family : Verdana, Arial, sans-serif ;
+	font-weight : 700 ;
+	width : 100px ;
+}
+
+/* messages d'information et d erreur */
+.info
+{
+	font-family : Verdana, Arial, sans-serif ; 
+	font-size : 11px
+        font-weight : 800 ;
+	color : #7425BE ;
+}
+
+.error
+{
+	font-weight : 800 ;
+	color : #7425BE ;
+}
+
+
+/* zone centrale du formulaire */
+#centralZone
+{
+	/*border-style : solid ;*/
+	border-width : 1px ;
+	border-color : #000000 ;
+	padding : 10px 5px 10px 5px ;
+	background : #FFFFFF ;
+	
+}
+

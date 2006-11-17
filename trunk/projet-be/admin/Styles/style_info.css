@@ -1,0 +1,12 @@
+/* formes pour le page de l'Info */
+#infoZone
+{
+        padding : 5px 5px 5px 5px ;
+	border-color : #777777 ;
+	border-style : solid ;
+	border-width : 1px ;
+	background-color :  #99CCFF ;
+	margin : 10px 0 10px 0 ;
+}
+
+

@@ -1,0 +1,329 @@
+body
+{
+	background-color : #FFFFFF ;
+	font-family : Verdana, Helvetica, Arial, sans-serif ;
+	font-size : 11px ;
+	font-weight : 500 ;
+}
+
+
+table
+{
+	font-family : Verdana, Helvetica, Arial, sans-serif ;
+	font-size : 11px ;
+	font-weight : 500 ;
+}
+
+td
+{
+	font-family : Verdana, Helvetica, Arial, sans-serif ;
+	font-size : 11px ;
+	font-weight : 500 ;
+}
+
+th
+{
+	background-color : #000000 ;
+	font-family : Verdana, Helvetica, sans-serif ;
+	font-size : 11px ;
+	font-weight : 600 ;
+	color : #FFFFFF ;
+	height : 20px ;
+	padding : 0 5px 0 5px ;
+	border-color : #FFFFFF ;
+	border-style : solid ;
+	border-width : 1px ;
+	
+}
+
+h0
+{
+	font-family : Arial, Helvetica, sans-serif ;
+	font-size : 16px ;
+	font-weight : 600 ;
+	color : #6633CC ;
+	display : inline ;
+}
+
+h1
+{
+	font-family : Arial, Helvetica, sans-serif ;
+	font-size : 14px ;
+	font-weight : 700 ;
+	color : #6633CC ;
+	display : inline ;	
+}
+
+h2
+{
+	font-family : Arial, Helvetica, sans-serif ;
+	font-size : 12px ;
+	font-weight : 600 ;
+	color : #6633CC ;
+	display : inline ;	
+}
+
+h3
+{
+	font-family : Arial, Helvetica, sans-serif ;
+	font-size : 11px ;
+	font-weight : 600 ;
+	color : #6633CC ;
+	text-decoration : underline ;
+	display : inline ;	
+}
+
+/* liens des adresses e-mail */
+a:link, a:visited, a:active
+{
+	font-family : Verdana, Helvetica, sans-serif ;
+	font-size : 11px ;
+	font-weight : 500 ;
+	color : #6633CC ;
+	text-decoration : none ;
+}
+
+a:hover
+{
+	font-family : Verdana, Helvetica, sans-serif ;
+	font-size : 11px ;
+	font-weight : 500 ;
+	color : #400060 ;
+	text-decoration : underline ;	
+}
+
+
+img
+{
+	border : 0px ;
+}
+
+/* liens de l'admin */
+a.admin:link, a.admin:visited, a.admin:active
+{
+	font-family : Verdana, Helvetica, sans-serif ;
+	font-size : 10px ;
+	font-weight : 500 ;
+	color : #00469B ;
+	text-decoration : underline ;
+}
+
+a.admin:hover
+{
+	font-family : Verdana, Helvetica, sans-serif ;
+	font-size : 10px ;
+	font-weight : 500 ;
+	color : #6633CC ;
+	text-decoration : none ;
+}
+
+
+/* liens du menu */
+a.menu:link, a.menu:visited, a.menu:active
+{
+	font-size : 11px ;
+	font-weight : 600 ;
+	color : #FFFFFF ;
+	text-decoration : none ;
+}
+
+a.menu:hover
+{
+	font-size : 11px ;
+	font-weight : 600 ;
+	color : #2080ff ;
+	text-decoration : none ;
+}
+
+
+/* messages d'information et d erreur */
+.info
+{
+	font-family : Verdana, arial, sans-serif ;
+	font-weight : 600 ;
+	color : #AAAAAA ;
+}
+
+.error
+{
+	font-family : Verdana, arial, sans-serif ;
+	font-weight : 600 ;
+	color : #7425BE ;
+}
+
+
+/* table qui contient tout le site */
+#siteContainer
+{
+	font-family : Verdana, Arial, sans-serif ;
+	font-size : 10px ;
+	font-weight : 500 ;
+	color : #000000 ;
+	margin-bottom : 10px ;
+}
+
+#header
+{
+	background-image : url('../Gfx/main_toplogo.gif') ;
+	background-repeat : no-repeat ;
+	width : 800px ;
+	height : 90px ;
+}
+
+#footer
+{
+	width : 800px ;
+	padding : 5px 5px 5px 5px ;
+	border-color : #DDDDDD ;
+	border-style : solid ;
+	border-width : 1px ;
+	background-color : #EEEEEE ;
+}
+
+/* truc d'en bas a droite*/
+#about
+{
+	float : right ;
+	font-family : Verdana, Arial, sans-serif ;
+	font-size : 10px ;
+	font-weight : 600 ;
+	color : #6633CC ;
+}
+
+
+
+/* Menus */
+/* Menu principal */
+
+#mainMenu
+{
+	width : 800px ;
+	height : 25px ;
+	padding : 0 0 0 0 ;
+	background-image : url('../Gfx/menu_bg.gif') ;
+}
+
+/* Menu secondaire */
+#secMenu
+{
+	width : 800px ;
+	height : 25px ;
+}
+
+
+#secMenuInfo
+{
+	height : 25px ;
+}
+
+
+/* Information */
+#infoZone
+{
+        padding : 5px 5px 5px 5px ;
+	border-color : #777777 ;
+	border-style : solid ;
+	border-width : 1px ;
+	background-color :  #99CCFF ;
+	margin : 10px 0 10px 0 ;
+}
+
+
+
+#infoTitre
+{
+        font-size : 16px ;
+        font-weight : 600 ;
+}
+
+
+
+
+/* separateur de cellules de table */
+.cellSeparator
+{
+	height : 5px ;
+	width : 800px ;
+}
+
+
+/* table predefinie pour contenir des donnees */
+.dataTable
+{
+	border-collapse : collapse ;
+}
+
+.pairRow
+{
+	background-color : #EEEEEE ;
+	height : 20px ;
+	padding : 0 5px 0 5px ;
+	border-color : #FFFFFF ;
+	border-style : solid ;
+	border-width : 1px ;
+}
+
+.oddRow
+{
+	background-color : #DDDDDD ;
+	height : 20px ;
+	padding : 0 5px 0 5px ;
+	border-color : #FFFFFF ;
+	border-style : solid ;
+	border-width : 1px ;
+}
+
+/* ligne plus importante */
+.impRow
+{
+	background-color : #6633CC ;
+	height : 20px ;
+	padding : 0 5px 0 5px ;
+	border-color : #FFFFFF ;
+	border-style : solid ;
+	border-width : 1px ;
+	font-family : Verdana, Arial, sans-serif ;
+	font-size : 11px ;
+	font-weight : 600 ;
+	color : #FFFFFF ;
+}
+
+
+/* Zone centrale : corps du site */
+#centralZone
+{
+	width : 800px ; 
+}
+
+
+
+#centerTitle
+{
+	font-family : Verdana, Arial, sans-serif ;
+	font-size : 12px ;
+	font-weight : 600 ;
+	color : #6633CC ;	
+}
+
+#centerTitle a:link, #centerTitle a:visited, #centerTitle a:active
+{
+	font-family : Verdana, Helvetica, sans-serif ;
+	font-size : 12px ;
+	font-weight : 600 ;
+	color : #6633CC ;
+	text-decoration : underline ;
+}
+
+#centerTitle a:hover
+{
+	font-family : Verdana, Helvetica, sans-serif ;
+	font-size : 12px ;
+	font-weight : 600 ;
+	color : #000000 ;
+	text-decoration : none ;	
+}
+
+
+
+
+
