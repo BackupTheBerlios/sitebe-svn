@@ -490,7 +490,7 @@ function insertion_base($tableau)
 
     {
 
-        for($i=0;$i<count($tableau);$i++)
+        for($i=0; $i < count($tableau);$i++)
 
         {
 
@@ -659,4 +659,3 @@ function insertion_base($tableau)
     }
 
 }
-ÿ
