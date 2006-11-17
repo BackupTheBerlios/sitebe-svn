@@ -23,11 +23,14 @@
 
 
 session_start();
-
-error_reporting(E_ALL && ~E_NOTICE);
+
+
+error_reporting(E_ALL && ~E_NOTICE);
+
 
 // fichier pour les messages
-require("Functions/messages.inc.php") ;
+require("Functions/messages.inc.php") ;
+
 require_once("../includes/toolbar.php");
 
 // mini header
@@ -38,11 +41,16 @@ require_once("../includes/toolbar.php");
 <head>
 <title> IUP ISI [Administration - Menus] </title>
 <meta name="author" content="Conde Mickael K., Badaoui Kassem, Canaye Kurvin, Guenatri Kamil">
-<meta name="copyright" content="Copyright 2004 IUP ISI">
-<style type="text/css">
-    img {
-        behavior: url("../styles/pngbehavior.htc");
-    }
+<meta name="copyright" content="Copyright 2004 IUP ISI">
+
+<style type="text/css">
+
+    img {
+
+        behavior: url("../styles/pngbehavior.htc");
+
+    }
+
 </style>
 <link rel="stylesheet" type="text/css" href="Styles/style_admin.css">
 <?php
@@ -58,8 +66,10 @@ if (isset($_GET['w']))
 
 
 ?>
-<script language="JavaScript" src="Scripts/scripts_admin.js"></script>
-<script language="Javascript" language="javascript" type="text/javascript" charset="utf-8" src="../Includes/js.php?edit=1"></script>
+<script language="JavaScript" src="Scripts/scripts_admin.js"></script>
+
+<script language="Javascript" language="javascript" type="text/javascript" charset="utf-8" src="../Includes/js.php?edit=1"></script>
+
 </head>
 
 <body>
@@ -93,16 +103,16 @@ if (! isset($_SESSION['rootConnecte']))
 	{
 		// alors affichage du formulaire
 		centeredInfoMessage(2, 2, "L'utilisation de cette page n&eacute;cessite une authentification") ;
-		print("\t\t\t<form action=\"admin.php\" method=\"post\">\n") ;
-		print("\t\t\t<center><table width=\"400\">\n\t\t\t\t<tr>\n") ;
-		print("\t\t\t\t\t<td align=\"left\" width=\"200\"> Login </td>") ;
-		print("<td align=\"right\" width=\"200\"><input name=\"rootLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n\t\t\t\t</tr>\n") ;
-		print("\t\t\t\t<tr>\n") ;
-		print("\t\t\t\t\t<td align=\"left\" width=\"200\"> Pass </td>") ;
-		print("<td align=\"right\" width=\"200\"><input name=\"rootPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n\t\t\t\t</tr>\n") ;
-		print("\t\t\t\t<tr>\n") ;
-		print("\t\t\t\t\t<td colspan=\"2\" align=\"left\" width=\"400\"><input type=\"submit\" name=\"rootAuth\" class=\"defaultButton\" value=\"identfication\"></td>\n\t\t\t\t</tr>\n") ;
-		print("\t\t\t</table>\n\t\t\t</center>\n") ;
+		print("<form action=\"admin.php\" method=\"post\">\n") ;
+		print("<center><table width=\"400\">\n<tr>\n") ;
+		print("<td align=\"left\" width=\"200\"> Login </td>") ;
+		print("<td align=\"right\" width=\"200\"><input name=\"rootLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n") ;
+		print("<tr>\n") ;
+		print("<td align=\"left\" width=\"200\"> Pass </td>") ;
+		print("<td align=\"right\" width=\"200\"><input name=\"rootPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n") ;
+		print("<tr>\n") ;
+		print("<td colspan=\"2\" align=\"left\" width=\"400\"><input type=\"submit\" name=\"rootAuth\" class=\"defaultButton\" value=\"identfication\"></td>\n</tr>\n") ;
+		print("</table>\n</center>\n") ;
 	}
 	
 	// sinon l'utilisateur a essaye de se connecter on verifie les donnees
@@ -332,7 +342,8 @@ else
 			// quelques fichiers indispensables
 			require("Includes/settings.inc.php") ;
 			require("Functions/database.inc.php") ;	
-			require("Admin/".$_GET['w'].".php") ;
+			require("Admin/".$_GET['w'].".php") ;
+
             
 			print("\t\t\t<br><br><center>") ;
 			
