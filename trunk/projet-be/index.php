@@ -71,7 +71,7 @@
 		</div>
 		<!-- Debut Texte -->
 		<table width="100%" valign="top" cellspacing="15">
-		<tr>
+			<tr>
 			<td width="150" valign="top">
 				<div id=themepromo>
 					<h2>CHOIX DE L'ANNEE</h2>
@@ -126,10 +126,8 @@
 					<!--======================= fin direction ==================-->
 				</div>
 				<div id="logob">
-					<!--==========début pied de page======--><a href="http://www.ups-tlse.fr/"
-					title="UPS"><img 
-					src="img/logoups.gif"
-					alt="UPS" /></a>
+					<!--==========début pied de page======-->
+					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
 			<td valign="top">
@@ -147,7 +145,7 @@
 					</div><!-- Fin Présentation -->
 				</div>
 			</td>
-		</tr>
+			</tr>
 		</table>
 		<div id="menus">
 			<div id="sectionmenus">
