@@ -98,28 +98,28 @@
 			$countDips = mysql_num_rows($dipsList);
 			// alors affichage du formulaire
           		print("<h2>Vous devez vous connecter pour acc&eacute;der &agrave; cette page</h2>");
-          		print("\t\t\t<form action=\"espacereserve.php\" method=\"post\">\n");
-			print("\t\t\t<center><table width=\"400\">\n\t\t\t\t<tr>\n");
+          		print("\t<form action=\"espacereserve.php\" method=\"post\">\n");
+			print("<center><table width=\"400\">\n<tr>\n");
 			print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b> Login </b></td>");
-			print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
-			print("\t\t\t\t<tr>\n");
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b> Mot de Passe </b></td>");
-			print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
+			print("<td align=\"left\" width=\"200\"><b> Login </b></td>");
+			print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
+			print("<tr>\n");
+			print("<td align=\"left\" width=\"200\"><b> Mot de Passe </b></td>");
+			print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
 			if ($countDips > 0)
 			{
-				print("\t\t\t\t<tr>\n");
-				print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b> Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
+				print("<tr>\n");
+				print("<td align=\"left\" width=\"200\"><b> Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
 				for($i = 0; $i < $countDips; $i++)
 				{
 					$dipsDetails = mysql_fetch_array($dipsList);
 					print("<option> {$dipsDetails['intitule']} </option>");
 				}
-				print("</select></td>\n\t\t\t\t</tr>\n");
+				print("</select></td>\n</tr>\n");
 			}
-			print("\t\t\t\t<tr>\n\n\n");
-			print("\t\t\t\t\t<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultButton\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n\t\t\t\t</tr>\n");
-			print("\t\t\t</table>\n\t\t\t</center>\n");
+			print("<tr>\n\n\n");
+			print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultButton\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
+			print("</table>\n</center>\n");
 		}
 		// sinon l'utilisateur a essaye de se connecter on verifie les donnees
 		else
@@ -131,27 +131,27 @@
 				print("<center><table width=\"400\"><tr>\n");
 				print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 				print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
-				print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
+				print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 				print("<tr>\n");
 				print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
-				print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
+				print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
 				print("<tr>\n");
 				$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 				$countDips = mysql_num_rows($dipsList);
 				if ($countDips > 0)
 				{
-					print("\t\t\t\t<tr>\n");
-					print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
+					print("<tr>\n");
+					print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
 					for($i = 0; $i < $countDips; $i++)
 					{
 						$dipsDetails = mysql_fetch_array($dipsList);
 						print("<option> {$dipsDetails['intitule']} </option>");
 					}
-					print("</select></td>\n\t\t\t\t</tr>\n");
+					print("</select></td>\n</tr>\n");
 				}
-				print("\t\t\t\t<tr>\n");
-				print("\t\t\t\t\t<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n\t\t\t\t</tr>\n");
-				print("\t\t\t</table>\n\t\t\t</center>\n");
+				print("<tr>\n");
+				print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
+				print("</table>\n</center>\n");
 			}
 			else
 			{
@@ -178,27 +178,27 @@
 						print("<center><table width=\"400\"><tr>\n");
 						print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 						print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
-						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 						print("<tr>\n");
 						print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
-						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
 						print("<tr>\n");
 						$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 						$countDips = mysql_num_rows($dipsList);
 						if ($countDips > 0)
 						{
-							print("\t\t\t\t<tr>\n");
-							print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
+							print("<tr>\n");
+							print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
 							for($i = 0; $i < $countDips; $i++)
 							{
 								$dipsDetails = mysql_fetch_array($dipsList);
 								print("<option> {$dipsDetails['intitule']} </option>");
 							}
-							print("</select></td>\n\t\t\t\t</tr>\n");
+							print("</select></td>\n</tr>\n");
 						}
-						print("\t\t\t\t<tr>\n");
-						print("\t\t\t\t\t<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n\t\t\t\t</tr>\n");
-						print("\t\t\t</table>\n\t\t\t</center>\n");
+						print("<tr>\n");
+						print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
+						print("</table>\n</center>\n");
 							
 	//					print("Erreurs de base de données! Plusieurs utilisateurs possibles!");
 					}
@@ -256,27 +256,27 @@
 						print("<center><table width=\"400\"><tr>\n");
 						print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 						print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
-						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 						print("<tr>\n");
 						print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
-						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n\t\t\t\t</tr>\n");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
 						print("<tr>\n");
 						$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 						$countDips = mysql_num_rows($dipsList);
 						if ($countDips > 0)
 						{
-							print("\t\t\t\t<tr>\n");
-							print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
+							print("<tr>\n");
+							print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
 							for($i = 0; $i < $countDips; $i++)
 							{
 								$dipsDetails = mysql_fetch_array($dipsList);
 								print("<option> {$dipsDetails['intitule']} </option>");
 							}
-							print("</select></td>\n\t\t\t\t</tr>\n");
+							print("</select></td>\n</tr>\n");
 						}
-						print("\t\t\t\t<tr>\n");
-						print("\t\t\t\t\t<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n\t\t\t\t</tr>\n");
-						print("\t\t\t</table>\n\t\t\t</center>\n");
+						print("<tr>\n");
+						print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
+						print("</table>\n</center>\n");
 					}
 				}
 			}
@@ -286,42 +286,42 @@
 	// l'utilisateur est authentifie avec succes
 	else
 	{
-		print("\t\t\t<table width=\"800\" cellpadding=\"0\" cellspacing=\"3\">\n");
-		print("\t\t\t\t<tr>\n");
-		print("\t\t\t\t\t<td width=\"400\" align=\"left\"><br><br><div id=\"centerTitle\">Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']." !!!!</div><br><br></td>");
-		print("\t\t\t\t\t<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=".$_GET['w']."&a=logout\">Deconnexion</a> &gt;</td>\n");
-		print("\t\t\t\t</tr>\n");
+		print("<table width=\"800\" cellpadding=\"0\" cellspacing=\"3\">\n");
+		print("<tr>\n");
+		print("<td width=\"400\" align=\"left\"><br><br><div id=\"centerTitle\"><b>Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']."</b></div><br><br></td>");
+		print("<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=".$_GET['w']."&a=logout\">Deconnexion</a> &gt;</td>\n");
+		print("</tr>\n");
 		if (!isset($_GET['a']))
 		{
 			//un enseignant est connecte
 			if(isset($_SESSION['ensConnecte']))
 			{
-				print("\t\t\t<table  cellspacing=\"1\" cellpadding=\"0\">\n");
-				print("\t\t\t\t<tr>\n");
+				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
+				print("<tr>\n");
 				print("<td align=\"center\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>Déposer des fichiers</u></a></td>");
-				print("\t\t\t\t</tr>\n");
-				print("\t\t\t\t<tr>\n");
+				print("</tr>\n");
+				print("<tr>\n");
 				print("<td align=\"center\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\"><u>Supprimer des fichiers</u></a></td>");
-				print("\t\t\t\t</tr>\n");
-				print("\t\t\t\t<tr>\n");
+				print("</tr>\n");
+				print("<tr>\n");
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\"><u>excel</u></a></td>");
-				print("\t\t\t\t</tr>\n");
-				print("\t\t\t\t<tr>\n");
+				print("</tr>\n");
+				print("<tr>\n");
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>visualisation</u></a></td>");
-				print("\t\t\t\t</tr>\n");
-				print("\t\t\t\t<tr>\n");
+				print("</tr>\n");
+				print("<tr>\n");
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>saisie des notes</u></a></td>");
-				print("\t\t\t\t</tr>\n");
-				print("\t\t\t</table>\n");
+				print("</tr>\n");
+				print("</table>\n");
 			}
 			//un etudiant est connecte
 			elseif(isset($_SESSION['etuConnecte']))
 			{
-				print("\t\t\t<table  cellspacing=\"1\" cellpadding=\"0\">\n");
-				print("\t\t\t\t<tr>\n");
+				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
+				print("<tr>\n");
 				print("<td align=\"left\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers à télécharger</u></a></td>");
-				print("\t\t\t\t</tr>\n");
-				print("\t\t\t</table>\n");
+				print("</tr>\n");
+				print("</table>\n");
 			}
 		}
 		else
@@ -333,13 +333,13 @@
 				// require("Includes/settings.inc.php");
 				//require("Functions/database.inc.php");
 				require("Connexion/".$_GET['w'].".php");
-				print("\t\t\t<br><br><center>");
+				print("<br><br><center>");
 			}
 			// sinon message d'erreur		
 			else
 			{
 				print("Page introuvable ".$_GET['w']);
-				//print("\t\t\t<br><br><center>[ <a href=\"admin.php\">menu principal</a> ]</center>\n");
+				//print("<br><br><center>[ <a href=\"admin.php\">menu principal</a> ]</center>\n");
 			}
 		}
 	}
