@@ -4,7 +4,7 @@
 ** Date de creation : 1/12/2004
 ** Auteurs : Conde Mickael, Badaoui Kassem, Canaye Kurvin, Guenatri Kamil
 ** Version : 1.0
-** Description : Fichier d'a propos
+** Description : Fichiers d'a propos
 */
 
 
