@@ -1,7 +1,4 @@
-<?php
-
-
-
+<?php
 /*
 ** Fichier : database
 ** Date de creation : 30/08/2005
