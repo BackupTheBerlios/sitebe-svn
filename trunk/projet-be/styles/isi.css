@@ -1,319 +1,383 @@
-BODY {
-	FONT-SIZE: small; MARGIN: 2em 10%;  COLOR: rgb(255,255,255); FONT-FAMILY: "Trebuchet MS",Verdana,Geneva,Arial,Helvetica,sans-serif; background-color: #e5e5e5;
-}
-
-#about {
-  text-align: right;
-}
-
-#about A {
-  COLOR: rgb(101,95,75); text-decoration: none;
-}
-
-#bandeau {
- background-image: url(../img/haut.jpg);
- BACKGROUND-REPEAT: no-repeat;
- background-position: center;
- border-bottom: rgb(199,199,199) 3px double ;
- height: 130px;
- width: 100%;
-}
-#bandeau img {
- margin-left: 1.5%;
- margin-top: 1.7%;
-}
-#direction {
-	PADDING-RIGHT: 1%; PADDING-LEFT: 1%; FONT-SIZE: 72%; PADDING-BOTTOM: 2em; COLOR: rgb(102,153,0); PADDING-TOP: 0pt; BACKGROUND-COLOR: rgb(245,248,252)
-}
-#direction H1 {
-	FONT-SIZE: 111%; MARGIN: 0pt; BACKGROUND-COLOR: transparent
-}
-
-#intro    {
-	float: right;
-	margin-top: 0%;
-	margin-left: 1%;
-	width: 38%;
-}
-
-#page {
-	  BORDER: rgb(199,199,199) 3px double ;
-  	background-position: center top;
-  	COLOR: rgb(199,199,199);
-  	BACKGROUND-REPEAT: no-repeat;
-  	BACKGROUND-COLOR: rgb(255,255,255);
-  	width: 1000px;
-}
-
-#iupisi {
-	PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; FONT-SIZE: 80%; PADDING-BOTTOM: 1em; MARGIN: 0pt 3% 0pt 1%; COLOR: rgb(0,51,102); PADDING-TOP: 0pt; TEXT-ALIGN: center
-}
-#iupisi UL {
-	PADDING-LEFT: 0pt; MARGIN-LEFT: 0pt
-}
-#iupisi LI {
-	BORDER-RIGHT: rgb(0,51,102) 1px solid; PADDING-RIGHT: 0.5em; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt 0.5em 0pt 0pt; PADDING-TOP: 0pt
-}
-#iupisi LI.dernier {
-	BORDER-RIGHT: 0pt; BORDER-TOP: 0pt; BORDER-LEFT: 0pt; BORDER-BOTTOM: 0pt
-}
-#iupisi A {
-	COLOR: rgb(255,102,0); BACKGROUND-COLOR: transparent
-}
-#iupisi A:hover {
-	COLOR: rgb(51,102,153); BACKGROUND-COLOR: rgb(239,244,250); TEXT-DECORATION: none
-}
-
-
-
-#logo {
-	MARGIN: 3em 0pt 0pt 5%
-}
-#logo IMG {
-	BORDER-RIGHT: 0pt; BORDER-TOP: 0pt; BORDER-LEFT: 0pt; BORDER-BOTTOM: 0pt
-}
-#logo A {
-	COLOR: rgb(0,0,0); BACKGROUND-COLOR: transparent
-}
-#logob {
-	MARGIN-LEFT: 5%
-}
-#logob IMG {
-	BORDER-RIGHT: 0pt; BORDER-TOP: 0pt; BORDER-LEFT: 0pt; BORDER-BOTTOM: 0pt
-}
-#logob A {
-	COLOR: rgb(0,0,0); BACKGROUND-COLOR: transparent
-}
-
-#nouveaute {
-  font-size: 13;	BORDER-RIGHT: rgb(102,102,102) 1px solid; PADDING-RIGHT: 1em; BORDER-TOP: rgb(102,102,102) 1px solid; PADDING-LEFT: 1em; PADDING-BOTTOM: 0.5em; MARGIN: 0pt 0pt 1em; BORDER-LEFT: rgb(102,102,102) 1px solid; COLOR: rgb(0,0,0); PADDING-TOP: 0.5em; BORDER-BOTTOM: rgb(102,102,102) 1px solid; background-color: #F0F0F7;
-}
-#nouveaute H2 {
-	MARGIN: 0pt; BACKGROUND-COLOR: transparent
-}
-#nouveaute P {
-	MARGIN: 0pt; BACKGROUND-COLOR: transparent
-}
-#nouveaute A {
-	color: #0033FF; BACKGROUND-COLOR: transparent 
-}
-#nouveaute H3 {
-	color: #009900; font-size: 15; font-family: Comic Sans MS; PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt 0pt 0.2em; PADDING-TOP: 0pt; BACKGROUND-COLOR: transparent
-}
-
-
-
-#texte {
-	color: black; font-size: small; text-align: justify;
-}
-#texte HR {
-	DISPLAY: none
-}
-#texte LI {
-	LIST-STYLE: disc none outside
-}
-#texte UL UL LI {
-	LIST-STYLE-TYPE: circle
-}
-#texte OL LI {
-	LIST-STYLE-TYPE: decimal
-}
-#texte H2 {
-	FONT-SIZE: 130%; COLOR: rgb(51,102,153); BACKGROUND-COLOR: transparent; margin: 0pt; margin-bottom: 10pt;
-}
-#texte H3 {
-	FONT-SIZE: small; MARGIN: 2em 0pt 0pt; COLOR: rgb(51,102,153); LINE-HEIGHT: 110%; BACKGROUND-COLOR: transparent
-}
-#texte H4 {
-	FONT-WEIGHT: 700; FONT-SIZE: small; COLOR: rgb(102,153,204); BORDER-BOTTOM: rgb(161,194,225) 1px dotted; FONT-FAMILY: "Trebuchet MS",Verdana,Geneva,Arial,Helvetica,sans-serif; BACKGROUND-COLOR: transparent
-}
-#texte H5 {
-	FONT-WEIGHT: 500; FONT-SIZE: small; COLOR: rgb(102,153,204); BACKGROUND-COLOR: transparent
-}
-#texte A {
-	COLOR: #3300CC; BACKGROUND-COLOR: transparent
-}
-#texte A:hover {
-	COLOR: rgb(51,102,153); BACKGROUND-COLOR: transparent; TEXT-DECORATION: none
-}
-#texte A:visited {
-	COLOR: rgb(51,102,153); BACKGROUND-COLOR: transparent
-}
-
-#theme {
-	COLOR: rgb(101,95,75); BACKGROUND-COLOR: rgb(255,255,255)
-}
-#theme H2 {
-	BORDER-RIGHT: rgb(255,153,0) 0pt solid; BORDER-TOP: rgb(255,153,0) 0pt solid; PADDING-LEFT: 0em; FONT-WEIGHT: 700; FONT-SIZE: medium; MARGIN: 0pt; TEXT-TRANSFORM: uppercase; BORDER-LEFT: rgb(255,153,0) 0pt solid; BORDER-BOTTOM: rgb(247,94,94) 2px solid 
-}
-#theme UL {
-	MARGIN-TOP: 0.3em; MARGIN-BOTTOM: 1.5em
-}
-#theme LI {
-	LIST-STYLE: none none outside; DISPLAY: inline
-}
-#theme A {
-	DISPLAY: block; PADDING-LEFT: 2em; FONT-WEIGHT: 700; MARGIN-LEFT: -4em; color: #3300cc; BACKGROUND-COLOR: transparent; TEXT-DECORATION: none
-}
-#theme A:hover {
-	color: #a8d3ee; BACKGROUND-COLOR: transparent
-}
-
-#themepromo {
-	COLOR: rgb(101,95,75); BACKGROUND-COLOR: rgb(255,255,255)
-}
-#themepromo H2 {
-	BORDER-RIGHT: rgb(255,153,0) 0pt solid; BORDER-TOP: rgb(255,153,0) 0pt solid; PADDING-LEFT: 0em; FONT-WEIGHT: 700; FONT-SIZE: medium; MARGIN: 0pt; TEXT-TRANSFORM: uppercase; BORDER-LEFT: rgb(255,153,0) 0pt solid; BORDER-BOTTOM: rgb(247,94,94) 2px solid 
-}
-#themepromo UL {
-	MARGIN-TOP: 0.3em; MARGIN-BOTTOM: 1.5em
-}
-#themepromo LI {
-	LIST-STYLE: none none outside; DISPLAY: inline
-}
-#themepromo A {
-	font-size: 15; color: #3300cc; TEXT-DECORATION: none
-}
-#themepromo A:hover {
-	color: #a8d3ee; BACKGROUND-COLOR: transparent
-}
-
-
-
-
-
-#espacereserve img
-{
-	border : 0px ;
-}
-
-#espacereserve th
-{
-	font-family : Verdana, Arial, sans-serif ; 
-	font-size : 11px ;
-	border-style : solid ;
-	border-width : 1px ;
-	border-color : #000000 ;
-}
-
-#espacereserve td
-{
-	font-family : Verdana, Arial, sans-serif ;
-	font-size : 11px ;
-	color: #414141;
-}
-
-
-
-#espacereserve a:link, a:visited, a:active
-{
-	font-family : Verdana, Arial, sans-serif ; 
-	text-decoration : none ;
-	color : #6633CC ;
-}
-
-#espacereserve a:hover
-{
-	font-family : Verdana, Arial, sans-serif ; 
-	text-decoration : underline ;
-	color : #2080FF ;
-}
-
-
-/* couleur de fond pour les differents champs */
-#espacereserve defaultInput
-{
-	font-family : Verdana, Arial, sans-serif ; 
-	font-size : 11px ;
-	font-weight : 800 ;
-	color : #FFFFFF ;
-	background-color : #80A0FF ;
-	border-style : solid ;
-	border-width : 1px ;
-	border-color : #000000 ;
-}
-
-/* forme des boutons */
-#espacereserve defaultButton
-{
-	font-size : 10px ;
-	font-family : Verdana, Arial, sans-serif ;
-	font-weight : 800 ;
-	width : 100px ;
-}
-
-#espacereserve toolButton
-{
-	font-size : 11px ;
-	font-family : Verdana, Arial, sans-serif ;
-	font-weight : 700 ;
-	width : 60px ;
-}
-
-#espacereserve toolBox
-{
-	border-style : solid ;
-	border-width : 1px ;
-	border-color : #000000 ;
-	padding : 1px 1px 1px 1px ;
-}
-
-#espacereserve largeToolButton
-{
-	font-size : 11px ;
-	font-family : Verdana, Arial, sans-serif ;
-	font-weight : 700 ;
-	width : 100px ;
-}
-
-/* messages d'information et d erreur */
-#espacereserve info
-{
-	font-family : Verdana, Arial, sans-serif ; 
-	font-size : 11px
-        font-weight : 800 ;
-	color : #7425BE ;
-}
-
-#espacereserve error
-{
-	font-weight : 800 ;
-	color : #7425BE ;
-}
-#espacereserve H2
-{
-  font-size: medium;
-  color: #763312;
-	font-family : Verdana, Arial, sans-serif ; 
-  text-align: center;	
-}
-
+body {
+	FONT-SIZE: small;
+	MARGIN: 2em 10%;
+	COLOR: rgb(255,255,255);
+	FONT-FAMILY: "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background-color: #e5e5e5;
+}
+#about {
+	text-align: right;
+}
+#about a {
+	COLOR: rgb(101,95,75);
+	text-decoration: none;
+}
+#bandeau {
+	background-image: url(../img/haut.jpg);
+	BACKGROUND-REPEAT: no-repeat;
+	background-position: center;
+	border-bottom: rgb(199,199,199) 3px double;
+	height: 130px;
+	width: 100%;
+}
+#bandeau img {
+	margin-left: 1.5%;
+	margin-top: 1.7%;
+}
+#direction {
+	PADDING-RIGHT: 1%;
+	PADDING-LEFT: 1%;
+	FONT-SIZE: 72%;
+	PADDING-BOTTOM: 2em;
+	COLOR: rgb(102,153,0);
+	PADDING-TOP: 0pt;
+	BACKGROUND-COLOR: rgb(245,248,252)
+}
+#direction h1 {
+	FONT-SIZE: 111%;
+	MARGIN: 0pt;
+	BACKGROUND-COLOR: transparent
+}
+#intro {
+	float: right;
+	margin-top: 0%;
+	margin-left: 1%;
+	width: 38%;
+}
+#page {
+	BORDER: rgb(199,199,199) 3px double;
+	background-position: center top;
+	COLOR: rgb(199,199,199);
+	BACKGROUND-REPEAT: no-repeat;
+	BACKGROUND-COLOR: rgb(255,255,255);
+	width: 1000px;
+}
+#iupisi {
+	PADDING-RIGHT: 0pt;
+	PADDING-LEFT: 0pt;
+	FONT-SIZE: 80%;
+	PADDING-BOTTOM: 1em;
+	MARGIN: 0pt 3% 0pt 1%;
+	COLOR: rgb(0,51,102);
+	PADDING-TOP: 0pt;
+	TEXT-ALIGN: center
+}
+#iupisi ul {
+	PADDING-LEFT: 0pt;
+	MARGIN-LEFT: 0pt
+}
+#iupisi li {
+	BORDER-RIGHT: rgb(0,51,102) 1px solid;
+	PADDING-RIGHT: 0.5em;
+	DISPLAY: inline;
+	PADDING-LEFT: 0pt;
+	PADDING-BOTTOM: 0pt;
+	MARGIN: 0pt 0.5em 0pt 0pt;
+	PADDING-TOP: 0pt
+}
+#iupisi li.dernier {
+	BORDER-RIGHT: 0pt;
+	BORDER-TOP: 0pt;
+	BORDER-LEFT: 0pt;
+	BORDER-BOTTOM: 0pt
+}
+#iupisi a {
+	COLOR: rgb(255,102,0);
+	BACKGROUND-COLOR: transparent
+}
+#iupisi a:hover {
+	COLOR: rgb(51,102,153);
+	BACKGROUND-COLOR: rgb(239,244,250);
+	TEXT-DECORATION: none
+}
+#logo {
+	MARGIN: 3em 0pt 0pt 5%
+}
+#logo img {
+	BORDER-RIGHT: 0pt;
+	BORDER-TOP: 0pt;
+	BORDER-LEFT: 0pt;
+	BORDER-BOTTOM: 0pt
+}
+#logo a {
+	COLOR: rgb(0,0,0);
+	BACKGROUND-COLOR: transparent
+}
+#logob {
+	MARGIN-LEFT: 5%
+}
+#logob img {
+	BORDER-RIGHT: 0pt;
+	BORDER-TOP: 0pt;
+	BORDER-LEFT: 0pt;
+	BORDER-BOTTOM: 0pt
+}
+#logob a {
+	COLOR: rgb(0,0,0);
+	BACKGROUND-COLOR: transparent
+}
+#nouveaute {
+	font-size: 13;
+	BORDER-RIGHT: rgb(102,102,102) 1px solid;
+	PADDING-RIGHT: 1em;
+	BORDER-TOP: rgb(102,102,102) 1px solid;
+	PADDING-LEFT: 1em;
+	PADDING-BOTTOM: 0.5em;
+	MARGIN: 0pt 0pt 1em;
+	BORDER-LEFT: rgb(102,102,102) 1px solid;
+	COLOR: rgb(0,0,0);
+	PADDING-TOP: 0.5em;
+	BORDER-BOTTOM: rgb(102,102,102) 1px solid;
+	background-color: #F0F0F7;
+}
+#nouveaute h2 {
+	MARGIN: 0pt;
+	BACKGROUND-COLOR: transparent
+}
+#nouveaute p {
+	MARGIN: 0pt;
+	BACKGROUND-COLOR: transparent
+}
+#nouveaute a {
+	color: #0033FF;
+	BACKGROUND-COLOR: transparent
+}
+#nouveaute h3 {
+	color: #009900;
+	font-size: 15;
+	font-family: Comic Sans MS;
+	PADDING-RIGHT: 0pt;
+	PADDING-LEFT: 0pt;
+	PADDING-BOTTOM: 0pt;
+	MARGIN: 0pt 0pt 0.2em;
+	PADDING-TOP: 0pt;
+	BACKGROUND-COLOR: transparent
+}
+#texte {
+	color: black;
+	font-size: small;
+	text-align: justify;
+}
+#texte hr {
+	DISPLAY: none
+}
+#texte li {
+	LIST-STYLE: disc none outside
+}
+#texte ul ul li {
+	LIST-STYLE-TYPE: circle
+}
+#texte ol li {
+	LIST-STYLE-TYPE: decimal
+}
+#texte h2 {
+	FONT-SIZE: 130%;
+	COLOR: rgb(51,102,153);
+	BACKGROUND-COLOR: transparent;
+	margin: 0pt;
+	margin-bottom: 10pt;
+}
+#texte h3 {
+	FONT-SIZE: small;
+	MARGIN: 2em 0pt 0pt;
+	COLOR: rgb(51,102,153);
+	LINE-HEIGHT: 110%;
+	BACKGROUND-COLOR: transparent
+}
+#texte h4 {
+	FONT-WEIGHT: 700;
+	FONT-SIZE: small;
+	COLOR: rgb(102,153,204);
+	BORDER-BOTTOM: rgb(161,194,225) 1px dotted;
+	FONT-FAMILY: "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
+	BACKGROUND-COLOR: transparent
+}
+#texte h5 {
+	FONT-WEIGHT: 500;
+	FONT-SIZE: small;
+	COLOR: rgb(102,153,204);
+	BACKGROUND-COLOR: transparent
+}
+#texte a {
+	COLOR: #3300CC;
+	BACKGROUND-COLOR: transparent
+}
+#texte a:hover {
+	COLOR: rgb(51,102,153);
+	BACKGROUND-COLOR: transparent;
+	TEXT-DECORATION: none
+}
+#texte a:visited {
+	COLOR: rgb(51,102,153);
+	BACKGROUND-COLOR: transparent
+}
+#theme {
+	COLOR: rgb(101,95,75);
+	BACKGROUND-COLOR: rgb(255,255,255)
+}
+#theme h2 {
+	BORDER-RIGHT: rgb(255,153,0) 0pt solid;
+	BORDER-TOP: rgb(255,153,0) 0pt solid;
+	PADDING-LEFT: 0em;
+	FONT-WEIGHT: 700;
+	FONT-SIZE: medium;
+	MARGIN: 0pt;
+	TEXT-TRANSFORM: uppercase;
+	BORDER-LEFT: rgb(255,153,0) 0pt solid;
+	BORDER-BOTTOM: rgb(247,94,94) 2px solid
+}
+#theme ul {
+	MARGIN-TOP: 0.3em;
+	MARGIN-BOTTOM: 1.5em
+}
+#theme li {
+	LIST-STYLE: none none outside;
+	DISPLAY: inline
+}
+#theme a {
+	DISPLAY: block;
+	PADDING-LEFT: 2em;
+	FONT-WEIGHT: 700;
+	MARGIN-LEFT: -4em;
+	color: #3300cc;
+	BACKGROUND-COLOR: transparent;
+	TEXT-DECORATION: none
+}
+#theme a:hover {
+	color: #a8d3ee;
+	BACKGROUND-COLOR: transparent
+}
+#themepromo {
+	COLOR: rgb(101,95,75);
+	BACKGROUND-COLOR: rgb(255,255,255)
+}
+#themepromo h2 {
+	BORDER-RIGHT: rgb(255,153,0) 0pt solid;
+	BORDER-TOP: rgb(255,153,0) 0pt solid;
+	PADDING-LEFT: 0em;
+	FONT-WEIGHT: 700;
+	FONT-SIZE: medium;
+	MARGIN: 0pt;
+	TEXT-TRANSFORM: uppercase;
+	BORDER-LEFT: rgb(255,153,0) 0pt solid;
+	BORDER-BOTTOM: rgb(247,94,94) 2px solid
+}
+#themepromo ul {
+	MARGIN-TOP: 0.3em;
+	MARGIN-BOTTOM: 1.5em
+}
+#themepromo li {
+	LIST-STYLE: none none outside;
+	DISPLAY: inline
+}
+#themepromo a {
+	font-size: 15;
+	color: #3300cc;
+	TEXT-DECORATION: none
+}
+#themepromo a:hover {
+	color: #a8d3ee;
+	BACKGROUND-COLOR: transparent
+}
+#espacereserve img {
+	border : 0px;
+}
+#espacereserve th {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 11px;
+	border-style : solid;
+	border-width : 1px;
+	border-color : #000000;
+}
+#espacereserve td {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 11px;
+	color: #414141;
+}
+#espacereserve a:link, a:visited, a:active {
+	font-family : Verdana, Arial, sans-serif;
+	text-decoration : none;
+	color : #6633CC;
+}
+#espacereserve a:hover {
+	font-family : Verdana, Arial, sans-serif;
+	text-decoration : underline;
+	color : #2080FF;
+}
+/* couleur de fond pour les differents champs */
+#espacereserve defaultinput {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 11px;
+	font-weight : 800;
+	color : #FFFFFF;
+	background-color : #80A0FF;
+	border-style : solid;
+	border-width : 1px;
+	border-color : #000000;
+}
+/* forme des boutons */
+#espacereserve defaultbutton {
+	font-size : 10px;
+	font-family : Verdana, Arial, sans-serif;
+	font-weight : 800;
+	width : 100px;
+}
+#espacereserve toolbutton {
+	font-size : 11px;
+	font-family : Verdana, Arial, sans-serif;
+	font-weight : 700;
+	width : 60px;
+}
+#espacereserve toolbox {
+	border-style : solid;
+	border-width : 1px;
+	border-color : #000000;
+	padding : 1px 1px 1px 1px;
+}
+#espacereserve largetoolbutton {
+	font-size : 11px;
+	font-family : Verdana, Arial, sans-serif;
+	font-weight : 700;
+	width : 100px;
+}
+/* messages d'information et d erreur */
+#espacereserve info {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 11px        font-weight : 800;
+	color : #7425BE;
+}
+#espacereserve error {
+	font-weight : 800;
+	color : #7425BE;
+}
+#espacereserve h2 {
+	font-size: medium;
+	color: #763312;
+	font-family : Verdana, Arial, sans-serif;
+	text-align: center;
+}
 /* inline tables */
 table.ue {
-  background-color: #fff;
-  border-spacing: 0px;
-  border-collapse: collapse;
+	background-color: #fff;
+	border-spacing: 0px;
+	border-collapse: collapse;
 }
-
 table.ue th {
-  padding: 3px;
-  border: 1px solid #8cacbb;
-  background-color: #dee7ec;
+	padding: 3px;
+	border: 1px solid #8cacbb;
+	background-color: #dee7ec;
 }
-
 table.ue td {
-  padding: 3px;
-  border: 1px solid #8cacbb;
+	padding: 3px;
+	border: 1px solid #8cacbb;
+}
+.leftalign {
+	text-align: left;
+}
+.centeralign {
+	text-align: center;
+}
+.rightalign {
+	text-align: right;
 }
 
-.leftalign{
-  text-align: left;
-}
-
-.centeralign{
-  text-align: center;
-}
-
-.rightalign{
-  text-align: right;
-}
