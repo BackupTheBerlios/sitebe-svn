@@ -289,13 +289,13 @@
 		print("<table width=\"800\" cellpadding=\"0\" cellspacing=\"3\">\n");
 		print("<tr>\n");
 		print("<td width=\"400\" align=\"left\"><br><br><div id=\"centerTitle\"><b>Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']."</b></div><br><br></td>");
-		print("<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=".$_GET['w']."&a=logout\">Deconnexion</a> &gt;</td>\n");
 		print("</tr>\n");
 		if (!isset($_GET['a']))
 		{
 			//un enseignant est connecte
 			if(isset($_SESSION['ensConnecte']))
 			{
+				print("<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=enseignants&a=logout\">Deconnexion</a> &gt;</td>\n");
 				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
 				print("<td align=\"center\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>Déposer des fichiers</u></a></td>");
@@ -317,6 +317,7 @@
 			//un etudiant est connecte
 			elseif(isset($_SESSION['etuConnecte']))
 			{
+				print("<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=etudiants&a=logout\">Deconnexion</a> &gt;</td>\n");
 				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
 				print("<td align=\"left\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers à télécharger</u></a></td>");
@@ -335,7 +336,7 @@
 				require("Connexion/".$_GET['w'].".php");
 				print("<br><br><center>");
 			}
-			// sinon message d'erreur		
+			// sinon message d'erreur
 			else
 			{
 				print("Page introuvable ".$_GET['w']);
