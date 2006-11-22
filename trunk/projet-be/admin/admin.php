@@ -86,8 +86,6 @@ if (isset($_GET['w']))
 				<tr>
 					<td align="left" width="100">Navigation</td>
 					<td align="left" width="100">&lt; <a href="javascript:window.close()">Fermer</a> &gt;</td>
-					<td align="center" width="100">&lt; <a href="javascript:window.history.back()">Pr&eacute;cedente</a> &gt;</td>
-					<td align="center" width="100">&lt; <a href="javascript:window.history.forward()">Suivante</a> &gt;</td>
 				</tr>
 			</table>
 
