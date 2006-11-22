@@ -35,12 +35,12 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		{
 			// dbConnect();
 			//require("Functions/edition.inc.php") ;
-			print("<br><br><table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+			print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("<tr>\n") ;
-			print("<td align=\"center\" width=\"800\"><br><b> Dépôt de fichiers<br><br></b></td>") ;
+			print("<td align=\"center\" width=\"800\"><br><b> D&eacute;p&ocirc;t de fichiers<br><br></b></td>") ;
 			print("</tr>\n") ;
 			print("</table>\n") ;
-			print("<center><form name=\"fichierForm\" action=\"espacereserve.php?p=connexion&w=enseignants&a=add\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
+			print("<center><form name=\"fichierForm\" action=\"espacereserve.php?p=connexion&w=enseignants&a=add\" method=\"post\" enctype=\"multipart/form-data\" onSubmit=\"return checkrequired(this)\">\n") ;
 			print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			//Pour afficher les matieres suivant le diplome choisi
 			//on retrouve l'id de diplome correspondant
@@ -76,7 +76,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("<br><br></select></td>\n</tr>\n") ;
 			}
 			print("<tr>\n") ;
-			print("<td align=\"left\"><b> Titre </b></td><td width=\"700\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"titreDepot\" size=\"40\"></td>\n") ;
+			// Le champ titre doit etre renseigné (controle par script récupere sur internet)
+			print("<td align=\"left\"><b> Titre </b></td><td width=\"700\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"requiredtitreDepot\" size=\"40\"></td>\n") ;
 			print("</tr>\n") ;
 			print("<tr>\n") ;
 			print("<td align=\"left\"><b> Fichier </b></td>\n") ;
@@ -177,7 +178,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print "</td></tr>";
 			}
 			print "</table>";
-			print "<br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a>";
 		}
 		//----------------------------- fin de la partie visualisation
 		/*--------------------------------------------------------------------------------------------
@@ -417,6 +417,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		print "Fichiers(s) supprim&eacute;(s) avec succ&egrave;s ,redirection" ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 	} //fin du if suppression
+	print "<br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a>";
 }
 else
 {
