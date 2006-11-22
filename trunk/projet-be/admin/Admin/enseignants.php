@@ -31,7 +31,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 		// ajout d'un element
 		if ($_GET['a'] == "add")
 		{
-			centeredInfoMessage(3, 3, "Administration enseignants : ajout") ;
+			// centeredInfoMessage(3, 3, "Administration enseignants : ajout") ;
+			print("<center>Admin de site de merde !!<center>");
 			print("\t\t\t<form name=\"enseignantForm\" action=\"database.php?w=enseignants\" method=\"post\">\n") ;
 			print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("\t\t\t\t<tr>\n") ;
