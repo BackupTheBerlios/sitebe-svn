@@ -30,6 +30,15 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 	// une action est precisee
 	else
 	{
+		// test
+		if ($_GET['a'] == "acces")
+		{
+			print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+			print("<tr>\n") ;
+			print("<td align=\"center\" width=\"800\"><br><b> Coucou<br><br></b></td>") ;
+			print("</tr>\n") ;
+			print("</table>\n") ;
+		}
 		// ajout d'un element
 		if ($_GET['a'] == "dep")
 		{
