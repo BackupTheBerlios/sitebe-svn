@@ -325,6 +325,37 @@
 			if(isset($_SESSION['ensConnecte']))
 			{
 				print("<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=enseignants&a=logout\">Deconnexion</a> &gt;</td>\n");
+				
+				$matiereList = DB_Query('SELECT * FROM matiere m, Enseignement e WHERE m.`id-matiere`=e.`id-matiere` and e.`id-enseignant`="'.$_SESSION['id-enseignant'].'" ORDER BY intitule');
+				$matiereCount = mysql_num_rows($matiereList) ;
+				// aucune matiere enseignee pour le moment
+				if ($matiereCount == 0)
+				{
+					print("<tr>\n") ;
+					print("<td width=\"600\" align=\"center\"> ");
+					print "Aucune matière enseigné !" ;
+					print("</td></tr>\n") ;
+				}
+				else
+				{
+					print("\t\t\t<center><form action=\"espacereserve.php?w=enseignants&a=acces\" method=\"post\">\n") ;
+					print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
+					
+					for ($i = 0 ; $i < $matiereCount ; $i++)
+					{
+						$fmatiereList = mysql_fetch_array($matiereList) ;
+						print("\t\t\t\t<tr>\n") ;
+						print("\t\t\t\t\t<td width=\"200\" align=\"left\"><input type=\"radio\" name=\"id\" value=\"{$fmatiereList['id-matiere']}\" onClick=\"submit()\"> {$fmatiereList['intitule']} </td>\n") ;
+						print("\t\t\t\t</tr>\n") ;
+					}
+				
+					print("\t\t\t\t<tr>\n") ;
+					print("\t\t\t\t\t<td width=\"200\" align=\"left\"><br><input type=\"hidden\" name=\"matiereMod\" value=\"true\"></td>\n") ;
+					print("\t\t\t\t</tr>\n") ;
+					print("\t\t\t</table>\n") ;
+					print("\t\t\t</form></center>\n") ;
+				}
+				
 				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
 				print("<td align=\"center\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>Déposer des fichiers</u></a></td>");
