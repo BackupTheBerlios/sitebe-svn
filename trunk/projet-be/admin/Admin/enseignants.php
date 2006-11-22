@@ -31,7 +31,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 		// ajout d'un element
 		if ($_GET['a'] == "add")
 		{
-			centeredInfoMessage(3, 3, "Administration des enseignants : ajout") ;
+			centeredInfoMessage(3, 3, "Administration enseignants : ajout") ;
 			print("\t\t\t<form name=\"enseignantForm\" action=\"database.php?w=enseignants\" method=\"post\">\n") ;
 			print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("\t\t\t\t<tr>\n") ;
@@ -46,13 +46,17 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> mail :</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"mailEnseignant\" size=\"25\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 
-                        print("\t\t\t\t<tr>\n") ;
+			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> login :</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"loginEnseignant\" size=\"25\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 
-                        print("\t\t\t\t<tr>\n") ;
+			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> mot de passe :</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"mdpEnseignant\" size=\"25\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
+			
+			print("\t\t\t\t<tr>\n");
+			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Enseignant : </td><td width=\"300\" align=\"left\" colspan=\"2\"><input type=\"checkbox\" class=\"defaultInput\" name=\"checkUeOui\" size=\"25\"><input type=\"checkbox\" class=\"defaultInput\" name=\"checkUeNon\" size=\"25\"></td>\n") ;
+			print("\t\t\t\t<tr>\n");
 
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"700\" align=\"left\" colspan=\"2\"><br><input type=\"hidden\" name=\"enseignantAdd\" value=\"true\"><input class=\"defaultButton\" type=\"button\" name=\"addButon\" value=\"Ajouter\" onClick=\"checkEnseignant('enseignantForm')\"></td>\n") ;
