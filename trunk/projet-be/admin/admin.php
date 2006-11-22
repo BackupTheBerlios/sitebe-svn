@@ -373,7 +373,7 @@ else
 	</tr>
 	<tr>
 		<td align=\"center\">
-			&copy; 2004 - 2005 IUP ISI
+			&copy; 2004 - 2006 IUP ISI
 		</td>
 	</tr>
 </table>

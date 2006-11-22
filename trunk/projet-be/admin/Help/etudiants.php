@@ -7,11 +7,10 @@
 ** Description : Fichier d'aide a l'administration des etudiants
 */
 
-
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (strpos($_SERVER['PHP_SELF'], "help.php"))
 {	
-	centeredInfoMessage(3, 3, "Aide : enseignants") ;
+	centeredInfoMessage(3, 3, "Aide : étudiants") ;
 	print("\t\t\t<ul>") ;
 	// a propos
 	print("\t\t\t<li><b>A propos des étudiants</b><br>\n") ;
