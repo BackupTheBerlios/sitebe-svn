@@ -166,7 +166,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				}
 				
 				// les pages pour acceder aux autres etudiants
-				$pagesCount = $totalEtu / $etuCount ;
+				$pagesCount = $totalEtu / $elementsCount ;
 		
 				print("\t\t\t<center><b>Pages</b><br>") ;
 				for ($k = 0 ; $k < $pagesCount ; $k++)
@@ -223,8 +223,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					return ;
 				}
 				
-				
-									
 				$fetuDetails = mysql_fetch_array($etuDetails) ;
 				print("\t\t\t<center><form name=\"defaultForm\" action=\"database.php?w=etudiants\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
 				print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
@@ -241,7 +239,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> E-mail de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mailetu\"size=\"30\" value=\"{$fetuDetails['email']}\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 
-                                print("</select></td>") ;
+                print("</select></td>") ;
 				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Login de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"loginetu\"size=\"30\" value=\"{$fetuDetails['login']}\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 
@@ -311,7 +309,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			
 			
 			// les pages pour acceder aux autres etudiants
-			$pagesCount = $totalEtu / $etuCount ;
+			$pagesCount = $totalEtu / $elementsCount ;
 		
 			print("\t\t\t<center><b>Pages</b><br>") ;
 			for ($k = 0 ; $k < $pagesCount ; $k++)
