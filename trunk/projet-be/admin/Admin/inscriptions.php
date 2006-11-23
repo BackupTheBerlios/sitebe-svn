@@ -153,7 +153,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					else
 					{
 						// les pages pour acceder aux autres etudiants
-						$pagesCount = $totalEtu / $etuCount ;
+						$pagesCount = $totalEtu / $elementsCount ;
 						
 						print("\t\t\t<center><b>Choisissez un &eacute;tudiant</b></center><br>\n") ;
 						print("\t\t\t<center><b>Pages</b><br>") ;
@@ -357,7 +357,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					else
 					{
 						// les pages pour acceder aux autres etudiants
-						$pagesCount = $totalEtu / $etuCount ;
+						$pagesCount = $totalEtu / $elementsCount ;
 						
 						print("\t\t\t<center><b>Choisissez un &eacute;tudiant</b></center><br>\n") ;
 						print("\t\t\t<center><b>Pages</b><br>") ;
