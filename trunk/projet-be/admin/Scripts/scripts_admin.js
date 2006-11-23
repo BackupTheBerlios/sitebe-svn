@@ -130,6 +130,17 @@ function makeImage(formName, fieldName)
 }
 
 
+/*
+** fonction	: suprAllEtu
+** entrees	: rien
+** sorties	: boolean
+** description	: demande a l'utilisateur de confirmer l'effacement de tous les etudiants
+*/
+function suprAllEtu()
+{
+	return confirm ("Etes-vous sûr de vouloir supprimer tous les étudiants inscrits ?");
+}
+
 
 /*
 ** EOF scripts_admin

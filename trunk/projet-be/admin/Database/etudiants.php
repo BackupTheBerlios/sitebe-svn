@@ -70,7 +70,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		if (is_uploaded_file($cvT))
 		{
 			// teste de toutes les facons
-			@ $success = move_uploaded_file($cvT, "Data/CV/{$numetu}_cv.".$finalExtension) ;
+			@ $success = move_uploaded_file($cvT, "../Data/CV/{$numetu}_cv.".$finalExtension) ;
 			if ($success) { $finalCV = $numetu."_cv.".$finalExtension ; }
 		}
 		
@@ -140,7 +140,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			// on verifie si le cv est uploade avec succes
 			if (is_uploaded_file($cvT))
 			{
-				$success = move_uploaded_file($cvT, "Data/CV/{$_POST['etuID']}_cv.".$finalExtension) ;
+				$success = move_uploaded_file($cvT, "../Data/CV/{$_POST['etuID']}_cv.".$finalExtension) ;
 				if ($success) { $finalCV = $_POST['etuID']."_cv.".$finalExtension ; }
 			}
 			
@@ -170,7 +170,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 	
 	
 	
-	// dernier cas : suppression
+	// troisieme cas : suppression
 	elseif (isset($_POST['etuDel']))
 	{		
 		// aucun choix defini
@@ -196,13 +196,13 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 				WHERE `id-etudiant` = '.$idKey) ;
 			
 			// suppression de tous les fichiers qui ont l'id en tete
-			$cvDir = opendir("Data/CV/") ;
+			$cvDir = opendir("../Data/CV/") ;
 			while ($fileName = readdir($cvDir))
 			{
 				
 				if (is_numeric(strpos($fileName, $idKey."_")))
 				{
-					unlink("Data/CV/".$fileName) ;
+					unlink("../Data/CV/".$fileName) ;
 				}
 			}
 		}
@@ -212,6 +212,33 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=etudiants\">\n") ;
 				
 	} // end of etuDel
+	
+	// dernier cas : suppression de tous les étudiants sans exception
+	elseif (isset($_POST['etuDelAll']))
+	{
+		dbConnect() ;	
+				
+		// on supprime tous les etudiants
+		dbQuery('DELETE
+			FROM etudiant') ;
+				
+		dbQuery('DELETE
+			FROM inscrit') ;
+		
+		// suppression de tous les fichiers du dossier CV
+		$cvDir = opendir("../Data/CV/") ;
+		while ($fileName = readdir($cvDir))
+		{
+			if (strcmp($fileName, ".") != 0 && strcmp($fileName, "..") != 0)
+			{
+				unlink("../Data/CV/".$fileName) ;
+			}
+		}
+			
+		dbClose() ;
+		centeredInfoMessage(3, 3, "Etudiants supprim&eacute;s avec succ&egrave;s, redirection...") ;
+		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=etudiants\">\n") ;
+	} // end of etuDelAll
 
 	// cas critique : action inconnue ou erronee : message erreur et redirection
 	else

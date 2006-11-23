@@ -331,15 +331,17 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			for ($i = 0 ; $i < $etuCount ; $i++)
 			{
 				$fetuList = mysql_fetch_array($allEtu) ;
-				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"300\" align=\"left\"><input type=\"checkbox\" name=\"id[]\" id=\"chbox$i\" value=\"{$fetuList['id-etudiant']}\"> {$fetuList['nom']} {$fetuList['prenom']}</td>\n") ;
-				print("\t\t\t\t</tr>\n") ;
+				print("<tr>\n") ;
+				print("<td width=\"300\" colspan=\"2\" align=\"left\"><input type=\"checkbox\" name=\"id[]\" id=\"chbox$i\" value=\"{$fetuList['id-etudiant']}\"> {$fetuList['nom']} {$fetuList['prenom']}</td>\n") ;
+				print("</tr>\n") ;
 			}
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><br><input class=\"defaultButton\" type=\"submit\" name=\"etuDel\" value=\"Supprimer\"></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t</table>\n") ;
-			print("\t\t\t</form></center>\n") ;
+			print("<tr>\n") ;
+			print("<td width=\"150\" align=\"left\"><br><input class=\"defaultButton\" type=\"submit\" name=\"etuDel\" value=\"Supprimer\"></form></td>") ;
+			print("<center><td width=\"150\" align=\"left\"><br><form action=\"database.php?w=etudiants\" method=\"post\" onSubmit=\"return suprAllEtu()\">") ;
+			print("<input class=\"defaultButton\" type=\"submit\" name=\"etuDelAll\" value=\"Supprimer tous\"></td>\n") ;
+			print("</tr>\n") ;
+			print("</table>\n") ;
+			print("</form></center>\n") ;
 			
 			dbClose() ;
 		} // end of if del

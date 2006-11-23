@@ -19,7 +19,7 @@ if (strpos($_SERVER['PHP_SELF'], "help.php"))
 	print("\t\t\t les opérations que l'on peut effectuer au niveau des étudiants sont :<br>\n") ;
 	print("\t\t\t\t - L'ajout d'un nouvel étudiant.<br>\n") ;
 	print("\t\t\t\t - La modification d'une information concernant un étudiant.<br>\n") ;
-	print("\t\t\t\t - La suppresion d'un étudiant(ou plusieurs).<br>\n") ;
+	print("\t\t\t\t - La suppresion d'un étudiant(ou plusieurs, ou encore de tous).<br>\n") ;
 	
 	// ajout
 	print("\t\t\t<br><li><b>Ajouter un étudiant</b><br>\n") ;
@@ -35,7 +35,8 @@ if (strpos($_SERVER['PHP_SELF'], "help.php"))
 	
 	// suppression
 	print("\t\t\t<br><li><b>Supprimer un(des) étudiant(s)</b><br>\n") ;
-	print("\t\t\t Cocher les cases correspondantes aux enseignants,<br>supprimer et valider en appuyant sur le bouton <b>Supprimer</b>.<br>\n") ;
+	print("\t\t\t Cocher les cases correspondantes aux étudiants,<br>supprimer et valider en appuyant sur le bouton <b>Supprimer</b>.\n");
+	print("\t\t\t Ou bien, pour supprimer tous les étudiants, cliquer directement sur le bouton <b>Supprimer tous</b>.<br>\n") ;
 	
 	
 	print("\t\t\t</ul>\n") ;
