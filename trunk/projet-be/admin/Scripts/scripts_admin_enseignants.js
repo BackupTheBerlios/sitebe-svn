@@ -86,9 +86,7 @@ function checkFileDep(formName)
 	{
 		alert(message) ;
 	}
-	
 }
-
 
 
 /*

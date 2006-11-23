@@ -7,8 +7,27 @@
 ** Description : Fichier inclu charge de la gestion des enseignants cote administration
 **	ajout, suppression, modification
 */
+?>
 
+<!-- Debut du script javascript -->
+<script language = "Javascript">
+	// Fonction permettant de rendre visible le champ idDiv
+	function setVisible(idDiv)
+	{
+		document.getElementById(idDiv).style.visibility = "visible";
+		document.getElementById('in').focus();
+	}
+	
+	// Fonction permettant de rendre invisible le champ idDiv
+	function setHidden(idDiv)
+	{
+		document.getElementById(idDiv).style.visibility = "hidden";
+		document.getElementById('in').focus();
+	}
+</script>
+<!-- Fin du script javascript -->
 
+<?php
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 {	
@@ -31,8 +50,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 		// ajout d'un element
 		if ($_GET['a'] == "add")
 		{
-			// centeredInfoMessage(3, 3, "Administration enseignants : ajout") ;
-			print("<center>Admin de site de merde !!<center>");
+			centeredInfoMessage(3, 3, "Administration enseignants : ajout") ;
+			// Remodifier la méthode de passage des parametres car mise en get pour voir si ca marchait.
 			print("\t\t\t<form name=\"enseignantForm\" action=\"database.php?w=enseignants\" method=\"post\">\n") ;
 			print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("\t\t\t\t<tr>\n") ;
@@ -56,7 +75,30 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t</tr>\n") ;
 			
 			print("\t\t\t\t<tr>\n");
-			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Enseignant : </td><td width=\"300\" align=\"left\" colspan=\"2\"><input type=\"checkbox\" class=\"defaultInput\" name=\"checkUeOui\" size=\"25\"><input type=\"checkbox\" class=\"defaultInput\" name=\"checkUeNon\" size=\"25\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Responsable d'UE : </td><td width=\"300\" align=\"left\" colspan=\"2\"> <p><label> oui<input type=\"radio\" class=\"defaultInput\" name=\"respUe\" size=\"25\" value=\"oui\" onclick=\"javascript:setVisible('salut')\"></label><label> non<input type=\"radio\" class=\"defaultInput\" name=\"respUe\" size=\"25\" value=\"non\" onclick=\"javascript:setHidden('salut')\" checked></label></p></td>\n") ;
+			print("\t\t\t\t\t");
+?>						
+						<td width='400' align='left'><br />
+							<table id='salut' style='visibility:hidden'>
+								<tr>
+									<td>
+										<select name='ue'>
+											<option value='0'>-- Choisissez une UE --</option>
+											<?php
+												dbConnect();
+												$res = dbQuery('SELECT * FROM module');
+												
+												while($tab = mysql_fetch_array($res))
+												{
+													echo "<option value=". $tab['id-module'] ."> ". $tab['intitule'] ." </option>";
+												}
+											?>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</td>
+<?php
 			print("\t\t\t\t<tr>\n");
 
 			print("\t\t\t\t<tr>\n") ;
@@ -76,7 +118,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			if (!isset($_POST['id']) && !isset($_GET['id']))
 			{
 				// connexion a la base de donnees et recuperation des infos
-				dbConnect() ;
+				dbConnect();
 				$enseignantList = dbQuery('SELECT `id-enseignant`, nom, prenom
 					FROM enseignant
 					ORDER BY nom, prenom') ;
