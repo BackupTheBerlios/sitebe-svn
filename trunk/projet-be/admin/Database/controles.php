@@ -55,14 +55,14 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 					VALUES ("'.$type.'")') ;
 					
 				// felicitations et redirection
-				centeredInfoMessage(3, 3, "Type de contrôle ajout&eacute; avec succ&egrave;s, redirection...") ;
+				centeredInfoMessage(3, 3, "Type de contr&ocirc;le ajout&eacute; avec succ&egrave;s, redirection...") ;
 				print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=controles\">\n") ;
 			}
 			
 			else
 			{
 				//le type existe on fait une redirection
-				centeredInfoMessage(3, 3, "Type de contrôle déjà présent, redirection...") ;
+				centeredInfoMessage(3, 3, "Type de contr&ocirc;le d&eacute;j&agrave; pr&eacute;sent, redirection...") ;
 				print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=controles\">\n") ;
 			}				
 			dbClose() ;

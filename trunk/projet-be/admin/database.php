@@ -11,12 +11,15 @@
 ** IMPORTANT :	Pour acceder aux differentes parties qui se chargent de la mise a jour
 **		on utilisera la variable $_GET['w'] (w pour what)
 **		les parties a inclure se trouvent dans le repertoire Database de la racine
-*/
-session_start();
+*/
+
+session_start();
+
 // fichier pour les messages
 require("Functions/messages.inc.php") ;
 // mini header
-?>
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,7 +38,8 @@ require("Functions/messages.inc.php") ;
 	</tr>
 	<tr>
 		<td id="centralZone">
-<?php
+<?php
+
 //aucuin atilisateur n'est identifie
 if (! isset($_SESSION['rootConnecte'])&& ! isset($_SESSION['ensConnecte']) && ! isset($_SESSION['etuConnecte']))
 {
@@ -50,7 +54,8 @@ if (! isset($_SESSION['rootConnecte'])&& ! isset($_SESSION['ensConnecte']) && ! 
 	elseif (! isset($_SESSION['ensConnecte']) && ! isset($_SESSION['etuConnecte']))
 	{
 		centeredErrorMessage(3, 3, "L'utilisation de cette page n&eacute;cessite une authentification") ;
-		print("<meta http-equiv=\"refresh\" content=\"1;url=index.php?p=connexion\">\n") ;	} // if ! isset session
+		print("<meta http-equiv=\"refresh\" content=\"1;url=index.php?p=connexion\">\n") ;
+	} // if ! isset session
 
 }
 // l'administrateur est authentifie avec succes
@@ -108,7 +113,8 @@ elseif (isset($_SESSION['ensConnecte']) || isset($_SESSION['etuConnecte']))
 			print("<meta http-equiv=\"refresh\" content=\"1;url=index.php?p=connexion&w={$_GET['w']}\">\n") ;
 		}
 	}
-}
+}
+
 ?>
 		</td>
 	</tr>
@@ -121,8 +127,13 @@ elseif (isset($_SESSION['ensConnecte']) || isset($_SESSION['etuConnecte']))
 </body>
 </html>
 
-<?php
-/*
-** EOF database.php
-*/
-?>
+<?php
+
+/*
+
+** EOF database.php
+
+*/
+
+?>
+

@@ -24,13 +24,19 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			
 		// enfin, on peut ajouter sans probleme
 		$intitule = trim($_POST['menuIntitule']) ;
-		$intutule = addslashes($intitule) ;
-        
+		$intutule = addslashes($intitule) ;
+
+        
+
         $desc = addslashes(trim($_POST['menuDescription']));
-        
-        // On récupère le nombre d'élément du menu dans le but d'inséré en queue de liste
-        $menuOld = dbQuery('SELECT `id-menu` FROM menu WHERE id_pmenu='.(int)$_POST['menuSub']);
-        $nbsubmenu = (int)mysql_num_rows($menuOld) + 1;
+        
+
+        // On récupère le nombre d'élément du menu dans le but d'inséré en queue de liste
+
+        $menuOld = dbQuery('SELECT `id-menu` FROM menu WHERE id_pmenu='.(int)$_POST['menuSub']);
+
+        $nbsubmenu = (int)mysql_num_rows($menuOld) + 1;
+
         
 		// on insere le nouveau menu
 		dbQuery('INSERT INTO menu
@@ -120,8 +126,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 					
 			dbQuery('DELETE
 				FROM menu						
-				WHERE `id-menu` = '.$idKey) ;
-                
+				WHERE `id-menu` = '.$idKey) ;
+
+                
+
             dbQuery('DELETE
 				FROM menu						
 				WHERE `id_pmenu` = '.$idKey) ;

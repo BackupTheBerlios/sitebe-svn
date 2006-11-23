@@ -10,33 +10,33 @@
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (strpos($_SERVER['PHP_SELF'], "help.php"))
 {	
-	centeredInfoMessage(3, 3, "Aide : étudiants") ;
+	centeredInfoMessage(3, 3, "Aide : &eacute;tudiants") ;
 	print("\t\t\t<ul>") ;
 	// a propos
-	print("\t\t\t<li><b>A propos des étudiants</b><br>\n") ;
-	print("\t\t\t Les étudiants présents dans ce site, sont ceux de la formation de l'IUP ISI.<br><br>") ;
-	print("\t\t\t Ils sont des différentes promotions de l'IUP depuis 1995-1996.<br>\n") ;
-	print("\t\t\t les opérations que l'on peut effectuer au niveau des étudiants sont :<br>\n") ;
-	print("\t\t\t\t - L'ajout d'un nouvel étudiant.<br>\n") ;
-	print("\t\t\t\t - La modification d'une information concernant un étudiant.<br>\n") ;
-	print("\t\t\t\t - La suppresion d'un étudiant(ou plusieurs, ou encore de tous).<br>\n") ;
+	print("\t\t\t<li><b>A propos des &eacute;tudiants</b><br>\n") ;
+	print("\t\t\t Les &eacute;tudiants pr&eacute;sents dans ce site, sont ceux de la formation de l'IUP ISI.<br><br>") ;
+	print("\t\t\t Ils sont des diff&eacute;rentes promotions de l'IUP depuis 1995-1996.<br>\n") ;
+	print("\t\t\t les op&eacute;rations que l'on peut effectuer au niveau des &eacute;tudiants sont :<br>\n") ;
+	print("\t\t\t\t - L'ajout d'un nouvel &eacute;tudiant.<br>\n") ;
+	print("\t\t\t\t - La modification d'une information concernant un &eacute;tudiant.<br>\n") ;
+	print("\t\t\t\t - La suppresion d'un &eacute;tudiant(ou plusieurs, ou encore de tous).<br>\n") ;
 	
 	// ajout
-	print("\t\t\t<br><li><b>Ajouter un étudiant</b><br>\n") ;
-	print("\t\t\t Pour ajouter un nouvel étudiant il faut saisir dans le formulaire,le numéro de carte étudiant, le nom et le prénom, l'email, l'URL du cv, de l'enseignant.<br>\n") ;
+	print("\t\t\t<br><li><b>Ajouter un &eacute;tudiant</b><br>\n") ;
+	print("\t\t\t Pour ajouter un nouvel &eacute;tudiant il faut saisir dans le formulaire,le num&eacute;ro de carte &eacute;tudiant, le nom et le pr&eacute;nom, l'email, l'URL du cv, de l'enseignant.<br>\n") ;
 	print("\t\t\t Il faut aussi choisir sa promotion et le diplome dans lequel il s'est inscrit.<br>\n") ;
 	
 	
 	// modification
 	print("\t\t\t<br><li><b>Modifier une information</b><br>\n") ;
-	print("\t\t\t Il faut d'abord choisir l'étudiant concerné\n") ;
+	print("\t\t\t Il faut d'abord choisir l'&eacute;tudiant concern&eacute;\n") ;
 	print("\t\t\t puis de donner de nouvelles valeurs aux champs\n") ;
 	print("\t\t\t et enfin de valider en appuyant sur le bouton <b>Modifier</b>.<br>\n") ;
 	
 	// suppression
-	print("\t\t\t<br><li><b>Supprimer un(des) étudiant(s)</b><br>\n") ;
-	print("\t\t\t Cocher les cases correspondantes aux étudiants,<br>supprimer et valider en appuyant sur le bouton <b>Supprimer</b>.\n");
-	print("\t\t\t Ou bien, pour supprimer tous les étudiants, cliquer directement sur le bouton <b>Supprimer tous</b>.<br>\n") ;
+	print("\t\t\t<br><li><b>Supprimer un(des) &eacute;tudiant(s)</b><br>\n") ;
+	print("\t\t\t Cocher les cases correspondantes aux &eacute;tudiants,<br>supprimer et valider en appuyant sur le bouton <b>Supprimer</b>.\n");
+	print("\t\t\t Ou bien, pour supprimer tous les &eacute;tudiants, cliquer directement sur le bouton <b>Supprimer tous</b>.<br>\n") ;
 	
 	
 	print("\t\t\t</ul>\n") ;

@@ -30,19 +30,19 @@ function checkEM(formName)
 	if (!intCorrect.test(matiere)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- identifiant de la matière incorrect" ;
+		message += "\n- identifiant de la mati&egrave;re incorrect" ;
 	}
 	
 	if (!floatCorrect.test(coeff1))
 	{
 		formIsCorrect = false ;
-		message += "\n- coefficient 1 de la matière incorrect" ;
+		message += "\n- coefficient 1 de la mati&egrave;re incorrect" ;
 	}
 	
 	if (!floatCorrect.test(coeff2))
 	{
 		formIsCorrect = false ;
-		message += "\n- coefficient 2 de la matière incorrect" ;
+		message += "\n- coefficient 2 de la mati&egrave;re incorrect" ;
 	}
 	
 		

@@ -43,7 +43,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "index.php")))
 		elseif (isset($_GET['view']) && ($_GET['view'] == 2))
 		{
 			$mode = 2 ;
-			print("\t\t\t\t\t<td id=\"centerTitle\">Navigation &raquo;&nbsp; <a href=\"index.php?p=enseignements\">Enseignements</a> &raquo;&nbsp; Descriptions détaillées des modules</td>\n") ;
+			print("\t\t\t\t\t<td id=\"centerTitle\">Navigation &raquo;&nbsp; <a href=\"index.php?p=enseignements\">Enseignements</a> &raquo;&nbsp; Descriptions d&eacute;taill&eacute;es des modules</td>\n") ;
 		}
 		
 		elseif (isset($_GET['view']) && ($_GET['view'] == 3))
@@ -90,7 +90,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "index.php")))
 		{
 			$dipDetails = mysql_fetch_array($dipList) ;
 			print("\t\t\t\t\t\t<b>$dipDetails[intitule]</b>") ;			
-			print(" &raquo; voir les <a href=\"index.php?p=enseignements&dip={$dipDetails['id-diplome']}&view=1\">modules et matières</a>") ;
+			print(" &raquo; voir les <a href=\"index.php?p=enseignements&dip={$dipDetails['id-diplome']}&view=1\">modules et mati&egrave;res</a>") ;
 			print(" &raquo; voir les <a href=\"index.php?p=enseignements&dip={$dipDetails['id-diplome']}&view=2\">informations d&eacute;taill&eacute;es</a>") ;
 			print(" &raquo; voir les <a href=\"index.php?p=enseignements&dip={$dipDetails['id-diplome']}&view=3\">modalit&eacute;s de contr&ocirc;le</a><br>") ;
 			

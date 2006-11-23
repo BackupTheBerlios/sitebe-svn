@@ -141,7 +141,7 @@ if (! isset($_SESSION['rootConnecte']))
 		// erreur on reaffiche le formulaire
 		else
 		{
-			centeredErrorMessage(2, 2, "Login incorrect, réessayez") ;
+			centeredErrorMessage(2, 2, "Login incorrect, r&eacute;essayez") ;
 			print("\t\t\t<form action=\"admin.php\" method=\"post\">\n") ;
 			print("\t\t\t<center><table width=\"400\">\n\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td align=\"left\" width=\"200\"> Login </td>") ;

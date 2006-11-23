@@ -49,7 +49,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "help.php")))
 	// si il n'y a aucun etudiant
 	if ($etuCount == 0)
 	{
-		centeredInfoMessage(2, 2, "Aucun étudiant pour le moment") ;
+		centeredInfoMessage(2, 2, "Aucun &eacute;tudiant pour le moment") ;
 	}
 	
 	else

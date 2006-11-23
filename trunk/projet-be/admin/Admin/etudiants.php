@@ -15,7 +15,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 	// aucune action precisee : menu principal
 	if (!isset($_GET['a']))
 	{
-		centeredInfoMessage(3, 3, "Administration des étudiants : accueil") ;
+		centeredInfoMessage(3, 3, "Administration des &eacute;tudiants : accueil") ;
 		print("\t\t\t<center>[ <a href=\"admin.php?w=etudiants&a=add\">ajouter &eacute;l&eacute;ment</a> ] - ") ;
 		print("[ <a href=\"admin.php?w=etudiants&a=mod\"> modifier &eacute;l&eacute;ment</a> ] - ") ;	
 		print("[ <a href=\"admin.php?w=etudiants&a=del\"> supprimer &eacute;l&eacute;ment</a> ]<br>\n") ;
@@ -55,31 +55,31 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t<form name=\"defaultForm\" action=\"database.php?w=etudiants\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
 			print("\t\t\t<center><table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Numéro de carte étudiant * </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"numetu\" size=\"8\" maxlength=\"8\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Num&eacute;ro de carte &eacute;tudiant * </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"numetu\" size=\"8\" maxlength=\"8\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 						
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'étudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 			
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Prenom de l'étudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Prenom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\" size=\"30\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> E-mail de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mailetu\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> E-mail de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mailetu\" size=\"30\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;  
 			
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Login de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"loginetu\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Login de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"loginetu\" size=\"30\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;  
 
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Mot de passe de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mdpetu\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Mot de passe de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mdpetu\" size=\"30\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 			
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> CV de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"cvetu\" type=\"file\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> CV de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"cvetu\" type=\"file\" size=\"30\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 			
 			
@@ -219,7 +219,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				$etuExists = mysql_num_rows($etuDetails) ;
 				if ($etuExists == 0)
 				{
-					centeredInfoMessage(2, 2, "Rien ne correspond &agrave; cet étudiant ") ;
+					centeredInfoMessage(2, 2, "Rien ne correspond &agrave; cet &eacute;tudiant ") ;
 					return ;
 				}
 				
@@ -228,23 +228,23 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 				
 				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'étudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\" value= \"{$fetuDetails['nom']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\" value= \"{$fetuDetails['nom']}\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 			
 				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Prénom de l'étudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\"size=\"30\" value=\"{$fetuDetails['prenom']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Pr&eacute;nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\"size=\"30\" value=\"{$fetuDetails['prenom']}\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 
 				print("</select></td>") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> E-mail de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mailetu\"size=\"30\" value=\"{$fetuDetails['email']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> E-mail de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mailetu\"size=\"30\" value=\"{$fetuDetails['email']}\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 
                 print("</select></td>") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Login de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"loginetu\"size=\"30\" value=\"{$fetuDetails['login']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Login de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"loginetu\"size=\"30\" value=\"{$fetuDetails['login']}\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 
 				print("</select></td>") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Mot de passe de l'étudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mdpetu\"size=\"30\" value=\"{$fetuDetails['mdp']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Mot de passe de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mdpetu\"size=\"30\" value=\"{$fetuDetails['mdp']}\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 		
 				print("\t\t\t\t<tr>\n") ;
@@ -271,7 +271,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 		// suppression d'un element
 		elseif ($_GET['a'] == "del")
 		{
-			centeredInfoMessage(3, 3, "Administration des étudiants : suppression") ;
+			centeredInfoMessage(3, 3, "Administration des &eacute;tudiants : suppression") ;
 			
 			// connexion a la base de donnees et recuperation des infos
 			dbConnect() ;

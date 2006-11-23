@@ -59,7 +59,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t</tr>\n") ;
 
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> prénom de l'enseignant : *</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> pr&eacute;nom de l'enseignant : *</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 
 			print("\t\t\t\t<tr>\n") ;
@@ -187,7 +187,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					print("\t\t\t\t</tr>\n") ;
 					
 					print("\t\t\t\t<tr>\n") ;
-					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Prénom de l'enseignant : * </b></td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\" value=\"{$enseignantDetails['prenom']}\"></td>\n") ;
+					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Pr&eacute;nom de l'enseignant : * </b></td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\" value=\"{$enseignantDetails['prenom']}\"></td>\n") ;
 					print("\t\t\t\t</tr>\n") ;
 					
 					print("\t\t\t\t<tr>\n") ;

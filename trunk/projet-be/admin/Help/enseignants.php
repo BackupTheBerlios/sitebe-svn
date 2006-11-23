@@ -15,21 +15,21 @@ if (strpos($_SERVER['PHP_SELF'], "help.php"))
 	print("\t\t\t<ul>") ;
 	// a propos
 	print("\t\t\t<li><b>A propos des enseignants</b><br>\n") ;
-	print("\t\t\t Les enseignants présents dans ce site, sont ceux de la formation de l'IUP ISI.<br><br>") ;
-	print("\t\t\t Ils enseignent aux différentes promotions de l'IUP.<br>\n") ;
-	print("\t\t\t les opérations que l'on peut effectuer au niveau des enseignants sont :<br>\n") ;
+	print("\t\t\t Les enseignants pr&eacute;sents dans ce site, sont ceux de la formation de l'IUP ISI.<br><br>") ;
+	print("\t\t\t Ils enseignent aux diff&eacute;rentes promotions de l'IUP.<br>\n") ;
+	print("\t\t\t les op&eacute;rations que l'on peut effectuer au niveau des enseignants sont :<br>\n") ;
 	print("\t\t\t\t - L'ajout d'un nouveau enseignant.<br>\n") ;
 	print("\t\t\t\t - La modification d'une information concernant un enseignant.<br>\n") ;
 	print("\t\t\t\t - La suppresion d'un enseignant(ou plusieurs).<br>\n") ;
 	
 	// ajout
 	print("\t\t\t<br><li><b>Ajouter un enseignant</b><br>\n") ;
-	print("\t\t\t Pour ajouter un nouveau enseignant il faut saisir dans le formulaire, le nom et le prénom de l'enseignant.<br>\n") ;
+	print("\t\t\t Pour ajouter un nouveau enseignant il faut saisir dans le formulaire, le nom et le pr&eacute;nom de l'enseignant.<br>\n") ;
 	
 	
 	// modification
 	print("\t\t\t<br><li><b>Modifier une information</b><br>\n") ;
-	print("\t\t\t Il faut d'abord choisir l'enseignant concerné\n") ;
+	print("\t\t\t Il faut d'abord choisir l'enseignant concern&eacute;\n") ;
 	print("\t\t\t puis de donner de nouvelles valeurs aux champs\n") ;
 	print("\t\t\t et enfin de valider en appuyant sur le bouton <b>Modifier</b>.<br>\n") ;
 	

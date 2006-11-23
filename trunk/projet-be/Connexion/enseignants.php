@@ -16,7 +16,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 	if (!isset($_GET['a']))
 	{
 		print "<table>";
-		print("<tr><td align='right'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\">Déposer des fichiers</a></td></tr>") ;
+		print("<tr><td align='right'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\">D&eacute;poser des fichiers</a></td></tr>") ;
 		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\"> Supprimer des fichiers</a></td></tr>") ;
 		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\"> excel </a></td></tr>") ;
 		print("<tr>\n") ;
@@ -63,7 +63,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			if ($moduleCount > 0 )
 			{
 				print("<tr>\n") ;
-				print("<td align=\"left\"><b> Matière *</b></td><td width=\"700\" align=\"left\"><select class=\"defaultInput\" name=\"matiere\">") ;
+				print("<td align=\"left\"><b> Mati&egrave;re *</b></td><td width=\"700\" align=\"left\"><select class=\"defaultInput\" name=\"matiere\">") ;
 				for($i = 0; $i<$moduleCount; $i++)
 				{
 					$fModuleList = mysql_fetch_array($moduleList);
@@ -103,7 +103,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<td width=\"800\" colspan=\"3\" align=\"left\"><textarea class=\"defaultInput\" rows=\"10\" cols=\"50\" name=\"commentaireDepot\"></textarea><br><br></td>\n") ;
 			print("</tr>\n") ;
 			print("<tr>\n") ;
-			print("<td width=\"800\" align=\"left\" colspan=\"3\"><br><input type=\"hidden\" name=\"fileDep\" value=\"true\"><input class=\"defaultButton\" type=\"submit\" name=\"addButton\" value=\"Déposer\" onClick=\"checFileDep('fichierForm')\"></td>\n") ;
+			print("<td width=\"800\" align=\"left\" colspan=\"3\"><br><input type=\"hidden\" name=\"fileDep\" value=\"true\"><input class=\"defaultButton\" type=\"submit\" name=\"addButton\" value=\"D&eacute;poser\" onClick=\"checFileDep('fichierForm')\"></td>\n") ;
 			print("</tr>\n") ;
 			print("</table>\n") ;
 			print("</form></center>\n") ;
@@ -123,7 +123,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 				print("<tr>\n") ;
 				print("<td width=\"600\" align=\"center\"> ");
-				print "Aucun fichier déposé pour ".$_SESSION['diplome']." !" ;
+				print "Aucun fichier d&eacute;pos&eacute; pour ".$_SESSION['diplome']." !" ;
 				print("</td></tr>\n") ;
 			}
 			else
@@ -178,15 +178,28 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$id_diplome2 = mysql_fetch_array($id_diplome1);
 			$id_diplome = $id_diplome2['id-diplome'];
 			$fichList = DB_Query('SELECT `id-fichier`, titre, URL FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-enseignant` ="'.$_SESSION['id-enseignant'].'"	ORDER BY titre') ;
-			$dip = explode(" ", $_SESSION['diplome']);
-			print "<table align='center'>";
-			while($liste_fichier = mysql_fetch_array($fichList))
+			$fichCount = mysql_num_rows($fichList) ;
+			// aucun enseignant pour le moment
+			if ($fichCount == 0)
 			{
-				print "<tr><td>";
-				print "titre : ".$liste_fichier['titre']."  </td><td> <a href='Data/Telechargement/".$dip[0].$dip[1]."/".$liste_fichier['URL']."'> visualisation du fichier</a>";
-				print "</td></tr>";
+				print("<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
+				print("<tr>\n") ;
+				print("<td width=\"600\" align=\"center\"> ");
+				print "Aucun fichier d&eacute;pos&eacute; pour ".$_SESSION['diplome']." !" ;
+				print("</td></tr>\n") ;
 			}
-			print "</table>";
+			else
+			{	
+				$dip = explode(" ", $_SESSION['diplome']);
+				print "<table align='center'>";
+				while($liste_fichier = mysql_fetch_array($fichList))
+				{
+					print "<tr><td>";
+					print "titre : ".$liste_fichier['titre']."  </td><td> <a href='Data/Telechargement/".$dip[0].$dip[1]."/".$liste_fichier['URL']."'> visualisation du fichier</a>";
+					print "</td></tr>";
+				}
+				print "</table>";
+			}
 		}
 		//----------------------------- fin de la partie visualisation
 		/*--------------------------------------------------------------------------------------------
@@ -203,7 +216,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$nb_ligne = mysql_num_rows($resultat_matiere);
 			if ($nb_ligne == 0)
 			{
-				print "aucune matiere disponible, redirection .....";
+				print("<tr><td>") ;
+				print("aucune matiere disponible, redirection ...") ;
+				print("</td></tr>") ;
+				print("<tr><td>") ;
 				print("<meta http-equiv='refresh' content='2;url=espacereserve.php?p=connexion&w=enseignants'>");
 			}
 			else
@@ -315,7 +331,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				}
 				fclose($fp);
 				print "<table><tr><td>enregistrement effectuer avec succes</td></tr></table>";
-				print "<table align='center'><tr><td><a href='Evaluation/".$_POST['file']."'>copie du fichier</a></td></tr><tr><td><a href='espacereserve.php?p=connexion&w=enseignants'> retour </a></td></tr></table>";
+				print "<table align='center'><tr><td><a href='Evaluation/".$_POST['file']."'>copie du fichier</a></td></tr></table>";
 			}
 			else
 			{
@@ -335,7 +351,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				}
 				fclose($fp);
 				print "<table><tr><td>enregistrement effectuer avec succes</td></tr></table>";
-				print "<table align='center'><tr><td><a href='Evaluation/".$_POST['file']."'>copie du fichier</a></td></tr><tr><td><a href='espacereserve.php?p=connexion&w=enseignants'> retour </a></td></tr></table>";
+				print "<table align='center'><tr><td><a href='Evaluation/".$_POST['file']."'>copie du fichier</a></td></tr></table>";
 			}
 		}
 		// deconnexion
@@ -393,7 +409,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		$finalchaine = $chaine[0]."".$chaine[1];
 		print "<table align='center'><tr><td>";
 		print "<a href='espacereserve.php?p=connexion&w=enseignants&a=visu&fichier=Data/Telechargement/{$finalchaine}/".$finalstring."'>visualiser</a>";
-		print("</td></tr><tr><td><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a>\n") ;
 		print "</td></tr></table>";
 		// dbClose() ;
 		}//fin du if (isset($_POST['fileDep']))
@@ -402,6 +417,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 	{
 		print("<table align='center'><tr><td><a href=\"{$_GET['fichier']}\">Visualiser</a></td></tr></table>");
 		fopen(realpath($_GET['fichier']), 'r');
+		print("<br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a>");
 	}
 	if (isset($_POST['fileUndep']))
 	{		
@@ -426,11 +442,12 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		print "Fichiers(s) supprim&eacute;(s) avec succ&egrave;s ,redirection" ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 	} //fin du if suppression
-	print "<br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a>";
+	print("<table><tr><td><br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a></td></tr></table>");
 }
 else
 {
 	print("<br><br><br><center><u>Impossible d'utiliser cette page directement</u></center>") ;
+	
 }
 /*
 ** EOF enseignants

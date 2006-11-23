@@ -87,7 +87,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "index.php")))
 	
 	$total = mysql_num_rows($pagesTitles) ;
 	
-	print("\t\t\t\t\t<br><br><h3>Aller à</h3>&nbsp;&nbsp;&nbsp;<select class=\"defaultSelect\" name=\"pageTitle\" onChange=\"gotoPage('{$_GET['id']}', this.value)\">") ;
+	print("\t\t\t\t\t<br><br><h3>Aller &agrave;</h3>&nbsp;&nbsp;&nbsp;<select class=\"defaultSelect\" name=\"pageTitle\" onChange=\"gotoPage('{$_GET['id']}', this.value)\">") ;
 	
 	$pagesCounter = 1 ;
 	while($pageTitlesF = mysql_fetch_array($pagesTitles))

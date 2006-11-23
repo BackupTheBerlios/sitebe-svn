@@ -49,7 +49,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		// si la page existe
 		if ($pageExists['pgNumb'] != 1)
 		{
-			centeredErrorMessage(3, 3, "La page associée semble ne pas exister, redirection...") ;
+			centeredErrorMessage(3, 3, "La page associ&eacute;e semble ne pas exister, redirection...") ;
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=sections\">\n") ;
 			return ;
 		}
@@ -155,7 +155,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		// si la page existe
 		if ($pageExists['pgNumb'] != 1)
 		{
-			centeredErrorMessage(3, 3, "La page associée semble ne pas exister, redirection...") ;
+			centeredErrorMessage(3, 3, "La page associ&eacute;e semble ne pas exister, redirection...") ;
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=sections\">\n") ;
 			return ;
 		}

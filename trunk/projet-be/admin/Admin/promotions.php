@@ -73,7 +73,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Choix de l'ann&eacute;e </b></td><td width=\"100\" align=\"left\"><select class=\"defaultInput\" name=\"promo\">") ;
 			foreach ($tabYear as $element)
 			{
-                                // on rajout une année dans la liste deroullante si elle est pas déja presente dans la bd
+                // on rajoute une année dans la liste deroullante si elle est pas déja presente dans la bd
 				if ( !in_array($element,$Year)) 
 					{
 					print("<option> $element </option>") ;

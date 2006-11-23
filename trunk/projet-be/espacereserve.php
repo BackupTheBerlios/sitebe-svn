@@ -164,7 +164,6 @@
 				print("<tr>\n");
 				print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
 				print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
-				print("<tr>\n");
 				$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 				$countDips = mysql_num_rows($dipsList);
 				if ($countDips > 0)
@@ -211,7 +210,6 @@
 						print("<tr>\n");
 						print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
 						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
-						print("<tr>\n");
 						$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 						$countDips = mysql_num_rows($dipsList);
 						if ($countDips > 0)
@@ -229,7 +227,7 @@
 						print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
 						print("</table>\n</center>\n");
 							
-	//					print("Erreurs de base de données! Plusieurs utilisateurs possibles!");
+	//					print("Erreurs de base de donn&eacute;es! Plusieurs utilisateurs possibles!");
 					}
 					//un resultat retrouve pour le cas d'enseignant
 					else
@@ -261,7 +259,7 @@
 						//plusieurs resultats trouves => erreur
 						if ($connect_result != 1)
 						{
-							print("Erreurs de base de données! Plusieurs utilisateurs possibles!");
+							print("Erreurs de base de donn&eacute;es! Plusieurs utilisateurs possibles!");
 						}
 						//un resultat retrouve pour le cas d'etudiant
 						else
@@ -289,7 +287,6 @@
 						print("<tr>\n");
 						print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
 						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
-						print("<tr>\n");
 						$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 						$countDips = mysql_num_rows($dipsList);
 						if ($countDips > 0)
@@ -317,14 +314,14 @@
 	{
 		print("<table width=\"800\" cellpadding=\"0\" cellspacing=\"3\">\n");
 		print("<tr>\n");
-		print("<td width=\"400\" align=\"left\"><br><br><div id=\"centerTitle\"><b>Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']."</b></div><br><br></td>");
+		print("<td width=\"800\"><br><br><div id=\"name\">Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']."</div><br><br></td>");
 		print("</tr>\n");
 		if (!isset($_GET['a']))
 		{
 			//un enseignant est connecte
 			if(isset($_SESSION['ensConnecte']))
 			{
-				print("<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=enseignants&a=logout\">Deconnexion</a> &gt;</td>\n");
+				print("<td width=\"800\" align=\"right\"><br>&lt; <a href=\"espacereserve.php?p=connexion&w=enseignants&a=logout\">D&eacute;connexion</a> &gt;</td>\n");
 				
 				$matiereList = DB_Query('SELECT * FROM matiere m, Enseignement e WHERE m.`id-matiere`=e.`id-matiere` and e.`id-enseignant`="'.$_SESSION['id-enseignant'].'" ORDER BY intitule');
 				$matiereCount = mysql_num_rows($matiereList) ;
@@ -333,7 +330,7 @@
 				{
 					print("<tr>\n") ;
 					print("<td width=\"600\" align=\"center\"> ");
-					print "Aucune matière enseigné !" ;
+					print("Aucune mati&egrave;re enseign&eacute;e !") ;
 					print("</td></tr>\n") ;
 				}
 				else
@@ -356,31 +353,31 @@
 					print("\t\t\t</form></center>\n") ;
 				}
 				
-				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
+				print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>Déposer des fichiers</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>D&eacute;poser des fichiers</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\"><u>Supprimer des fichiers</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\"><u>Supprimer des fichiers</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\"><u>excel</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\"><u>Gestion Excel</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>visualisation</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>Visualisation</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>saisie des notes</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>Saisie des notes</u></a></td>");
 				print("</tr>\n");
 				print("</table>\n");
 			}
 			//un etudiant est connecte
 			elseif(isset($_SESSION['etuConnecte']))
 			{
-				print("<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=etudiants&a=logout\">Deconnexion</a> &gt;</td>\n");
+				print("<td width=\"800\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=etudiants&a=logout\">Deconnexion</a> &gt;</td>\n");
 				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
-				print("<td align=\"left\" width=\"400\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers à télécharger</u></a></td>");
+				print("<td align=\"left\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers &agrave; t&eacute;l&eacute;charger</u></a></td>");
 				print("</tr>\n");
 				print("</table>\n");
 			}
