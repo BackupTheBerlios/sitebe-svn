@@ -383,6 +383,15 @@
 				print("<tr>\n");
 				print("<td align=\"left\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers &agrave; t&eacute;l&eacute;charger</u></a></td>");
 				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"left\" width=\"800\"><a href=\"deposer_doc.php\"><u>Deposer fichier</u></a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=1\"><u>Modifier password</u></a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=0\"><u>Modifier login</u></a></td>");
+				print("</tr>\n");
 				print("</table>\n");
 			}
 		}
