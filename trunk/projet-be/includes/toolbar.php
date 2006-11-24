@@ -152,7 +152,7 @@ function toolbar_JSdefines($varname){
             'type'   => 'picker',
             'title'  => 'Insérer un module dynamique',
             'icon'   => 'chars.png',
-            'list'   => explode(';','{{isi>ue?ID_DIPLOME}};{{isi>ens?ID_MODULE}};{{isi>uenav?ID_MODULE}};{{isi>actu}};{{isi>apog?ID_MODULE}}') ,
+            'list'   => explode(';','{{isi>ue?ID_DIPLOME}};{{isi>ens?ID_MODULE}};{{isi>uenav?ID_MODULE}};{{isi>actu}};{{isi>apog?ID_MODULE}}'),
             ),
       /*array(
             'type'   => 'signature',

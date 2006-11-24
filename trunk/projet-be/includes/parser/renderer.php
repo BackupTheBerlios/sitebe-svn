@@ -164,7 +164,7 @@ class Doku_Renderer {
     // Link to file on users OS, $title could be an array (media)
     function filelink($link, $title = NULL) {}
     
-    // Link to a Windows share, , $title could be an array (media)
+    // Link to a Windows share, $title could be an array (media)
     function windowssharelink($link, $title = NULL) {}
     
 //  function email($address, $title = NULL) {}

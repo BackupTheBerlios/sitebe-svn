@@ -262,7 +262,7 @@ class Doku_Renderer_Wiki extends Doku_Renderer {
         }
     }
     
-    // Link to a Windows share, , $title could be an array (media)
+    // Link to a Windows share, $title could be an array (media)
     function windowssharelink($link, $title = NULL) {
         if ( $title ) {
             echo '[['.$link.'|'.$title.']]';

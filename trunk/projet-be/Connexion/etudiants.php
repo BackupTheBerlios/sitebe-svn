@@ -10,7 +10,7 @@
 
 ** Auteurs : Avetisyan Gohar
 
-** Auteurs deuxieme version : Julien SIEGA , Emilien PERICO
+** Auteurs deuxieme version : Julien SIEGA, Emilien PERICO
 
 ** Version : 2.0
 

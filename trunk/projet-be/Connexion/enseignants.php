@@ -166,7 +166,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			//print_r($tableau);
 			insertion_base($tableau);   
 			unlink("Tmp/".$file);
-			echo "<table align='center'><tr><td><h2> L'insertion s'est bien deroul&eacute;e ... Redirection ... </h2></td></tr></table>";
+//			echo "<table align='center'><tr><td><h2> L'insertion s'est bien deroul&eacute;e ... Redirection ... </h2></td></tr></table>";
 			print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 		}
 		/*-----------------------------------------------------------------------------------------
@@ -373,7 +373,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		//	dbConnect() ;			
 		//on ne trim pas le titre ni la matiere car il peut y avoir des espaces
 		$fMatiere = addslashes($_POST['matiere']);
-		$fileTitre = addslashes($_POST['titreDepot']) ;
+		$fileTitre = addslashes($_POST['requiredtitreDepot']) ;
 		$fileCommentaire = addslashes($_POST['commentaireDepot']) ;
 		$fileURL = $_FILES['fichierDepot']['name'];
 		$fileURLT = $_FILES['fichierDepot']['tmp_name'];
@@ -398,18 +398,21 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			@ $success = move_uploaded_file($fileURLT, "Data/Telechargement/{$finalchaine}/".$finalstring) ;
 			chmod("Data/Telechargement/{$finalchaine}/".$finalstring, 0755);
 			//if ($success) { $finalCV = $fileId."_fich.".$finalExtension ; }
+			$fMatiereId = DB_Query('SELECT `id-matiere` FROM matiere WHERE intitule = "'.$fMatiere.'"');
+			$fMatiereId = mysql_fetch_array($fMatiereId);
+			$fMatiereId = $fMatiereId['id-matiere'];
+			DB_Query('INSERT INTO fichier	VALUES (NULL, "'.$fileTitre.'", "'.$ligne['id-diplome'].'", "'.$_SESSION['id-enseignant'].'", "'.$finalstring.'", "'.$fileCommentaire.'")') ;
+			// felicitations et redirection
+			print("<table><tr><td>Fichier d&eacute;pos&eacute; avec succ&egrave;s</td></tr></table>") ;
+			$chaine = explode(" ",$ligne['intitule']);
+			$finalchaine = $chaine[0]."".$chaine[1];
 		}
-		$fMatiereId = DB_Query('SELECT `id-matiere` FROM matiere WHERE intitule = "'.$fMatiere.'"');
-		$fMatiereId = mysql_fetch_array($fMatiereId);
-		$fMatiereId = $fMatiereId['id-matiere'];
-		DB_Query('INSERT INTO fichier	VALUES (NULL, "'.$fileTitre.'", "'.$ligne['id-diplome'].'", "'.$_SESSION['id-enseignant'].'", "'.$finalstring.'", "'.$fileCommentaire.'")') ;
-		// felicitations et redirection
-		print "<h2>Fichier d&eacute;pos&eacute; avec succ&egrave;s</h2>" ;
-		$chaine = explode(" ",$ligne['intitule']);
-		$finalchaine = $chaine[0]."".$chaine[1];
-		print "<table align='center'><tr><td>";
-		print "<a href='espacereserve.php?p=connexion&w=enseignants&a=visu&fichier=Data/Telechargement/{$finalchaine}/".$finalstring."'>visualiser</a>";
-		print "</td></tr></table>";
+		else
+		{
+			print "<table align=\"center\"><tr><td>";
+			print("L'envoi du fichier a &eacute;chou&eacute;.");
+			print "</td></tr></table>";
+		}
 		// dbClose() ;
 		}//fin du if (isset($_POST['fileDep']))
 		// if qui concerne la visualisation des fichiers deposés
@@ -417,14 +420,15 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 	{
 		print("<table align='center'><tr><td><a href=\"{$_GET['fichier']}\">Visualiser</a></td></tr></table>");
 		fopen(realpath($_GET['fichier']), 'r');
-		print("<br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a>");
 	}
 	if (isset($_POST['fileUndep']))
 	{		
 		// aucun choix defini
 		if (!isset($_POST['id']))
 		{
+			print("<table><tr><td>") ;
 			print "Aucun fichier selectionn&eacute;, redirection..." ;
+			print("</td></tr></table>") ;
 			print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignant&a=undep\">\n") ;
 			return ;
 		}
@@ -439,15 +443,18 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$req = "delete from fichier where `id-fichier` ='".$idKey."'";
 			$ress = DB_query($req);
 		}
-		print "Fichiers(s) supprim&eacute;(s) avec succ&egrave;s ,redirection" ;
+		print("<table><tr><td>") ;
+		print "Fichiers(s) supprim&eacute;(s) avec succ&egrave;s, redirection" ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
+		print("</td></tr></table>") ;
 	} //fin du if suppression
 	print("<table><tr><td><br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a></td></tr></table>");
 }
 else
 {
+	print("<table><tr><td>") ;
 	print("<br><br><br><center><u>Impossible d'utiliser cette page directement</u></center>") ;
-	
+	print("</td></tr></table>") ;
 }
 /*
 ** EOF enseignants

@@ -131,7 +131,7 @@ function utf8_substr($str,$start,$length=null){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    substr_replace()
  */
-function utf8_substr_replace($string, $replacement, $start , $length=0 ){
+function utf8_substr_replace($string, $replacement, $start, $length=0 ){
   $ret = '';
   if($start>0) $ret .= utf8_substr($string, 0, $start);
   $ret .= $replacement;
