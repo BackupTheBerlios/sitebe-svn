@@ -106,6 +106,12 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 				dbQuery('DELETE
 					FROM enseignement				
 					WHERE `id-enseignant` = '.$idKey) ;
+				dbQuery('DELETE
+					FROM `resp-diplome`				
+					WHERE `id-enseignant` = '.$idKey) ;
+				dbQuery('DELETE
+					FROM `resp-module`				
+					WHERE `id-enseignant` = '.$idKey) ;
 			}
 			dbClose() ;
 			centeredInfoMessage(3, 3, "Enseignant(s) supprim&eacute;(s) avec succ&egrave;s, redirection...") ;
