@@ -186,7 +186,10 @@
 				$usrlogin = trim($_POST['usrLogin']);
 				$usrlogin = addslashes($usrlogin);
 				// on trim pas le pass au cas ou il y aurait des espaces
-				$usrpass = addslashes($_POST['usrPass']);
+				$usrpass = md5($_POST['usrPass']);
+				$usrpass = addslashes($usrpass) ;
+				
+				//$usrpass = addslashes($_POST['usrPass']);
 				//$diplome = trim($_POST['diplome']);
 				//on ne trim pas le diplome car il ya des espaces
 				$diplome = addslashes($_POST['diplome']);
@@ -270,6 +273,7 @@
 							$_SESSION['etuConnecte'] = true;
 							$_SESSION['nom'] = $etuDetails['nom'];
 							$_SESSION['prenom'] = $etuDetails['prenom'];
+							$_SESSION['id-etu'] = $etuDetails['id-etudiant'];
 							$_SESSION['diplome'] = $diplome;
 							print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion&w=etudiants\">\n");
 							}
