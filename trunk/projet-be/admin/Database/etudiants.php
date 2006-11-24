@@ -38,8 +38,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$email = addslashes($email) ; 
 		$login = trim($_POST['loginetu']) ;
 		$login = addslashes($login) ;
-                $mdp = trim($_POST['mdpetu']) ;
-                $mdp = addslashes($mdp) ;
+        $mdp = md5($_POST['mdpetu']) ;
+        $mdp = addslashes($mdp) ;
 
 		$cv = $_FILES['cvetu']['name'] ;
 		$cvT = $_FILES['cvetu']['tmp_name'] ;
@@ -119,10 +119,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$prenom = addslashes($prenom) ;
 		$email = trim($_POST['mailetu']) ;
 		$email = addslashes($email) ; 
-                $login = trim($_POST['loginetu']) ;
-                $login = addslashes($login) ;
-                $mdp = trim($_POST['mdpetu']) ;
-                $mdp = addslashes($mdp) ;
+        $login = trim($_POST['loginetu']) ;
+        $login = addslashes($login) ;
+        $mdp = md5($_POST['mdpetu']) ;
+        $mdp = addslashes($mdp) ;
 		
 		if (isset($_POST['rmCV']))
 		{		
