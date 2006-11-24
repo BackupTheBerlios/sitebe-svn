@@ -38,7 +38,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$mail = addslashes($mail) ;
 		$login = trim($_POST['loginEnseignant']) ;
 		$login = addslashes($login) ;
-		$mdp = trim($_POST['mdpEnseignant']) ;
+		$mdp = md5($_POST['mdpEnseignant']);
 		$mdp = addslashes($mdp) ;
 		$idUe = $_POST['ue'];
 
@@ -81,7 +81,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$mail = addslashes($mail) ; 
 		$login = trim($_POST['loginEnseignant']) ;
 		$login = addslashes($login) ;
-		$mdp = trim($_POST['mdpEnseignant']) ;
+		$mdp = md5($_POST['mdpEnseignant']);
 		$mdp = addslashes($mdp) ;
 			
 		// on met a jour l'enseignant
