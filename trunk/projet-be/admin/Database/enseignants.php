@@ -40,11 +40,26 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$login = addslashes($login) ;
 		$mdp = trim($_POST['mdpEnseignant']) ;
 		$mdp = addslashes($mdp) ;
+		$idUe = $_POST['ue'];
 
 		// on insere le nouveau enseignant
 		dbQuery('INSERT INTO enseignant
 			VALUES (NULL, "'.$nom.'", "'.$prenom.'", "'.$mail.'", "'.$login.'", "'.$mdp.'")') ;
-					
+		
+		// Dans le cas ou on choisi que l'enseignant sera responsable d'une UE on doit ajouter un tuple dans la base
+		// dans la table resp-module
+		if(isset($_POST['respUe']))
+		{
+			if($_POST['respUe'] == 'oui')
+			{
+				$idProf = mysql_insert_id();
+				$req = "INSERT INTO `resp-module` VALUES (". $idProf .",". $idUe .")";
+				dbQuery($req);
+			}
+		}else{
+			print("Erreur le champ demandé n'existe pas !");
+		}
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Enseignant ajout&eacute; avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignants\">\n") ;				

@@ -71,7 +71,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t</tr>\n") ;
 
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> mot de passe :</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"mdpEnseignant\" size=\"25\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> mot de passe :</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" type=\"password\" name=\"mdpEnseignant\" size=\"25\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 			
 			print("\t\t\t\t<tr>\n");
