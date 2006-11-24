@@ -17,6 +17,7 @@
 	<title>IUP ISI - <?=$titre?></title>
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<link rel="stylesheet" type="text/css" href="Styles/style_help.css">
 	<meta name="revisit-after" content="15 days" />
 	<meta name="robots" content="index,follow" />
 	<link rel="shortcut icon" type="images/x-icon" href="favicon.ico" />
@@ -111,7 +112,7 @@
 					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
-			<td valign="top">
+			<td valign="top" id="centralZone">
 				<div id="espacereserve">
 				<!-------------------------------------------------->
 				<!-- partie qui permet de gerer la partie reservé -->
