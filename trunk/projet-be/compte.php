@@ -1,12 +1,13 @@
 <?php
 	/*
 	fichier qui permet d'acceder a l'espace reserve du site
-	auteur : Julien SIEGA , Emilien PERICO
+	auteur : CLOUET Gael
 	*/
 	session_start();
 	error_reporting(E_ALL && ~E_NOTICE);
 	include('includes/config.php');
 	require_once('includes/lib-db.php');
+	$titre="Compte";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -30,6 +31,11 @@
 		}
 	</SCRIPT>
 	<meta name="DC.Publisher" content="IUP ISI" />
+	<style type="text/css">
+	img {
+		behavior: url("styles/pngbehavior.htc");
+	}
+	</style>
 	<link rel="stylesheet" href="styles/isi.css" type="text/css" />
 </head>
 <body>   
@@ -81,7 +87,7 @@
 					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
-			<td valign="top">
+			<th valign="top">
 				<div id="espacereserve">
 				<!-------------------------------------------------->
 				<!-- partie qui permet de gerer la partie reservé -->
@@ -124,14 +130,14 @@
 					Inscription
 					<form method="post" action="compte.php">
 					<center><table width=400 border=0>
-					<tr><td align=left>N&deg;Etudiant : </td><td align=right><input type="text" name="num_etu" size="15"></td></tr><br>
-					<tr><td align=left>Pr&eacute;nom : </td><td align=right><input type="text" name="prenom" size="15"></td></tr><br>
-					<tr><td align=left>Nom : </td><td align=right><input type="text" name="nom" size="15"></td></tr><br><br>
-					<tr><td align=left>Mail : </td><td align=right><input type="text" name="mail" size="15"></td></tr>
-					<tr><td align=left>Login : </td><td align=right><input type="text" name="login" size="15"></td></tr>
+					<tr><td align="left">N&deg;Etudiant : </td><td align="right"><input type="text" name="num_etu" value="<?= $_POST['num_etu'] ?>"size="15"></td></tr><br>
+					<tr><td align="left">Pr&eacute;nom : </td><td align="right"><input type="text" name="prenom" value="<?= $_POST['prenom'] ?>" size="15"></td></tr><br>
+					<tr><td align="left">Nom : </td><td align="right"><input type="text" name="nom" value="<?= $_POST['nom']?>" size="15"></td></tr><br><br>
+					<tr><td align="left">Mail : </td><td align="right"><input type="text" name="mail" value="<?= $_POST['mail'] ?>" size="15"></td></tr>
+					<tr><td align="left">Login : </td><td align="right"><input type="text" name="login" value="<?= $_POST['login'] ?>" size="15"></td></tr>
 										<tr><td>&nbsp;</td></tr>
-					<tr><td align=left>Password : </td><td align=right><input type="password" name="password" size="16"></td></tr>
-					<tr><td align=left>Password : </td><td align=right><input type="password" name="password2" size="16"></td></tr>
+					<tr><td align="left">Mot de passe :</td><td align="right"><input type="password" name="password" size="16"></td></tr>
+					<tr><td align="left">Confirmer le mot de passe :</td><td align="right"><input type="password" name="password2" size="16"></td></tr>
 										<tr><td>&nbsp;</td></tr>
 					<?
 					
@@ -145,6 +151,7 @@
 					print("</select></td></tr>");
 					print("<tr><td>&nbsp;</td><td align=right><input type=\"submit\" value=\"Valider\"></td></tr>");
 					print("</form>");
+					print("</table>");
 
 					print("</h2>");
 					
@@ -172,7 +179,7 @@
 						$res=mysql_query("select `id-matiere` from matiere,etudiant,module,inscrit,diplome
 											 where inscrit.`id-etudiant`=etudiant.`id-etudiant`
 											 and inscrit.`id-diplome`=diplome.`id-diplome`
-									 	     and diplome.`id-diplome`=module.`id-diplome`
+									 		 and diplome.`id-diplome`=module.`id-diplome`
 										 	 and matiere.`id-module`=module.`id-module`
 											 and etudiant.`id-etudiant`='$num_etu';");
 						$chemin='etudiants/'.$num_etu.'/';
@@ -194,13 +201,11 @@
 				}
 				?>
 
-
-
 				<!------------------------------------------------------------>
 				<!-- fin de la partie qui permet de gerer la partie reservé -->
 				<!------------------------------------------------------------>
 				</div>
-			</td>
+			</th>
 			</tr>
 		</table>
 		<div id="about">
