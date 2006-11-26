@@ -1,85 +1,170 @@
-img
-{
-	border : 0px ;
-}
-
-th
-{
-	border-style : solid ;
-	border-width : 1px ;
-}
-
-table
-{
-	font-family : Verdana, Arial, sans-serif ;
-	font-size : 10px ;
-}
-
-
-/* container de la partie administration */
-#mainContainer
-{
-	font-family : Verdana, Arial, sans-serif ;
-	font-size : 10px ;
-	background : #FFFFFF ;
-	font-weight : 500 ;
-	color : #000000 ;
-}
-
-
-a:link, a:visited, a:active
-{
-	font-family : Verdana, arial, sans-serif ;
-	text-decoration : none ;
-	font-size : 10px ;
-	font-weight : 600 ;
-	color : #6633CC ;
-}
-
-a:hover
-{
-	font-family : Verdana, arial, sans-serif ;
-	text-decoration : underline ;
-	font-weight : 600 ;
-	color : #400060 ;
-}
-
-
-
-
-/* forme des boutons */
-.defaultButton
-{
-	background-color : #E3E3E3 ;
-	font-size : 10px ;
-	font-family : Verdana, Arial, sans-serif ;
-	font-weight : 600 ;
-	width : 100px ;
-}
-
-/* messages d'information et d erreur */
-.info
-{
-	font-family : Verdana, arial, sans-serif ;
-	font-weight : 600 ;
-	color : #A5A5A5 ;
-}
-
-.error
-{
-	font-family : Verdana, arial, sans-serif ;
-	font-weight : 600 ;
-	color : #7425BE ;
-}
-
-
-/* zone centrale du formulaire */
-#centralZone
-{
-	border-style : solid ;
-	border-width : 1px ;
-	border-color : #000000 ;
-	padding : 10px 5px 10px 5px ;
-	background : #EEEEEE ;
-}
-
+img
+
+{
+
+	border : 0px ;
+
+}
+
+
+
+th
+
+{
+
+	border-style : solid ;
+
+	border-width : 1px ;
+
+}
+
+
+
+table
+
+{
+
+	font-family : Verdana, Arial, sans-serif ;
+
+	font-size : 10px ;
+
+}
+
+
+
+
+
+/* container de la partie administration */
+
+#mainContainer
+
+{
+
+	font-family : Verdana, Arial, sans-serif ;
+
+	font-size : 10px ;
+
+	background : #FFFFFF ;
+
+	font-weight : 500 ;
+
+	color : #000000 ;
+
+}
+
+
+
+
+
+a:link, a:visited, a:active
+
+{
+
+	font-family : Verdana, arial, sans-serif ;
+
+	text-decoration : none ;
+
+	font-size : 10px ;
+
+	font-weight : 600 ;
+
+	color : #6633CC ;
+
+}
+
+
+
+a:hover
+
+{
+
+	font-family : Verdana, arial, sans-serif ;
+
+	text-decoration : underline ;
+
+	font-weight : 600 ;
+
+	color : #400060 ;
+
+}
+
+
+
+
+
+
+
+
+
+/* forme des boutons */
+
+.defaultButton
+
+{
+
+	background-color : #E3E3E3 ;
+
+	font-size : 10px ;
+
+	font-family : Verdana, Arial, sans-serif ;
+
+	font-weight : 600 ;
+
+	width : 100px ;
+
+}
+
+
+
+/* messages d'information et d erreur */
+
+.info
+
+{
+
+	font-family : Verdana, arial, sans-serif ;
+
+	font-weight : 600 ;
+
+	color : #A5A5A5 ;
+
+}
+
+
+
+.error
+
+{
+
+	font-family : Verdana, arial, sans-serif ;
+
+	font-weight : 600 ;
+
+	color : #7425BE ;
+
+}
+
+
+
+
+
+/* zone centrale du formulaire */
+
+#centralZone
+
+{
+
+	border-style : solid ;
+
+	border-width : 1px ;
+
+	border-color : #000000 ;
+
+	padding : 10px 5px 10px 5px ;
+
+	background : #EEEEEE ;
+
+}
+
+
+

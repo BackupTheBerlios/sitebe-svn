@@ -17,12 +17,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 	{
 		print "<table>";
 		print("<tr><td align='right'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\">D&eacute;poser des fichiers</a></td></tr>") ;
-		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\"> Supprimer des fichiers</a></td></tr>") ;
-		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\"> excel </a></td></tr>") ;
-		print("<tr>\n") ;
-		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>visualisation</u></a></td>") ;
-		print("</tr>\n") ;	
-		print("<tr>\n") ;
+		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\">Supprimer des fichiers</a></td></tr>") ;
+		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\">Gestion excel</a></td></tr>") ;
+		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>Visualisation</u></a></td>") ;
 		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>saisie des notes</u></a></td>") ;
 		print("</tr>\n") ;	
 		print "<table>";
@@ -49,7 +46,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<td align=\"center\" width=\"800\"><br><b> D&eacute;p&ocirc;t de fichiers<br><br></b></td>") ;
 			print("</tr>\n") ;
 			print("</table>\n") ;
-			print("<center><form name=\"fichierForm\" action=\"espacereserve.php?p=connexion&w=enseignants&a=add\" method=\"post\" enctype=\"multipart/form-data\" onSubmit=\"return checkrequired(this)\">\n") ;
+			print("<center><form name=\"fichierForm\" action=\"espacereserve.php?p=connexion&w=enseignants&a=add\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
 			print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			//Pour afficher les matieres suivant le diplome choisi
 			//on retrouve l'id de diplome correspondant
@@ -86,7 +83,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			}
 			print("<tr>\n") ;
 			// Le champ titre doit etre renseigné (controle par script récupere sur internet)
-			print("<td align=\"left\"><b> Titre </b></td><td width=\"700\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"requiredtitreDepot\" size=\"40\"></td>\n") ;
+			print("<td align=\"left\"><b> Titre </b></td><td width=\"700\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"titreDepot\" size=\"40\"></td>\n") ;
 			print("</tr>\n") ;
 			print("<tr>\n") ;
 			print("<td align=\"left\"><b> Fichier </b></td>\n") ;

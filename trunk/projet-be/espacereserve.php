@@ -17,7 +17,7 @@
 	<title>IUP ISI - <?=$titre?></title>
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="Content-Style-Type" content="text/css" />
-	<link rel="stylesheet" type="text/css" href="Styles/style_help.css">
+
 	<meta name="revisit-after" content="15 days" />
 	<meta name="robots" content="index,follow" />
 	<link rel="shortcut icon" type="images/x-icon" href="favicon.ico" />
@@ -31,35 +31,6 @@
 			window.open("admin/admin.php?"+parameters, "Administration", "width=850,height=700,toolbar=no,scrollbars=yes,directories=no,status=yes,resizable=no");
 		}
 	</script>
-	<script>
-		function checkrequired(which)
-		{
-			var pass=true
-			if (document.images)
-			{
-				for (i=0;i<which.length;i++)
-				{
-					var tempobj=which.elements[i]
-					if (tempobj.name.substring(0,8)=="required")
-					{
-						if (((tempobj.type=="text"||tempobj.type=="textarea")&&tempobj.value=='')||(tempobj.type.toString().charAt(0)=="s"&&tempobj.selectedIndex==-1))
-						{
-							pass=false
-							break
-						}
-					}
-				}
-			}
-			if (!pass)
-			{
-				alert("Certains champs de ce formulaire sont obligatoires, merci de bien vouloir les renseigner")
-				return false
-			}
-			else
-			return true
-		}
-	</script>
-
 	<meta name="DC.Publisher" content="IUP ISI" />
 	<link rel="stylesheet" href="styles/isi.css" type="text/css" />
 </head>
@@ -112,7 +83,7 @@
 					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
-			<td valign="top" id="centralZone">
+			<th valign="top">
 				<div id="espacereserve">
 				<!-------------------------------------------------->
 				<!-- partie qui permet de gerer la partie reservé -->
@@ -148,7 +119,7 @@
 				print("</select></td>\n</tr>\n");
 			}
 			print("<tr>\n\n\n");
-			print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultButton\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
+			print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" name=\"usrAuth\" value=\"Connexion\"></td>\n</tr>\n");
 			print("</table>\n</center>\n");
 		}
 		// sinon l'utilisateur a essaye de se connecter on verifie les donnees
@@ -185,10 +156,10 @@
 			else
 			{
 				$usrlogin = trim($_POST['usrLogin']);
-				$usrlogin = addslashes($usrlogin);
 				// on trim pas le pass au cas ou il y aurait des espaces
-				$usrpass = md5($_POST['usrPass']);
 				$usrpass = addslashes($usrpass) ;
+				//$usrpass = md5($_POST['usrPass']);
+				
 				
 				//$usrpass = addslashes($_POST['usrPass']);
 				//$diplome = trim($_POST['diplome']);
@@ -274,7 +245,6 @@
 							$_SESSION['etuConnecte'] = true;
 							$_SESSION['nom'] = $etuDetails['nom'];
 							$_SESSION['prenom'] = $etuDetails['prenom'];
-							$_SESSION['id-etu'] = $etuDetails['id-etudiant'];
 							$_SESSION['diplome'] = $diplome;
 							print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion&w=etudiants\">\n");
 							}
@@ -384,15 +354,6 @@
 				print("<tr>\n");
 				print("<td align=\"left\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers &agrave; t&eacute;l&eacute;charger</u></a></td>");
 				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"left\" width=\"800\"><a href=\"deposer_doc.php\"><u>Deposer fichier</u></a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=1\"><u>Modifier password</u></a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=0\"><u>Modifier login</u></a></td>");
-				print("</tr>\n");
 				print("</table>\n");
 			}
 		}
@@ -420,7 +381,7 @@
 				<!-- fin de la partie qui permet de gerer la partie reservé -->
 				<!------------------------------------------------------------>
 				</div>
-			</td>
+			</th>
 			</tr>
 		</table>
 		<div id="about">
