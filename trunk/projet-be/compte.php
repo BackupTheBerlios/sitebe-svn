@@ -30,6 +30,50 @@
 			window.open("admin/admin.php?"+parameters, "Administration", "width=850,height=700,toolbar=no,scrollbars=yes,directories=no,status=yes,resizable=no") ;
 		}
 	</SCRIPT>
+	<!-- DEBUT BLOCAGE 1ERE LETTRE EN MAJUSCULE-->
+	<script type="text/javascript" language="JavaScript" title="G1SCRIPT">
+		//Script Généré sur le Site http://www.G1SCRIPT.COM
+		// © genered by tanguy@crollen.com
+		<!-- Begin
+		function changeCase(frmObj)
+		{
+			var index;
+			var tmpStr;
+			var tmpChar;
+			var preString;
+			var postString;
+			var strlen;
+			tmpStr = frmObj.value.toLowerCase();
+			strLen = tmpStr.length;
+			if (strLen > 0)
+			{
+				for (index = 0; index < strLen; index++)
+				{
+					if (index == 0)
+					{
+						tmpChar = tmpStr.substring(0,1).toUpperCase();
+						postString = tmpStr.substring(1,strLen);
+						tmpStr = tmpChar + postString;
+					}
+					else
+					{
+						tmpChar = tmpStr.substring(index, index+1);
+						if (tmpChar == " " && index < (strLen-1))
+						{
+							tmpChar = tmpStr.substring(index+1, index+2).toUpperCase();
+							preString = tmpStr.substring(0, index+1);
+							postString = tmpStr.substring(index+2,strLen);
+							tmpStr = preString + tmpChar + postString;
+						}
+					}
+				}
+			}
+			frmObj.value = tmpStr;
+		}
+		//  End -->
+	</script>
+	<!-- FIN BLOCAGE 1ERE LETTRE EN MAJUSCULE-->
+
 	<meta name="DC.Publisher" content="IUP ISI" />
 	<style type="text/css">
 	img {
@@ -89,9 +133,9 @@
 			</td>
 			<th valign="top">
 				<div id="espacereserve">
-				<!-------------------------------------------------->
-				<!-- partie qui permet de gerer la partie reservé -->
-				<!-------------------------------------------------->
+				<!------------------------------------------------------>
+				<!-- debut de la partie qui permet de creer un compte -->
+				<!------------------------------------------------------>
 				
 				<?
 				if(isset($_POST['nom']))      $nom=$_POST['nom'];
@@ -119,20 +163,20 @@
 				{
   					if (isset($_POST['nom']) OR isset($_POST['prenom']) OR isset($_POST['num_etu']) OR isset($_POST['mail']) OR isset($_POST['password']) OR isset($_POST['login']))
   					{
-  						print("Attention, aucun champ de doit reste vide !");
+  						print("Attention, aucun champ ne doit rester vide !");
 					}
   					if($password!=$password2)
   					{
-  						print("\nAttention, les deux mots de passe sont différents !");
+  						print("\nAttention, les deux mots de passe sont diff&eacute;rents !");
   					}
   					?>
 					<h2>
 					Inscription
 					<form method="post" action="compte.php">
 					<center><table width=400 border=0>
-					<tr><td align="left">N&deg;Etudiant : </td><td align="right"><input type="text" name="num_etu" value="<?= $_POST['num_etu'] ?>"size="15"></td></tr><br>
-					<tr><td align="left">Pr&eacute;nom : </td><td align="right"><input type="text" name="prenom" value="<?= $_POST['prenom'] ?>" size="15"></td></tr><br>
-					<tr><td align="left">Nom : </td><td align="right"><input type="text" name="nom" value="<?= $_POST['nom']?>" size="15"></td></tr><br><br>
+					<tr><td align="left">N&deg;Etudiant : </td><td align="right"><input type="text" name="num_etu" value="<?= $_POST['num_etu'] ?>" size="15"></td></tr><br>
+					<tr><td align="left">Nom : </td><td align="right"><input type="text" name="nom" value="<?= $_POST['nom']?>" size="15" onChange="javascript:this.value=this.value.toUpperCase();"></td></tr><br><br>
+					<tr><td align="left">Pr&eacute;nom : </td><td align="right"><input type="text" name="prenom" value="<?= $_POST['prenom'] ?>" size="15" onChange="javascript:changeCase(this.form.prenom);"></td></tr><br>
 					<tr><td align="left">Mail : </td><td align="right"><input type="text" name="mail" value="<?= $_POST['mail'] ?>" size="15"></td></tr>
 					<tr><td align="left">Login : </td><td align="right"><input type="text" name="login" value="<?= $_POST['login'] ?>" size="15"></td></tr>
 										<tr><td>&nbsp;</td></tr>
@@ -191,7 +235,7 @@
 							mkdir ($var, 0770);
 						}
 						print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php\">") ;						
-						echo 'Vous avez ete inscrit.';						
+						echo 'Votre inscription a bien &eacute;t&eacute; valid&eacute;e, vous pouvez maintenant vous connecter.';						
 					}
 					else
 					{
@@ -199,11 +243,12 @@
 						echo 'Inscription impossible.';
 					}
 				}
+				print("<table><tr><td><br><br><a href='espacereserve.php?'>retour</a></td></tr></table>");
 				?>
-
-				<!------------------------------------------------------------>
-				<!-- fin de la partie qui permet de gerer la partie reservé -->
-				<!------------------------------------------------------------>
+				
+				<!---------------------------------------------------->
+				<!-- fin de la partie qui permet de creer un compte -->
+				<!---------------------------------------------------->
 				</div>
 			</th>
 			</tr>
