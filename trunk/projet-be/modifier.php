@@ -102,11 +102,11 @@
 						{
   							if (isset($_POST['password']) OR isset($_POST['password2']))
   							{
-  								print("Attention, aucun champ de doit reste vide !<br>");
+  								print("Attention, aucun champ ne doit rester vide !<br>");
 							}
   							if($password!=$password2)
   							{
-  								print("<br>Attention, les deux mots de passe sont différents !<br><br>");
+  								print("<br>Attention, les deux mots de passe sont diff&eacute;rents !<br><br>");
   							}
 							print("Modification de votre mot de passe<br><br>");
 							print("<h2>Veuillez saisir deux fois votre nouveau mot de passe<br><br>");
