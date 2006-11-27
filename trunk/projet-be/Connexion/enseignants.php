@@ -12,20 +12,22 @@
 // on verifie toujours que cette page a ete appelee a partir de index
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 {
+	/*
 	// aucune action precisee : section principal
 	if (!isset($_GET['a']))
 	{
-		print "<table>";
-		print("<tr><td align='right'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\">D&eacute;poser des fichiers</a></td></tr>") ;
+		print("<table border=\"1\">");
+		print("<tr><td align='right'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>D&eacute;poser des fichiers</u></a></td></tr>") ;
 		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\">Supprimer des fichiers</a></td></tr>") ;
 		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\">Gestion excel</a></td></tr>") ;
 		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>Visualisation</u></a></td>") ;
 		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>saisie des notes</u></a></td>") ;
 		print("</tr>\n") ;	
-		print "<table>";
+		print "</table>";
 	} // fin de if (!isset($_GET['a']))
 	// une action est precisee
-	else
+	else*/
+	if (isset($_GET['a']))
 	{
 		// test
 		if ($_GET['a'] == "acces")
@@ -392,7 +394,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		if (is_uploaded_file($fileURLT))
 		{
 			// teste de toutes les facons
-			@ $success = move_uploaded_file($fileURLT, "Data/Telechargement/{$finalchaine}/".$finalstring) ;
+			$success = move_uploaded_file($fileURLT, "Data/Telechargement/{$finalchaine}/".$finalstring) ;
 			chmod("Data/Telechargement/{$finalchaine}/".$finalstring, 0755);
 			//if ($success) { $finalCV = $fileId."_fich.".$finalExtension ; }
 			$fMatiereId = DB_Query('SELECT `id-matiere` FROM matiere WHERE intitule = "'.$fMatiere.'"');

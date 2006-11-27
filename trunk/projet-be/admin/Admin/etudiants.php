@@ -59,11 +59,11 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t</tr>\n") ;
 						
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\" onChange=\"javascript:this.value=this.value.toUpperCase();\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 			
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Prenom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\" size=\"30\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Prenom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\" size=\"30\" onChange=\"javascript:changeCase(this.form.prenometu);\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 
 			print("\t\t\t\t<tr>\n") ;
@@ -228,11 +228,11 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 				
 				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\" value= \"{$fetuDetails['nom']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"nometu\" size=\"30\" value=\"{$fetuDetails['nom']}\" onChange=\"javascript:this.value=this.value.toUpperCase();\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 			
 				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Pr&eacute;nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\"size=\"30\" value=\"{$fetuDetails['prenom']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Pr&eacute;nom de l'&eacute;tudiant *</b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"prenometu\"size=\"30\" value=\"{$fetuDetails['prenom']}\" onChange=\"javascript:changeCase(this.form.prenometu);\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 
 				print("</select></td>") ;

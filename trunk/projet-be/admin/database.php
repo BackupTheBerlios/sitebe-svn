@@ -40,7 +40,7 @@ require("Functions/messages.inc.php") ;
 		<td id="centralZone">
 <?php
 
-//aucuin atilisateur n'est identifie
+//aucun atilisateur n'est identifie
 if (! isset($_SESSION['rootConnecte'])&& ! isset($_SESSION['ensConnecte']) && ! isset($_SESSION['etuConnecte']))
 {
 	// L'administrateur n'est pas authentifie pas de raison de lui proposer quoi que ce soit

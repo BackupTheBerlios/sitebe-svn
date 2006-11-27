@@ -55,11 +55,11 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t<form name=\"enseignantForm\" action=\"database.php?w=enseignants\" method=\"post\">\n") ;
 			print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> nom de l'enseignant : *</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"nomEnseignant\" size=\"25\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> nom de l'enseignant : *</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"nomEnseignant\" size=\"25\"  onChange=\"javascript:this.value=this.value.toUpperCase();\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> pr&eacute;nom de l'enseignant : *</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\"></td>\n") ;
+			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> pr&eacute;nom de l'enseignant : *</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\" onChange=\"javascript:changeCase(this.form.prenomEnseignant);\"></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 
 			print("\t\t\t\t<tr>\n") ;
@@ -183,11 +183,11 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					print("\t\t\t<form name=\"enseignantForm\" action=\"database.php?w=enseignants\" method=\"post\">\n") ;
 					print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 					print("\t\t\t\t<tr>\n") ;
-					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Nom de l'enseignant : * </b></td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"nomEnseignant\" size=\"25\" value=\"{$enseignantDetails['nom']}\"></td>\n") ;
+					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Nom de l'enseignant : * </b></td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"nomEnseignant\" size=\"25\" value=\"{$enseignantDetails['nom']}\"  onChange=\"javascript:this.value=this.value.toUpperCase();\"></td>\n") ;
 					print("\t\t\t\t</tr>\n") ;
 					
 					print("\t\t\t\t<tr>\n") ;
-					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Pr&eacute;nom de l'enseignant : * </b></td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\" value=\"{$enseignantDetails['prenom']}\"></td>\n") ;
+					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Pr&eacute;nom de l'enseignant : * </b></td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"prenomEnseignant\" size=\"25\" value=\"{$enseignantDetails['prenom']}\" onChange=\"javascript:changeCase(this.form.prenomEnseignant);\"></td>\n") ;
 					print("\t\t\t\t</tr>\n") ;
 					
 					print("\t\t\t\t<tr>\n") ;
