@@ -158,7 +158,7 @@
 				$usrlogin = trim($_POST['usrLogin']);
 				// on trim pas le pass au cas ou il y aurait des espaces
 				$usrpass = addslashes($usrpass) ;
-				//$usrpass = md5($_POST['usrPass']);
+				$usrpass = md5($_POST['usrPass']);
 				
 				
 				//$usrpass = addslashes($_POST['usrPass']);
