@@ -68,7 +68,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			
 		// AJOUT		
 		dbQuery('INSERT INTO module
-			VALUES (NULL, '.$dipID.', "'.$intitule.'", "'.$description.'", 1, "'. (int)$_POST['moduleResp'] . '","'.(int)$_POST['moduleNode'].'")') ;
+			VALUES (NULL, '.$dipID.', "'.$intitule.'", 1, "'.$description.'", "'. (int)$_POST['ects'] . '", "'. (int)$_POST['pscc'] . '", "'. (int)$_POST['pscp'] . '", "'. (int)$_POST['psct'] . '", "'. (int)$_POST['sscc'] . '", "'. (int)$_POST['sscp'] . '", "'. (int)$_POST['ssct'] . '", "'. (int)$_POST['semestre'] . '", "'. (int)$_POST['moduleResp'] . '","'.(int)$_POST['moduleNode'].'")') ;
 					
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module ajout&eacute; avec succ&egrave;s, redirection...") ;
@@ -129,7 +129,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 				
 		// on ajoute sinon	
 		dbQuery('UPDATE module
-			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", description = "'.$description.'", `id-responsable` = "'. (int)$_POST['moduleResp'] . '", id_node = "'.(int)$_POST['moduleNode'].'"
+			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", description = "'.$description.'", `id-responsable` = "'. (int)$_POST['moduleResp'] . '", ECTS = "'. (int)$_POST['ects'] . '", PS_CC = "'. (int)$_POST['pscc'] . '", PS_CP = "'. (int)$_POST['pscp'] . '", PS_CT = "'. (int)$_POST['psct'] . '", SS_CC = "'. (int)$_POST['sscc'] . '", SS_CP = "'. (int)$_POST['sscp'] . '", SS_CT = "'. (int)$_POST['ssct'] . '", no_semestre = "'. (int)$_POST['semestre'] . '", id_node = "'.(int)$_POST['moduleNode'].'"
 			WHERE `id-module` = '.$_POST['moduleID']) ;
 					
 		// felicitations et redirection

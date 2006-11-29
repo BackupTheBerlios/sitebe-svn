@@ -38,15 +38,24 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			$dipList = dbQuery('SELECT *
 				FROM diplome
 				ORDER BY intitule') ;
-            
-            $respList = dbQuery('SELECT *
-                FROM enseignant
-                ORDER BY nom');
-                
-            $nodeList = dbQuery('SELECT *
-                FROM node
-                ORDER BY titre');
-                    
+            
+
+            $respList = dbQuery('SELECT *
+
+                FROM enseignant
+
+                ORDER BY nom');
+
+                
+
+            $nodeList = dbQuery('SELECT *
+
+                FROM node
+
+                ORDER BY titre');
+
+                    
+
                     
 			$dipCount = mysql_num_rows($dipList) ;
 			
@@ -71,7 +80,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			}
 			print("\n\t\t\t\t\t</select></td>\n") ;			
 			print("\t\t\t\t</tr>\n") ;
-			
+			
+
             print("\t\t\t\t<tr>\n") ;
             print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Enseignant responsable </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleResp\">\n") ;
             while ($dipDetails = mysql_fetch_array($respList))
@@ -81,8 +91,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
                 print("<option$selected value=\"{$dipDetails['id-enseignant']}\">{$dipDetails['nom']} {$dipDetails['prenom']}</option>") ;
             }
             print("\n\t\t\t\t\t</select></td>") ;
-            print("\t\t\t\t</tr>\n") ;
-                
+            print("\t\t\t\t</tr>\n") ;
+
+                
+
             print("\t\t\t\t<tr>\n") ;
             print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Page </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleNode\">\n") ;
             while ($dipDetails = mysql_fetch_array($nodeList))
@@ -92,15 +104,33 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
                 print("<option$selected value=\"{$dipDetails['ID_NODE']}\">{$dipDetails['TITRE']}</option>") ;
             }
             print("\n\t\t\t\t\t</select></td>") ;
-            print("\t\t\t\t</tr>\n") ;
+            print("\t\t\t\t</tr>\n") ;
+
             
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"700\" align=\"left\" colspan=\"2\"><b> Description d&eacute;taill&eacute;e du module (y compris des mati&egrave;res) </b></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;			
 			
 			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"700\" colspan=\"2\" align=\"left\"><textarea class=\"defaultInput\" rows=\"10\" cols=\"100\" name=\"moduleContenu\"></textarea><br><br></td>\n") ;
+			print("\t\t\t\t\t<td width=\"700\" colspan=\"2\" align=\"left\"><textarea class=\"defaultInput\" rows=\"8\" cols=\"100\" name=\"moduleContenu\"></textarea><br><br></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
+			
+			print("\t\t\t\t<tr>\n");
+			print("\t\t\t\t\t<td width=\"700\" colspan=\"2\" align=\"left\">\n");
+				print("\t\t\t\t\t\t<table align=\"center\" width=\"700\">\n");
+				print("\t\t\t\t\t\t\t<tr>\n");
+					print("\t\t\t\t\t\t\t\t<td><b>ECTS</b><br><input class=\"defaultInput\" name=\"ects\" size=\"8\" value=\"1\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>PS_CC</b><br><input class=\"defaultInput\" name=\"pscc\" size=\"8\" value=\"0\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>PS_CP</b><br><input class=\"defaultInput\" name=\"pscp\" size=\"8\" value=\"0\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>PS_CT</b><br><input class=\"defaultInput\" name=\"psct\" size=\"8\" value=\"0\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>SS_CC</b><br><input class=\"defaultInput\" name=\"sscc\" size=\"8\" value=\"0\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>SS_CP</b><br><input class=\"defaultInput\" name=\"sscp\" size=\"8\" value=\"0\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>SS_CT</b><br><input class=\"defaultInput\" name=\"ssct\" size=\"8\" value=\"0\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>Semestre</b><br><input class=\"defaultInput\" name=\"semestre\" size=\"8\" value=\"1\"></td>\n") ;
+				print("\t\t\t\t\t\t\t</tr>\n");
+				print("\t\t\t\t\t\t</table>\n");
+			print("\t\t\t\t\t</td>\n");
+			print("\t\t\t\t</tr>\n");
 			
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"700\" align=\"left\" colspan=\"2\"><br><input type=\"hidden\" name=\"moduleAdd\" value=\"true\"><input class=\"defaultButton\" type=\"button\" name=\"addButton\" value=\"Ajouter\" onClick=\"checkModule('defaultForm')\"></td>\n") ;
@@ -216,7 +246,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				// boite d'edition
 				require("Functions/edition.inc.php") ;
 				
-				$moduleDetails = dbQuery('SELECT description, intitule, `id-diplome`, id_node, `id-responsable`
+				$moduleDetails = dbQuery('SELECT description, intitule, `id-diplome`, id_node, `id-responsable`, ECTS as ects, PS_CC as pscc, PS_CP as pscp, PS_CT as psct, SS_CC as sscc, SS_CP as sscp, SS_CT as ssct, no_semestre as semestre
 					FROM module
 					WHERE `id-module` = '.$eID) ;
 					
@@ -232,15 +262,23 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					
 				$dipList = dbQuery('SELECT *
 					FROM diplome
-					ORDER BY intitule') ;
-                    
-                $respList = dbQuery('SELECT *
-                    FROM enseignant
+					ORDER BY intitule') ;
+
+                    
+
+                $respList = dbQuery('SELECT *
+
+                    FROM enseignant
+
                     ORDER BY nom');
-										
-                $nodeList = dbQuery('SELECT *
-                    FROM node
-                    ORDER BY titre');
+										
+
+                $nodeList = dbQuery('SELECT *
+
+                    FROM node
+
+                    ORDER BY titre');
+
                         
 				print("\t\t\t<center><form name=\"defaultForm\" action=\"database.php?w=modules\" method=\"post\">\n") ;
 				print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
@@ -257,8 +295,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					print("<option$selected>{$dipDetails['intitule']}</option>") ;
 				}
 				print("\n\t\t\t\t\t</select></td>") ;
-				print("\t\t\t\t</tr>\n") ;
-                
+				print("\t\t\t\t</tr>\n") ;
+
+                
+
                 print("\t\t\t\t<tr>\n") ;
 				print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Enseignant responsable </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleResp\">\n") ;
 				while ($dipDetails = mysql_fetch_array($respList))
@@ -268,8 +308,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					print("<option$selected value=\"{$dipDetails['id-enseignant']}\">{$dipDetails['nom']} {$dipDetails['prenom']}</option>") ;
 				}
 				print("\n\t\t\t\t\t</select></td>") ;
-				print("\t\t\t\t</tr>\n") ;
-
+				print("\t\t\t\t</tr>\n") ;
+
+
+
                 print("\t\t\t\t<tr>\n") ;
                 print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Page </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleNode\">\n") ;
                 while ($dipDetails = mysql_fetch_array($nodeList))
@@ -279,7 +321,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
                     print("<option$selected value=\"{$dipDetails['ID_NODE']}\">{$dipDetails['TITRE']}</option>") ;
                 }
                 print("\n\t\t\t\t\t</select></td>") ;
-                print("\t\t\t\t</tr>\n") ;
+                print("\t\t\t\t</tr>\n") ;
+
             
 				print("\t\t\t\t<tr>\n") ;
 				print("\t\t\t\t\t<td width=\"700\" align=\"left\" colspan=\"2\"><b> Description d&eacute;taill&eacute;e du module (y compris des mati&egrave;res) </b></td>\n") ;
@@ -288,7 +331,24 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				print("\t\t\t\t<tr>\n") ;
 				print("\t\t\t\t\t<td width=\"700\" colspan=\"2\" align=\"left\"><textarea class=\"defaultInput\" rows=\"10\" cols=\"100\" name=\"moduleContenu\">{$moduleDetails['description']}</textarea><br><br></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
-			
+				
+				print("\t\t\t\t<tr>\n");
+				print("\t\t\t\t\t<td width=\"700\" colspan=\"2\" align=\"left\">\n");
+				print("\t\t\t\t\t\t<table align=\"center\" width=\"700\">\n");
+				print("\t\t\t\t\t\t\t<tr>\n");
+					print("\t\t\t\t\t\t\t\t<td><b>ECTS</b><br><input class=\"defaultInput\" name=\"ects\" size=\"8\" value=\"{$moduleDetails['ects']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>PS_CC</b><br><input class=\"defaultInput\" name=\"pscc\" size=\"8\" value=\"{$moduleDetails['pscc']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>PS_CP</b><br><input class=\"defaultInput\" name=\"pscp\" size=\"8\" value=\"{$moduleDetails['pscp']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>PS_CT</b><br><input class=\"defaultInput\" name=\"psct\" size=\"8\" value=\"{$moduleDetails['psct']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>SS_CC</b><br><input class=\"defaultInput\" name=\"sscc\" size=\"8\" value=\"{$moduleDetails['sscc']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>SS_CP</b><br><input class=\"defaultInput\" name=\"sscp\" size=\"8\" value=\"{$moduleDetails['sscp']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>SS_CT</b><br><input class=\"defaultInput\" name=\"ssct\" size=\"8\" value=\"{$moduleDetails['ssct']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t\t<td><b>Semestre</b><br><input class=\"defaultInput\" name=\"semestre\" size=\"8\" value=\"{$moduleDetails['semestre']}\"></td>\n") ;
+					print("\t\t\t\t\t\t\t</tr>\n");
+					print("\t\t\t\t\t\t</table>\n");
+				print("\t\t\t\t\t</td>\n");
+				print("\t\t\t\t</tr>\n");
+				
 				print("\t\t\t\t<tr>\n") ;
 				print("\t\t\t\t\t<td width=\"700\" align=\"left\" colspan=\"2\"><br><input type=\"hidden\" name=\"moduleMod\" value=\"true\"><input type=\"hidden\" name=\"moduleID\" value=\"$eID\"><input class=\"defaultButton\" type=\"button\" name=\"modButton\" value=\"Modifier\" onClick=\"checkModule('defaultForm')\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
