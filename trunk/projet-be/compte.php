@@ -190,10 +190,10 @@
 							
 					while($row = DB_fetchArray($res))
 					{		
-						print("<option>$row[0]</option>");
+						print("<option>". $row[0] ."</option>");
 					}
 					print("</select></td></tr>");
-					print("<tr><td>&nbsp;</td><td align=right><input type=\"submit\" value=\"Valider\"></td></tr>");
+					print("<tr><td>&nbsp;</td><td align=right><input type='submit' value='Valider'></td></tr>");
 					print("</form>");
 					print("</table>");
 

@@ -198,35 +198,9 @@ if (isset($_GET['w']))
 		{
 			centeredInfoMessage(3, 3, "Administration : menu principal") ;
 			// on affiche les differents liens
-			// tous les liens pr administrer		
-			print("\t\t\t<table  cellspacing=\"5\" cellpadding=\"0\" align=\"center\">\n") ;
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<th align=\"left\" width=\"200\"><u>Administration site</u></th>") ;
-			print("<th align=\"center\" width=\"150\" >ajouter</th>") ;
-			print("<th align=\"center\" width=\"150\">modifier</th>") ;	
-			print("<th align=\"center\" width=\"150\">supprimer</th>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Gestion du menu</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=menu&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=menu&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=menu&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Gestion des pages</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=pages&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=pages&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;		
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=pages&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Gestion de l'information</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=information&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=information&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=information&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t</table><br><br>\n") ;
+			// tous les liens pr administrer
 			
-			// Deuxieme table : enseignement
+			// table : enseignement
 			print("\t\t\t<table  cellspacing=\"5\" cellpadding=\"0\" align=\"center\">\n") ;
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<th align=\"left\" width=\"200\"><u>Administration enseignement</u></th>") ;
@@ -249,14 +223,7 @@ if (isset($_GET['w']))
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=inscriptions&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=inscriptions&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
-			/*print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Gestion des promotions</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=promotions&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\">&nbsp;</a></td>") ;
-			print("<td align=\"center\" width=\"150\">&nbsp;</td>") ;		
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=promotions&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;	*/
-				
+			
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Gestion des enseignants</b></td>") ;
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=enseignants&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
