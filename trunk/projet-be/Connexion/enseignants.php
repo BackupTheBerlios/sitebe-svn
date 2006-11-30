@@ -9,7 +9,7 @@
 ** Description : Fichier inclu charge de la gestion des fichiers par un enseignant
 **	depot, suppression
 */
-// on verifie toujours que cette page a ete appelee a partir de index
+// on verifie toujours que cette page a ete appelee a partir de l'espace reserve
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 {
 	/*
@@ -145,9 +145,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		} // end of if del
 		if($_GET['a']== 'excel')
 		{
-			print("<center><form name=\"valideExcel\" action=\"espacereserve.php?w=enseignants&a=enregexcel\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
-			print ("<table>");
-			print("<tr><td> selection du fichier :</td><td width=\"700\" align=\"left\" colspan=\"3\"><input type=\"file\" name=\"fichierexcel\" class=\"defaultInput\" size=\"40\"></td></tr>") ;
+			print("<center><form name='valideExcel' action='espacereserve.php?w=enseignants&a=enregexcel' method='post' enctype='multipart/form-data'>\n") ;
+			print("<table>");
+			print("<tr><td>Selection du fichier :</td><td width=\"700\" align=\"left\" colspan=\"3\"><input type=\"file\" name=\"fichierexcel\" class=\"defaultInput\" size=\"40\"></td></tr>") ;
 			print("<tr><td width=\"200\" align=\"left\"><br><input class=\"defaultButton\" type=\"submit\" name=\"fileexcel\" value=\"Valider\"></td>\n") ;
 			print("</tr>\n") ;
 			print ("</table>");
@@ -215,11 +215,12 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$nb_ligne = mysql_num_rows($resultat_matiere);
 			if ($nb_ligne == 0)
 			{
-				print("<tr><td>") ;
+				print("<table><tr><td>") ;
 				print("aucune matiere disponible, redirection ...") ;
 				print("</td></tr>") ;
 				print("<tr><td>") ;
 				print("<meta http-equiv='refresh' content='2;url=espacereserve.php?p=connexion&w=enseignants'>");
+				print("</td></tr></table>") ;
 			}
 			else
 			{ 
@@ -447,7 +448,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 		print("</td></tr></table>") ;
 	} //fin du if suppression
-	print("<table><tr><td><br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a></td></tr></table>");
+	print("<center><table><tr><td><br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a></td></tr></table></center>");
 }
 else
 {

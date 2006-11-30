@@ -227,7 +227,8 @@
 							echo "Une erreur est survenue lors de la création du nouvel étudiant, vous allez être rediriger...";
 							print(mysql_error());
 							// echo "<script language='Javascript'>location.href='compte.php'</script>";
-						}else{
+						}
+						else{
 							$res=mysql_query("select `id-matiere` from matiere,etudiant,module,inscrit,diplome
 												 where inscrit.`id-etudiant`=etudiant.`id-etudiant`
 												 and inscrit.`id-diplome`=diplome.`id-diplome`
@@ -241,7 +242,7 @@
 								$var=$chemin.$row[0].'/';
 								mkdir ($var, 0770);
 							}
-							print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php\">") ;						
+							print("<meta http-equiv=\"refresh\" content=\"5;url=espacereserve.php\">") ;						
 							echo 'Votre inscription a bien &eacute;t&eacute; valid&eacute;e, vous pouvez maintenant vous connecter.';						
 						}
 					}
