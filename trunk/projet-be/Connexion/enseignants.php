@@ -123,7 +123,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("<tr>\n") ;
 				print("<td width=\"600\" align=\"center\"> ");
 				print "Aucun fichier d&eacute;pos&eacute; pour ".$_SESSION['diplome']." !" ;
-				print("</td></tr>\n") ;
+				print("</td></tr>") ;
+				print("</table>") ;
 			}
 			else
 			{
@@ -145,12 +146,12 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		} // end of if del
 		if($_GET['a']== 'excel')
 		{
-			print("<center><form name='valideExcel' action='espacereserve.php?w=enseignants&a=enregexcel' method='post' enctype='multipart/form-data'>\n") ;
+			print("<center><form name=\"valideExcel\" action=\"espacereserve.php?w=enseignants&a=enregexcel\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
 			print("<table>");
-			print("<tr><td>Selection du fichier :</td><td width=\"700\" align=\"left\" colspan=\"3\"><input type=\"file\" name=\"fichierexcel\" class=\"defaultInput\" size=\"40\"></td></tr>") ;
-			print("<tr><td width=\"200\" align=\"left\"><br><input class=\"defaultButton\" type=\"submit\" name=\"fileexcel\" value=\"Valider\"></td>\n") ;
+			print("<tr><td align=\"left\">Selection du fichier :</td><td width=\"700\" align=\"left\" colspan=\"3\"><input type=\"file\" name=\"fichierexcel\" class=\"defaultInput\" size=\"40\"></td></tr>") ;
+			print("<tr><td width=\"200\" align=\"center\"><br><input class=\"defaultButton\" type=\"submit\" name=\"fileexcel\" value=\"Valider\"></td>\n") ;
 			print("</tr>\n") ;
-			print ("</table>");
+			print("</table>");
 			print("</form></center>\n") ;
 		}
 		if($_GET['a']=='enregexcel')
@@ -186,6 +187,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("<td width=\"600\" align=\"center\"> ");
 				print "Aucun fichier d&eacute;pos&eacute; pour ".$_SESSION['diplome']." !" ;
 				print("</td></tr>\n") ;
+				print("</table>") ;
 			}
 			else
 			{	
@@ -363,7 +365,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			//$SESSION['etuConnecte'] = false;
 			// redirection
 			//infoMessage(3, 3, "Fermeture de session...") ;
+			print("<table><td><tr>") ;
 			print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion\">\n") ;
+			print("</td></tr></table>") ;
 		} //end of if($_GET['a'] == "logout")
 	}
 	if (isset($_POST['fileDep']))

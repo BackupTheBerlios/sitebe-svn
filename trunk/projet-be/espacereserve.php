@@ -101,7 +101,7 @@
           		print("<h2>Vous devez vous connecter pour acc&eacute;der &agrave; cette page</h2>");
           		print("\t<form action=\"espacereserve.php\" method=\"post\">\n");
 			print("<center><table width=\"400\">\n<tr>\n");
-			print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
+			print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 			print("<td align=\"left\" width=\"200\"><b> Login </b></td>");
 			print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 			print("<tr>\n");
@@ -179,7 +179,7 @@
 						print("<h2>Param&egrave;tres de connexion incorrects, r&eacute;essayez</h2>");
 						print("<form action='espacereserve.php?p=connexion' method='post'>\n");
 						print("<center><table width='400'><tr>\n");
-						print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
+						print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 						print("<td align='left' width='200'><b>Login</b></td>");
 						print("<td align='right' width='200'><input name='usrLogin' class='defaultInput' maxlength='15' size='15'></td>\n</tr>\n");
 						print("<tr>\n");

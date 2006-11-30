@@ -183,7 +183,8 @@
 					<center><table width='400' border='0'>
 					
 					<?php
-					echo "<tr><td align='left'>N&deg;Etudiant : </td><td align='right'><input type='text' name='num_etu' value='$numEtu' size='15'></td></tr><br>";
+					echo "<table>";
+					echo "<tr><td align='left'>N&deg;Etudiant : </td><td align='right'><input type='text' name='num_etu' value='$numEtu' size='8' maxlength='8'></td></tr><br>";
 					echo "<tr><td align='left'>Nom : </td><td align='right'><input type='text' name='nom' value='$nomEtu' size='15' onChange='javascript:this.value=this.value.toUpperCase();'></td></tr><br><br>";
 					echo "<tr><td align='left'>Pr&eacute;nom : </td><td align='right'><input type='text' name='prenom' value='$prenomEtu' size='15' onChange='javascript:changeCase(this.form.prenom);'></td></tr><br>";
 					echo "<tr><td align='left'>Mail : </td><td align='right'><input type='text' name='mail' value='$mailEtu' size='15'></td></tr>";
@@ -192,18 +193,17 @@
 					echo "<tr><td align='left'>Confirmer le mot de passe :</td><td align='right'><input type='password' name='password2' size='16'></td></tr><tr><td>&nbsp;</td></tr>";
 					
 					$res=mysql_query("select intitule from diplome");
-  					print("<tr><td align='left'>Selectionner votre annee:</td><td align=right><select size='1' name='combo'>");
+  					echo "<tr><td align='left'>Selectionner votre annee:</td><td align=right><select size='1' name='combo'>";
 							
 					while($row = DB_fetchArray($res))
 					{		
-						print("<option>". $row[0] ."</option>");
+						echo "<option>". $row[0] ."</option>";
 					}
-					print("</select></td></tr>");
-					print("<tr><td>&nbsp;</td><td align=right><input type='submit' value='Valider'></td></tr>");
-					print("</form>");
-					print("</table>");
-
-					print("</h2>");
+					echo "</select></td></tr>";
+					echo "<tr><td>&nbsp;</td><td align=right><input type='submit' value='Valider'></td></tr>";
+					echo "</form>";
+					echo "</table>";
+					echo "</h2>";
 					
 				}
 				// Aucun champ n'est vide, on peut enregistrer dans la table
@@ -252,7 +252,7 @@
 						echo 'Inscription impossible.';
 					}
 				}
-				print("<table><tr><td><br><br><a href='espacereserve.php?'>retour</a></td></tr></table>");
+				print("<center><table><tr><td><br><br><a href='espacereserve.php?'>retour</a></td></tr><tr><td>&nbsp;</td></tr></table></center>");
 				?>
 				
 				<!---------------------------------------------------->
