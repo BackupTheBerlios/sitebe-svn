@@ -16,6 +16,42 @@
 **		est donc important de controler toutes les donnees correspondantes du formulaire
 */
 
+// Fonction permettant de supprimer l'intégralité d'un fichier
+function sup_repertoire($chemin)
+{
+	// vérifie si le nom du repertoire contient "/" à la fin
+	if ($chemin[strlen($chemin)-1] != '/') // place le pointeur en fin d'url
+	{
+		$chemin .= '/'; // rajoute '/'
+	}
+	
+	if (is_dir($chemin))
+	{
+		$sq = opendir($chemin); // lecture
+		while ($f = readdir($sq))
+		{
+			if ($f != '.' && $f != '..')
+			{
+				$fichier = $chemin.$f; // chemin fichier
+				if (is_dir($fichier))
+				{
+					sup_repertoire($fichier);  // rapel la fonction de manière récursive
+				}
+				else
+				{
+					unlink($fichier); // sup le fichier
+				}
+			}
+		}
+		closedir($sq);
+		rmdir($chemin); // sup le répertoire
+	}
+	else
+	{
+		unlink($chemin);  // sup le fichier
+	}
+}
+
 
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
@@ -66,10 +102,29 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			return ;
 		}
 			
-		// AJOUT		
+		// Ajout module		
 		dbQuery('INSERT INTO module
-			VALUES (NULL, '.$dipID.', "'.$intitule.'", 1, "'.$description.'", "'. (int)$_POST['ects'] . '", "'. (int)$_POST['pscc'] . '", "'. (int)$_POST['pscp'] . '", "'. (int)$_POST['psct'] . '", "'. (int)$_POST['sscc'] . '", "'. (int)$_POST['sscp'] . '", "'. (int)$_POST['ssct'] . '", "'. (int)$_POST['semestre'] . '", "'. (int)$_POST['moduleResp'] . '","'.(int)$_POST['moduleNode'].'")') ;
-					
+			VALUES (NULL, '.$dipID.', "'.$intitule.'", 1, "'.$description.'", "'. (int)$_POST['ects'] . '", "'. (int)$_POST['pscc'] . '", "'. (int)$_POST['pscp'] . '", "'. (int)$_POST['psct'] . '", "'. (int)$_POST['sscc'] . '", "'. (int)$_POST['sscp'] . '", "'. (int)$_POST['ssct'] . '", "'. (int)$_POST['semestre'] . '", "'. (int)$_POST['moduleResp'] . '","0")') ;
+		
+		// on recupere l'identifiant du module cree
+		$modID = mysql_insert_id();
+		
+		// Dans le cas ou on choisi un enseignant responsable du module on doit ajouter un tuple dans la base
+		// dans la table resp-module
+		if(isset($_POST['respMod']))
+		{
+			if($_POST['respMod'] == 'oui' && $_POST['moduleResp'] != '0')
+			{
+				$req = "INSERT INTO `resp-module` VALUES (". $_POST['moduleResp'] .",". $modID .")";
+				dbQuery($req);
+			}
+		}else{
+			print("Erreur le champ demandé n'existe pas !");
+		}
+		
+		// Ajout du repertoire associe
+		mkdir("../Data/".$modID, 0755) ;
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module ajout&eacute; avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=modules\">\n") ;
@@ -175,10 +230,17 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			dbQuery('DELETE
 				FROM matiere
 				WHERE `id-module` = '.$idKey) ;	
-							
+			
+			dbQuery('DELETE
+				FROM `resp-module`
+				WHERE `id-module` = '.$idKey) ;
+					
 			dbQuery('DELETE
 				FROM module						
 				WHERE `id-module` = '.$idKey) ;
+			
+			// On supprime le dossier lié au module
+			sup_repertoire("../Data/".$idKey) ;
 		}
 			
 			

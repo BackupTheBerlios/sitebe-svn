@@ -7,8 +7,27 @@
 ** Description : Fichier inclu charge de la gestion des diplomes cote administration
 **	ajout, suppression, modification
 */
+?>
 
+<!-- Debut du script javascript -->
+<script language = "Javascript">
+	// Fonction permettant de rendre visible le champ idDiv
+	function setVisible(idDiv)
+	{
+		document.getElementById(idDiv).style.visibility = "visible";
+		document.getElementById('in').focus();
+	}
+	
+	// Fonction permettant de rendre invisible le champ idDiv
+	function setHidden(idDiv)
+	{
+		document.getElementById(idDiv).style.visibility = "hidden";
+		document.getElementById('in').focus();
+	}
+</script>
+<!-- Fin du script javascript -->
 
+<?php
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 {	
@@ -81,21 +100,34 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\n\t\t\t\t\t</select></td>\n") ;			
 			print("\t\t\t\t</tr>\n") ;
 			
+            print("\t\t\t\t<tr>\n");
+			print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Enseignant responsable </td><td width=\"400\" align=\"left\"><table><tr><td><label> oui<input type=\"radio\" class=\"defaultInput\" name=\"respMod\" size=\"25\" value=\"oui\" onclick=\"javascript:setVisible('listMod')\"></label><label> non<input type=\"radio\" class=\"defaultInput\" name=\"respMod\" size=\"25\" value=\"non\" onclick=\"javascript:setHidden('listMod')\" checked></label>&nbsp;&nbsp;&nbsp;&nbsp;</td>\n") ;
+			print("\t\t\t\t\t");
+?>
+									<td id='listMod' style='visibility:hidden'>
+										<select name='moduleResp'>
+											<option value='0'>-- Choisissez un responsable --</option>
+											<?php
+												dbConnect();
+												$res = dbQuery('SELECT *
+																FROM enseignant
+																ORDER BY nom, prenom');
+												
+												while($tab = mysql_fetch_array($res))
+												{
+													echo "<option value=". $tab['id-enseignant'] .">".$tab['nom']." ".$tab['prenom']."</option>";
+												}
+											?>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</td>
+<?php
+			print("\t\t\t\t</tr>\n");
 
-            print("\t\t\t\t<tr>\n") ;
-            print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Enseignant responsable </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleResp\">\n") ;
-            while ($dipDetails = mysql_fetch_array($respList))
-            {
-                $selected = "" ;
-                if ($moduleDetails['id-responsable'] == $dipDetails['id-enseignant']) { $selected = " selected" ; }
-                print("<option$selected value=\"{$dipDetails['id-enseignant']}\">{$dipDetails['nom']} {$dipDetails['prenom']}</option>") ;
-            }
-            print("\n\t\t\t\t\t</select></td>") ;
-            print("\t\t\t\t</tr>\n") ;
-
-                
-
-            print("\t\t\t\t<tr>\n") ;
+			// Partie supprimée suite à la suppresion de la partie gestion du site
+            /*print("\t\t\t\t<tr>\n") ;
             print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Page </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleNode\">\n") ;
             while ($dipDetails = mysql_fetch_array($nodeList))
             {
@@ -104,9 +136,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
                 print("<option$selected value=\"{$dipDetails['ID_NODE']}\">{$dipDetails['TITRE']}</option>") ;
             }
             print("\n\t\t\t\t\t</select></td>") ;
-            print("\t\t\t\t</tr>\n") ;
-
-            
+            print("\t\t\t\t</tr>\n") ;*/
+			
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"700\" align=\"left\" colspan=\"2\"><b> Description d&eacute;taill&eacute;e du module (y compris des mati&egrave;res) </b></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;			
