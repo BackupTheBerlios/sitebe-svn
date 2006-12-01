@@ -17,7 +17,6 @@
 	<title>IUP ISI - <?=$titre?></title>
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="Content-Style-Type" content="text/css" />
-
 	<meta name="revisit-after" content="15 days" />
 	<meta name="robots" content="index,follow" />
 	<link rel="shortcut icon" type="images/x-icon" href="favicon.ico" />
@@ -31,6 +30,35 @@
 			window.open("admin/admin.php?"+parameters, "Administration", "width=850,height=700,toolbar=no,scrollbars=yes,directories=no,status=yes,resizable=no");
 		}
 	</script>
+	<script>
+		function checkrequired(which)
+		{
+			var pass=true
+			if (document.images)
+			{
+				for (i=0;i<which.length;i++)
+				{
+					var tempobj=which.elements[i]
+					if (tempobj.name.substring(0,8)=="required")
+					{
+						if (((tempobj.type=="text"||tempobj.type=="textarea")&&tempobj.value=='')||(tempobj.type.toString().charAt(0)=="s"&&tempobj.selectedIndex==-1))
+						{
+							pass=false
+							break
+						}
+					}
+				}
+			}
+			if (!pass)
+			{
+				alert("Certains champs de ce formulaire sont obligatoires, merci de bien vouloir les renseigner")
+				return false
+			}
+			else
+			return true
+		}
+	</script>
+
 	<meta name="DC.Publisher" content="IUP ISI" />
 	<link rel="stylesheet" href="styles/isi.css" type="text/css" />
 </head>
@@ -83,7 +111,7 @@
 					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
-			<th valign="top">
+			<td valign="top">
 				<div id="espacereserve">
 				<!-------------------------------------------------->
 				<!-- partie qui permet de gerer la partie reservé -->
@@ -128,20 +156,20 @@
 			if ($_POST['usrLogin']=="")
 			{
 				print("<h2>Param&egrave;tres de connexion incorrects, r&eacute;essayez</h2>");
-				print("<form action='espacereserve.php?p=connexion' method='post'>\n");
-				print("<center><table width='400'><tr>\n");
+				print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
+				print("<center><table width=\"400\"><tr>\n");
 				print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
-				print("<td align='left' width='200'><b>Login</b></td>");
-				print("<td align='right' width='200'><input name='usrLogin' class='defaultInput' maxlength='15' size='15'></td>\n</tr>\n");
+				print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
+				print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 				print("<tr>\n");
-				print("<td align='left' width='200'><b>Mot de passe</b></td>");
-				print("<td align='right' width='200'><input name='usrPass' class='defaultInput' maxlength='15' type='password' size='15'></td>\n</tr>\n");
+				print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
+				print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
 				$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 				$countDips = mysql_num_rows($dipsList);
 				if ($countDips > 0)
 				{
 					print("<tr>\n");
-					print("<td align='left' width='200'><b>Dipl&ocirc;me *</b></td><td width='200' align='right'><select class='defaultInput' name='diplome'>");
+					print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
 					for($i = 0; $i < $countDips; $i++)
 					{
 						$dipsDetails = mysql_fetch_array($dipsList);
@@ -150,16 +178,16 @@
 					print("</select></td>\n</tr>\n");
 				}
 				print("<tr>\n");
-				print("<td colspan='2' align='center' width='400'><input type='submit' class='defaultInput' name='usrAuth' class='defaultButton' value='Connexion'></td>\n</tr>\n");
+				print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
 				print("</table>\n</center>\n");
 			}
 			else
 			{
 				$usrlogin = trim($_POST['usrLogin']);
+				$usrlogin = addslashes($usrlogin);
 				// on trim pas le pass au cas ou il y aurait des espaces
-				
 				$usrpass = md5($_POST['usrPass']);
-				$usrpass = addslashes($usrpass);
+				$usrpass = addslashes($usrpass) ;
 				
 				//$usrpass = addslashes($_POST['usrPass']);
 				//$diplome = trim($_POST['diplome']);
@@ -177,20 +205,20 @@
 					if ($connect_result != 1)
 					{
 						print("<h2>Param&egrave;tres de connexion incorrects, r&eacute;essayez</h2>");
-						print("<form action='espacereserve.php?p=connexion' method='post'>\n");
-						print("<center><table width='400'><tr>\n");
+						print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
+						print("<center><table width=\"400\"><tr>\n");
 						print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
-						print("<td align='left' width='200'><b>Login</b></td>");
-						print("<td align='right' width='200'><input name='usrLogin' class='defaultInput' maxlength='15' size='15'></td>\n</tr>\n");
+						print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 						print("<tr>\n");
-						print("<td align='left' width='200'><b>Mot de passe</b></td>");
-						print("<td align='right' width='200'><input name='usrPass' class='defaultInput' maxlength='15' type='password' size='15'></td>\n</tr>\n");
+						print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
 						$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 						$countDips = mysql_num_rows($dipsList);
 						if ($countDips > 0)
 						{
 							print("<tr>\n");
-							print("<td align='left' width='200'><b>Dipl&ocirc;me *</b></td><td width='200' align='right'><select class='defaultInput' name='diplome'>");
+							print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
 							for($i = 0; $i < $countDips; $i++)
 							{
 								$dipsDetails = mysql_fetch_array($dipsList);
@@ -199,7 +227,7 @@
 							print("</select></td>\n</tr>\n");
 						}
 						print("<tr>\n");
-						print("<td colspan='2' align='center' width='400'><input type='submit' class='defaultInput' name='usrAuth' class='defaultButton' value='Connexion'></td>\n</tr>\n");
+						print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
 						print("</table>\n</center>\n");
 							
 	//					print("Erreurs de base de donn&eacute;es! Plusieurs utilisateurs possibles!");
@@ -212,7 +240,7 @@
 					$_SESSION['prenom'] = $ensDetails['prenom'];
 					$_SESSION['id-enseignant'] = $ensDetails['id-enseignant'];
 					$_SESSION['diplome'] = $diplome;
-					print("<meta http-equiv='refresh' content='0;url=espacereserve.php?p=connexion&w=enseignants'>\n");
+					print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion&w=enseignants\">\n");
 					}
 				}
 				//aucun resultat pour le cas de l'enseignant
@@ -245,8 +273,9 @@
 							$_SESSION['etuConnecte'] = true;
 							$_SESSION['nom'] = $etuDetails['nom'];
 							$_SESSION['prenom'] = $etuDetails['prenom'];
+							$_SESSION['id-etu'] = $etuDetails['id-etudiant'];
 							$_SESSION['diplome'] = $diplome;
-							print("<meta http-equiv='refresh' content='0;url=espacereserve.php?p=connexion&w=etudiants'>\n");
+							print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion&w=etudiants\">\n");
 							}
 						}
 					}
@@ -254,20 +283,20 @@
 					else
 					{
 						print("<h2>Ce compte n'est pas valide</h2>");
-						print("<form action='espacereserve.php?p=connexion' method='post'>\n");
-						print("<center><table width='400'><tr>\n");
+						print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
+						print("<center><table width=\"400\"><tr>\n");
 						print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
-						print("<td align='left' width='200'><b>Login</b></td>");
-						print("<td align='right' width='200'><input name='usrLogin' class='defaultInput' maxlength='15' size='15'></td>\n</tr>\n");
+						print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 						print("<tr>\n");
-						print("<td align='left' width='200'><b>Mot de passe</b></td>");
-						print("<td align='right' width='200'><input name='usrPass' class='defaultInput' maxlength='15' type='password' size='15'></td>\n</tr>\n");
+						print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
+						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
 						$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
 						$countDips = mysql_num_rows($dipsList);
 						if ($countDips > 0)
 						{
 							print("<tr>\n");
-							print("<td align='left' width='200'><b>Dipl&ocirc;me *</b></td><td width='200' align='right'><select class='defaultInput' name='diplome'>");
+							print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
 							for($i = 0; $i < $countDips; $i++)
 							{
 								$dipsDetails = mysql_fetch_array($dipsList);
@@ -276,7 +305,7 @@
 							print("</select></td>\n</tr>\n");
 						}
 						print("<tr>\n");
-						print("<td colspan='2' align='center' width='400'><input type='submit' class='defaultInput' name='usrAuth' class='defaultButton' value='Connexion'></td>\n</tr>\n");
+						print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
 						print("</table>\n</center>\n");
 					}
 				}
@@ -287,16 +316,16 @@
 	// l'utilisateur est authentifie avec succes
 	else
 	{
-		print("<table width='800' cellpadding='0' cellspacing='3'>\n");
+		print("<table width=\"800\" cellpadding=\"0\" cellspacing=\"3\">\n");
 		print("<tr>\n");
-		print("<td width='800'><br><br><div id='name'>Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']."</div><br><br></td>");
+		print("<td width=\"800\"><br><br><div id=\"name\">Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']."</div><br><br></td>");
 		print("</tr>\n");
 		if (!isset($_GET['a']))
 		{
 			//un enseignant est connecte
 			if(isset($_SESSION['ensConnecte']) && $_SESSION['ensConnecte'])
 			{
-				print("<td width='800' align='right'><br>&lt; <a href='espacereserve.php?p=connexion&w=enseignants&a=logout'>D&eacute;connexion</a> &gt;</td>\n");
+				print("<td width=\"800\" align=\"right\"><br>&lt; <a href=\"espacereserve.php?p=connexion&w=enseignants&a=logout\">D&eacute;connexion</a> &gt;</td>\n");
 				
 				$matiereList = DB_Query('SELECT * FROM matiere m, Enseignement e WHERE m.`id-matiere`=e.`id-matiere` and e.`id-enseignant`="'.$_SESSION['id-enseignant'].'" ORDER BY intitule');
 				$matiereCount = mysql_num_rows($matiereList) ;
@@ -304,55 +333,64 @@
 				if ($matiereCount == 0)
 				{
 					print("<tr>\n") ;
-					print("<td width='600' align='left'> ");
-					print("Aucune mati&egrave;re enseign&eacute;e !\n") ;
+					print("<td width=\"600\" align=\"center\"> ");
+					print("Aucune mati&egrave;re enseign&eacute;e !") ;
 					print("</td></tr>\n") ;
 				}
 				else
 				{
-					print("\t\t\t<center><form action='espacereserve.php?w=enseignants&a=acces' method='post'>\n") ;
-					print("\t\t\t<table cellspacing='3' cellpadding='0'>\n") ;
+					print("\t\t\t<center><form action=\"espacereserve.php?w=enseignants&a=acces\" method=\"post\">\n") ;
+					print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 					
 					for ($i = 0 ; $i < $matiereCount ; $i++)
 					{
 						$fmatiereList = mysql_fetch_array($matiereList) ;
 						print("\t\t\t\t<tr>\n") ;
-						print("\t\t\t\t\t<td width='200' align='left'><input type='radio' name='id' value='{$fmatiereList['id-matiere']}' onClick='submit()'> {$fmatiereList['intitule']} </td>\n") ;
+						print("\t\t\t\t\t<td width=\"200\" align=\"left\"><input type=\"radio\" name=\"id\" value=\"{$fmatiereList['id-matiere']}\" onClick=\"submit()\"> {$fmatiereList['intitule']} </td>\n") ;
 						print("\t\t\t\t</tr>\n") ;
 					}
 				
 					print("\t\t\t\t<tr>\n") ;
-					print("\t\t\t\t\t<td width='200' align='left'><br><input type='hidden' name='matiereMod' value='true'></td>\n") ;
+					print("\t\t\t\t\t<td width=\"200\" align=\"left\"><br><input type=\"hidden\" name=\"matiereMod\" value=\"true\"></td>\n") ;
 					print("\t\t\t\t</tr>\n") ;
 					print("\t\t\t</table>\n") ;
 					print("\t\t\t</form></center>\n") ;
 				}
 				
-				print("<table cellspacing='1' cellpadding='0'>\n");
+				print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
-				print("<td align='center' width='800'><a href='espacereserve.php?p=connexion&w=enseignants&a=dep'>D&eacute;poser des fichiers</a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>D&eacute;poser des fichiers</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align='center' width='800'><a href='espacereserve.php?p=connexion&w=enseignants&a=undep'>Supprimer des fichiers</a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\"><u>Supprimer des fichiers</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align='center' width='800'><a href='espacereserve.php?p=connexion&w=enseignants&a=excel'>Gestion Excel</a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\"><u>Gestion Excel</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align='center' width='800'><a href='espacereserve.php?p=connexion&w=enseignants&a=visualisation'>Visualisation</a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>Visualisation</u></a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align='center' width='800'><a href='espacereserve.php?p=connexion&w=enseignants&a=note'>Saisie des notes</a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>Saisie des notes</u></a></td>");
 				print("</tr>\n");
 				print("</table>\n");
 			}
 			//un etudiant est connecte
 			elseif(isset($_SESSION['etuConnecte']) && $_SESSION['etuConnecte'])
 			{
-				print("<td width='800' align='right'><br><br>&lt; <a href='espacereserve.php?p=connexion&w=etudiants&a=logout'>Deconnexion</a> &gt;</td>\n");
-				print("<table  cellspacing='1' cellpadding='0'>\n");
+				print("<td width=\"800\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=etudiants&a=logout\">Deconnexion</a> &gt;</td>\n");
+				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
-				print("<td align='left' width='800'><a href='espacereserve.php?p=connexion&w=etudiants&a=load'>Consulter les fichiers &agrave; t&eacute;l&eacute;charger</a></td>");
+				print("<td align=\"left\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers &agrave; t&eacute;l&eacute;charger</u></a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"left\" width=\"800\"><a href=\"deposer_doc.php\"><u>Deposer fichier</u></a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=1\"><u>Modifier password</u></a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=0\"><u>Modifier login</u></a></td>");
 				print("</tr>\n");
 				print("</table>\n");
 			}
@@ -372,7 +410,7 @@
 			else
 			{
 				print("Page introuvable ".$_GET['w']);
-				//print("<br><br><center>[ <a href='admin.php'>menu principal</a> ]</center>\n");
+				//print("<br><br><center>[ <a href=\"admin.php\">menu principal</a> ]</center>\n");
 			}
 		}
 	}
@@ -381,7 +419,7 @@
 				<!-- fin de la partie qui permet de gerer la partie reservé -->
 				<!------------------------------------------------------------>
 				</div>
-			</th>
+			</td>
 			</tr>
 		</table>
 		<div id="about">
