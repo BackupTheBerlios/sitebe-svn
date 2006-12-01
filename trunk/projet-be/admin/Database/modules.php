@@ -182,11 +182,37 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			return ;
 		}
 				
+		// recupere l'id du nouveau responsable de module, si la case 'oui' était cochee
+		$moduleResp = (int)$_POST['moduleResp'];
+		if ($_POST['respMod'] == 'non')
+		{
+			$moduleResp = 0;
+		}
+		
 		// on ajoute sinon	
 		dbQuery('UPDATE module
-			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", description = "'.$description.'", `id-responsable` = "'. (int)$_POST['moduleResp'] . '", ECTS = "'. (int)$_POST['ects'] . '", PS_CC = "'. (int)$_POST['pscc'] . '", PS_CP = "'. (int)$_POST['pscp'] . '", PS_CT = "'. (int)$_POST['psct'] . '", SS_CC = "'. (int)$_POST['sscc'] . '", SS_CP = "'. (int)$_POST['sscp'] . '", SS_CT = "'. (int)$_POST['ssct'] . '", no_semestre = "'. (int)$_POST['semestre'] . '", id_node = "'.(int)$_POST['moduleNode'].'"
+			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", description = "'.$description.'", `id-responsable` = "'. $moduleResp . '", ECTS = "'. (int)$_POST['ects'] . '", PS_CC = "'. (int)$_POST['pscc'] . '", PS_CP = "'. (int)$_POST['pscp'] . '", PS_CT = "'. (int)$_POST['psct'] . '", SS_CC = "'. (int)$_POST['sscc'] . '", SS_CP = "'. (int)$_POST['sscp'] . '", SS_CT = "'. (int)$_POST['ssct'] . '", no_semestre = "'. (int)$_POST['semestre'] . '", id_node = "0"
 			WHERE `id-module` = '.$_POST['moduleID']) ;
-					
+		
+		// suppression du responsable de module actuel
+		dbQuery('DELETE
+				FROM `resp-module`
+				WHERE `id-module` = '.$_POST['moduleID']) ;
+		
+		// ajout du nouveau responsable de module s'il y a
+		if(isset($_POST['respMod']))
+		{
+			if($_POST['respMod'] == 'oui' && $_POST['moduleResp'] != '0')
+			{
+				$req = "INSERT INTO `resp-module` VALUES (". $_POST['moduleResp'] .",".$_POST['moduleID'].")";
+				dbQuery($req);
+			}
+		}
+		else
+		{
+			print("Erreur le champ demandé n'existe pas !");
+		}
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module modifi&eacute; avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=modules\">\n") ;

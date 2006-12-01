@@ -327,23 +327,53 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				}
 				print("\n\t\t\t\t\t</select></td>") ;
 				print("\t\t\t\t</tr>\n") ;
-
-                
-
-                print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Enseignant responsable </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleResp\">\n") ;
-				while ($dipDetails = mysql_fetch_array($respList))
+				
+				
+				// on verifie si le module a déjà un responsable
+				dbConnect() ;
+				$respInfo = dbQuery('SELECT *
+										FROM `resp-module`
+										WHERE `id-module` = "'.$eID.'"') ;
+				$respExists = mysql_num_rows($respInfo) ;
+				dbClose() ;
+				if ($respExists == 0)
 				{
-					$selected = "" ;
-					if ($moduleDetails['id-responsable'] == $dipDetails['id-enseignant']) { $selected = " selected" ; }
-					print("<option$selected value=\"{$dipDetails['id-enseignant']}\">{$dipDetails['nom']} {$dipDetails['prenom']}</option>") ;
+					$masq1 = "";
+					$masq2 = " checked";
+					$masq3 = " style='visibility:hidden'";
 				}
-				print("\n\t\t\t\t\t</select></td>") ;
-				print("\t\t\t\t</tr>\n") ;
+				else
+				{
+					$masq1 = " checked";
+					$masq2 = "";
+					$masq3 = "";
+				}
+				print("\t\t\t\t<tr>\n");
+				print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Enseignant responsable </td><td width=\"400\" align=\"left\"><table><tr><td><label> oui<input type=\"radio\" class=\"defaultInput\" name=\"respMod\" size=\"25\" value=\"oui\" onclick=\"javascript:setVisible('listMod')\"".$masq1."></label><label> non<input type=\"radio\" class=\"defaultInput\" name=\"respMod\" size=\"25\" value=\"non\" onclick=\"javascript:setHidden('listMod')\"".$masq2."></label>&nbsp;&nbsp;&nbsp;&nbsp;</td>\n") ;
+				print("\t\t\t\t\t");
+				print("\t\t\t\t\t<td id='listMod'".$masq3.">\n");
+?>
+									<select name='moduleResp'>
+										<option value='0'>-- Choisissez un responsable --</option>
+										<?php
+											while ($dipDetails = mysql_fetch_array($respList))
+											{
+												$selected = "" ;
+												if ($moduleDetails['id-responsable'] == $dipDetails['id-enseignant']) { $selected = " selected" ; }
+												print("<option$selected value=\"{$dipDetails['id-enseignant']}\">{$dipDetails['nom']} {$dipDetails['prenom']}</option>") ;
+											}
+										?>
+									</select>
+								</td>
+							</tr>
+						</table>
+<?php
+				print("\t\t\t\t\t</td>\n");
+				print("\t\t\t\t</tr>\n");
 
 
-
-                print("\t\t\t\t<tr>\n") ;
+				// Supression de ce champs, suite à la suppression de la partie admin du site
+                /*print("\t\t\t\t<tr>\n") ;
                 print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Page </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleNode\">\n") ;
                 while ($dipDetails = mysql_fetch_array($nodeList))
                 {
@@ -352,7 +382,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
                     print("<option$selected value=\"{$dipDetails['ID_NODE']}\">{$dipDetails['TITRE']}</option>") ;
                 }
                 print("\n\t\t\t\t\t</select></td>") ;
-                print("\t\t\t\t</tr>\n") ;
+                print("\t\t\t\t</tr>\n") ;*/
 
             
 				print("\t\t\t\t<tr>\n") ;
