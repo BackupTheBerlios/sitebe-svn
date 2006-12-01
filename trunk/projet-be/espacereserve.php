@@ -111,7 +111,7 @@
 					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
-			<td valign="top">
+			<th valign="top">
 				<div id="espacereserve">
 				<!-------------------------------------------------->
 				<!-- partie qui permet de gerer la partie reservé -->
@@ -419,7 +419,7 @@
 				<!-- fin de la partie qui permet de gerer la partie reservé -->
 				<!------------------------------------------------------------>
 				</div>
-			</td>
+			</th>
 			</tr>
 		</table>
 		<div id="about">
