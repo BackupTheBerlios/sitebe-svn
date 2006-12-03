@@ -310,7 +310,7 @@
 				}
 				else
 				{
-				  echo "<form name=\"formMatiere\" action=\"espacereserve.php?p=connexion&w=enseignants&a=acces\" method=\"post\">\n";
+				  print("<form name=\"formMatiere\" action=\"espacereserve.php?p=connexion&w=enseignants&a=acces\" method=\"post\">\n");
 				  print("<tr align=\"center\">\n") ;
 				  print("<td width=\"200\"><select class=\"defaultInput\" name=\"matiereListe\">") ;
 					
@@ -353,7 +353,6 @@
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=modif&b=login\">Modifier login</a></td>");
 				print("</tr>\n");
 				print("</table>\n");
-				
 			}
 		}
 		else
