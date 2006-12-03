@@ -8,12 +8,6 @@
 	include('includes/config.php');
 	require_once('includes/lib-db.php');
 	$titre = "Modifier";
-	if(isset($_SESSION['etuConnecte']) && $_SESSION['etuConnecte'])      $w='etudiants';$table='etudiant';
-	echo "etu";
-	echo $_SESSION['etuConnecte'];	
-	if(isset($_SESSION['ensConnecte']) && $_SESSION['ensConnecte'])      $w='enseignants';$table='enseignant';
-	echo "ens";
-	echo $_SESSION['etuConnecte'];
 	if ($_GET['b']=='pass')
 	{
 		if(isset($_POST['password']))      $password=$_POST['password'];
@@ -35,7 +29,7 @@
 			print("<table width=400 border='0' align='center'>");
 			print("<tr><td colspan=2><h2>Modification de votre mot de passe</h2><br><br>");
 			print("Veuillez saisir deux fois votre nouveau mot de passe<br><br></td></tr>");
-			print("<form method=post action=espacereserve.php?p=connexion&w=$w&a=modif&b=pass>");
+			print("<form method=post action=espacereserve.php?p=connexion&w=".$_GET['w']."&a=modif&b=pass>");
 			print("<tr><td align=left>Password : </td><td align=right><input type=password name=password size=16></td></tr>");
 			print("<tr><td align=left>Password : </td><td align=right><input type=password name=password2 size=16></td></tr>");
 			print("<tr><td>&nbsp;</td><td align=right><input type=submit value=Valider></td></tr>");
@@ -43,14 +37,23 @@
 		else
 		{
 			$password=md5($password);
-			$etu=$_SESSION['id-etu'];
-			mysql_query("UPDATE etudiant SET mdp='$password' where `id-etudiant`='$etu'")
-			or die('Erreur SQL ! <br>'.mysql_error());
+			if ($_GET['w']=='etudiants')
+			{
+				$etu=$_SESSION['id-etu'];
+				mysql_query("UPDATE etudiant SET mdp='$password' where `id-etudiant`='$etu'")
+				or die('Erreur SQL ! <br>'.mysql_error());
+			}
+			elseif ($_GET['w']=='enseignants')
+			{
+				$ens=$_SESSION['id-enseignant'];
+				mysql_query("UPDATE enseignant SET mdp='$password' where `id-enseignant`='$ens'")
+				or die('Erreur SQL ! <br>'.mysql_error());
+			}			
 			print("Votre mot de passe a ete modifie avec succes. Redirection...");
 			print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;
 		}					
 	}
-	else
+	elseif ($_GET['b']=='login')
 	{
 		if(isset($_POST['login']))      $login=$_POST['login'];
 		else      $login="";
@@ -58,12 +61,12 @@
 		{
 			if (isset($_POST['login']))
 			{
-				print("Attention, aucun champ de doit reste vide !<br>");
+				print("Attention, aucun champ de doit rester vide !<br>");
 			}
 			print("<table width=400 border='0' align='center'>");
 			print("<tr><td colspan='2'><h2>Modification de votre login</h2><br><br>");
 			print("Veuillez saisir votre nouveau login<br><br><tr><td>");
-			print("<form method=post action=espacereserve.php?p=connexion&w=$w&a=modif&b=login>");
+			print("<form method=post action=espacereserve.php?p=connexion&w=".$_GET['w']."&a=modif&b=login>");
 			print("<tr><td align=left>Login : </td><td align=right><input type=\"login\" name=\"login\" size=\"16\"></td></tr>");
 			print("<tr><td>&nbsp;</td><td align=right><input type=\"submit\" value=\"Valider\"></td></tr>");
 		}
@@ -84,16 +87,25 @@
 				print("<br>Attention, login deja utilisé choisissez en un autre !<br><br>");
 				print("<tr><td colspan='2'><h2>Modification de votre login</h2><br><br>");
 				print("Veuillez saisir votre nouveau login<br><br><tr><td>");
-				print("<form method=post action=espacereserve.php?p=connexion&w=$w&a=modif&b=login>");
+				print("<form method=post action=espacereserve.php?p=connexion&w=".$_GET['w']."&a=modif&b=login>");
 				print("<center><table width=400 border=0>");
 				print("<tr><td align=left>Login : </td><td align=right><input type=\"login\" name=\"login\" size=\"16\"></td></tr>");
 				print("<tr><td>&nbsp;</td><td align=right><input type=\"submit\" value=\"Valider\"></td></tr></table>");
 			}
 			else
 			{
-				$etu=$_SESSION['id-etu'];
-				mysql_query("UPDATE '$table' set login='$login' where `id-etudiant`='$etu'")
-				or die('Erreur SQL ! <br>'.mysql_error());
+				if ($_GET['w']=='etudiants')
+				{
+					$etu=$_SESSION['id-etu'];
+					mysql_query("UPDATE `etudiant` set login='$login' where `id-etudiant`='$etu'")
+					or die('Erreur SQL ! <br>'.mysql_error());
+				}
+				elseif ($_GET['w']=='enseignants')
+				{
+					$ens=$_SESSION['id-enseignant'];
+					mysql_query("UPDATE `enseignant` set login='$login' where `id-enseignant`='$ens'")
+					or die('Erreur SQL ! <br>'.mysql_error());
+				}
 				print("Votre login a ete modifie avec succes. Redirection...");
 				print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;  							
 			}
