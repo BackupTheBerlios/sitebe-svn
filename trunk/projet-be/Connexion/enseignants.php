@@ -32,12 +32,17 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		// test
 		if ($_GET['a'] == "acces")
 		{
-		    	/*print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
-		    	
+		  $intituleMat = DB_Query('SELECT intitule FROM matiere WHERE `id-matiere` ="'.$_POST['matiereListe'].'"');
+			$intituleFetch = mysql_fetch_array($intituleMat);
+			$inti = $intituleFetch['intitule'];
+		  
+		  print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("<tr>\n") ;
-			print("<td align=\"center\" width=\"800\"><br><b> Enseignement : $_GET['matiereListe']<br><br></b></td>") ;
+			print("<td align=\"center\" width=\"800\"><br><b> Enseignement : ");
+      echo  $inti;
+      print("<br><br></b></td>") ;
 			print("</tr>\n") ;
-			print("</table>\n") ;*/
+			print("</table>\n") ;
 			print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\">D&eacute;poser des fichiers</a></td></tr>") ;
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\">Supprimer des fichiers</a></td></tr>") ;
