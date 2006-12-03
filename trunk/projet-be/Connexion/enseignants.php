@@ -32,29 +32,20 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		// test
 		if ($_GET['a'] == "acces")
 		{
-		    	print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+		    	/*print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 		    	
 			print("<tr>\n") ;
 			print("<td align=\"center\" width=\"800\"><br><b> Enseignement : $_GET['matiereListe']<br><br></b></td>") ;
 			print("</tr>\n") ;
-			print("</table>\n") ;
-			 print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
-				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"enseignants.php?a=dep\">D&eacute;poser des fichiers</a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"enseignants.php?a=undep\">Supprimer des fichiers</a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"enseignants.php?a=excel\">Gestion Excel</a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"enseignants.php?a=visualisation\">Visualisation</a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"enseignants.php?a=note\">Saisie des notes</a></td>");
-				print("</tr>\n");
-				print("</table>\n");
+			print("</table>\n") ;*/
+			print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
+			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\">D&eacute;poser des fichiers</a></td></tr>") ;
+			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\">Supprimer des fichiers</a></td></tr>") ;
+			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\">Gestion excel</a></td></tr>") ;
+			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\">Visualisation</a></td></tr>") ;
+			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\">saisie des notes</a></td></tr>") ;
+			print("</tr>\n") ;	
+			print "</table>";
 		}
 		
 		// ajout d'un fichier
