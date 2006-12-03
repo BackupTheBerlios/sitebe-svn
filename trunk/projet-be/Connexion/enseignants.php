@@ -33,6 +33,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		if ($_GET['a'] == "acces")
 		{
 		    	print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+		    	
 			print("<tr>\n") ;
 			print("<td align=\"center\" width=\"800\"><br><b> Enseignement : $_GET['matiereListe']<br><br></b></td>") ;
 			print("</tr>\n") ;
