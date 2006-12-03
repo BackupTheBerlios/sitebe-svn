@@ -81,11 +81,11 @@
 					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
-			<td valign="top">
+			<th align="left" valign="top">
 				<div id="espacereserve">
-				<!-------------------------------------------------->
-				<!-- partie qui permet de gerer la partie reservé -->
-				<!-------------------------------------------------->
+				<!--------------------------------------------->
+				<!-- partie qui permet de deposer un fichier -->
+				<!--------------------------------------------->
 				
 				<?			
 					$id_etu=$_SESSION['id-etu'];
@@ -93,27 +93,28 @@
 					{
 						if ($_FILES['fichier']['error'])
 						{
-         					switch ($_FILES['fichier']['error'])
-		  					{
-                  				case 1: // UPLOAD_ERR_INI_SIZE
-                   				echo"Le fichier dépasse la limite autorisée par le serveur (fichier php.ini) !";
-                   				break;
-                   				case 2: // UPLOAD_ERR_FORM_SIZE
-                   				echo "Le fichier dépasse la limite autorisée dans le formulaire HTML !";
-                   				break;
-                   				case 3: // UPLOAD_ERR_PARTIAL
-                   				echo "L'envoi du fichier a été interrompu pendant le transfert !";
-                   				break;
-                   				case 4: // UPLOAD_ERR_NO_FILE
-                   				echo "Le fichier que vous avez envoyé a une taille nulle !";
-                   				break;
-          					}
+		         					switch ($_FILES['fichier']['error'])
+				  			{
+			                  				case 1: // UPLOAD_ERR_INI_SIZE
+			                   				echo"Le fichier dépasse la limite autorisée par le serveur (fichier php.ini) !";
+			                   				break;
+			                   				case 2: // UPLOAD_ERR_FORM_SIZE
+			                   				echo "Le fichier dépasse la limite autorisée dans le formulaire HTML !";
+			                   				break;
+			                   				case 3: // UPLOAD_ERR_PARTIAL
+			                   				echo "L'envoi du fichier a été interrompu pendant le transfert !";
+			                   				break;
+			                   				case 4: // UPLOAD_ERR_NO_FILE
+			                   				echo "Le fichier que vous avez envoyé a une taille nulle !";
+			                   				break;
+	          					}
 						}
 						else
 						{
  							// $_FILES['nom_du_fichier']['error'] vaut 0 soit UPLOAD_ERR_OK
  							// ce qui signifie qu'il n'y a eu aucune erreur
 						}
+						
 						$content_dir = 'Etudiants/'; // dossier où sera déplacé le fichier
 						$content_dir=$content_dir.$id_etu;
 						$matiere=$_POST['combo'];
@@ -155,11 +156,11 @@
 							}
 							print("</select>");
 							
-							print("<font face=\"Arial\" color=#330033><i></i><br><br><br>Selectionner le fichier a deposer:</font><br><br>");					
+							print("<font face=\"Arial\" color=#330033><i></i><br><br><br>Selectionner le fichier &agrave; d&eacute;poser:</font><br><br>");					
 						
 							print("<form method=\"post\" action=\"deposer_doc.php\" enctype=\"multipart/form-data\">");
           					print("<input type=hidden name=MAX_FILE_SIZE  VALUE=5000000>");
-          					print("<input type=file name=\"fichier\"><br><br>");
+          					print("<input type=file name=\"fichier\" size=\"40\"><br><br>");
           					print("<input type=submit value=\"Deposer\">");
            					print("</form>");
      				}
@@ -171,7 +172,7 @@
 				<!-- fin de la partie qui permet de gerer la partie reservé -->
 				<!------------------------------------------------------------>
 				</div>
-			</td>
+			</th>
 			</tr>
 		</table>
 		<div id="about">

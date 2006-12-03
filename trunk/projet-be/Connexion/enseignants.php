@@ -38,7 +38,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("</tr>\n") ;
 			print("</table>\n") ;
 		}
-		// ajout d'un element
+		
+		// ajout d'un fichier
 		if ($_GET['a'] == "dep")
 		{
 			// dbConnect();
@@ -107,7 +108,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("</table>\n") ;
 			print("</form></center>\n") ;
 		}
-		// suppression d'un element
+		
+		// suppression d'un fichier
 		if ($_GET['a'] == "undep")
 		{
 			$id_diplome = DB_Query('SELECT `id-diplome` FROM diplome WHERE intitule ="'.$_SESSION['diplome'].'"');
@@ -143,17 +145,20 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("</table>\n") ;
 				print("</form></center>\n") ;
 			}
-		} // end of if del
+		}
+		
+		// Importer un fichier excel
 		if($_GET['a']== 'excel')
 		{
 			print("<center><form name=\"valideExcel\" action=\"espacereserve.php?w=enseignants&a=enregexcel\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
 			print("<table>");
 			print("<tr><td align=\"left\">Selection du fichier :</td><td width=\"700\" align=\"left\" colspan=\"3\"><input type=\"file\" name=\"fichierexcel\" class=\"defaultInput\" size=\"40\"></td></tr>") ;
 			print("<tr><td width=\"200\" align=\"center\"><br><input class=\"defaultButton\" type=\"submit\" name=\"fileexcel\" value=\"Valider\"></td>\n") ;
-			print("</tr>\n") ;
+			print("</tr>\n");
 			print("</table>");
 			print("</form></center>\n") ;
 		}
+		
 		if($_GET['a']=='enregexcel')
 		{
 			require 'fonction_csv.inc.php';
@@ -169,6 +174,14 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 //			echo "<table align='center'><tr><td><h2> L'insertion s'est bien deroul&eacute;e ... Redirection ... </h2></td></tr></table>";
 			print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 		}
+		
+		// Partie modification
+		if($_GET['a']=='modif')
+		{
+			// on include le fichier modif
+			include("modifier.php");
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		partie visualisation des fichiers
 		------------------------------------------------------------------------------------------*/

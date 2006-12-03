@@ -75,14 +75,9 @@
 	<!-- FIN BLOCAGE 1ERE LETTRE EN MAJUSCULE-->
 
 	<meta name="DC.Publisher" content="IUP ISI" />
-	<style type="text/css">
-	img {
-		behavior: url("styles/pngbehavior.htc");
-	}
-	</style>
 	<link rel="stylesheet" href="styles/isi.css" type="text/css" />
 </head>
-<body>   
+<body>
 	<div id="page">
 		<div id="bandeau">
 			<!--======================= Debut logo ==================-->
@@ -136,125 +131,118 @@
 				<!------------------------------------------------------>
 				<!-- debut de la partie qui permet de creer un compte -->
 				<!------------------------------------------------------>
-				
-				<?php
-				if(isset($_POST['nom']))      $nom=$_POST['nom'];
-					else      $nom="";
-					
-				if(isset($_POST['prenom']))      $prenom=$_POST['prenom'];
-					else      $prenom="";
-					
-				if(isset($_POST['mail']))      $mail=$_POST['mail'];
-					else      $mail="";
-					
-				if(isset($_POST['num_etu']))      $num_etu=$_POST['num_etu'];
-					else      $num_etu="";
-					
-				if(isset($_POST['login']))      $login=$_POST['login'];
-					else      $login="";
-					
-				if(isset($_POST['password']))      $password=$_POST['password'];
-					else      $password="";
-					
-				if(isset($_POST['password2']))      $password2=$_POST['password2'];
-					else      $password2="";
-					
-				if(empty($nom) OR empty($prenom) OR empty($num_etu) OR empty($mail) OR empty($password) OR empty($login) OR empty($password2) OR $password!=$password2)
-				{
-  					if (isset($_POST['nom']) OR isset($_POST['prenom']) OR isset($_POST['num_etu']) OR isset($_POST['mail']) OR isset($_POST['password']) OR isset($_POST['login']))
-  					{
-  						print("Attention, aucun champ ne doit rester vide !");
-					}
-  					if($password!=$password2)
-  					{
-  						print("\nAttention, les deux mots de passe sont diff&eacute;rents !");
-  					}
-					
-					$numEtu = $_POST['num_etu'];
-					$nomEtu = $_POST['nom'];
-					$prenomEtu = $_POST['prenom'];
-					$mailEtu = $_POST['mail'];
-					$loginEtu = $_POST['login'];
-					
-  					?>
-					<h2>
-					Inscription
-					<form method='post' action='compte.php'>
-					<center><table width='400' border='0'>
-					
-					<?php
-					echo "<table>";
-					echo "<tr><td align='left'>N&deg;Etudiant : </td><td align='right'><input type='text' name='num_etu' value='$numEtu' size='8' maxlength='8'></td></tr><br>";
-					echo "<tr><td align='left'>Nom : </td><td align='right'><input type='text' name='nom' value='$nomEtu' size='15' onChange='javascript:this.value=this.value.toUpperCase();'></td></tr><br><br>";
-					echo "<tr><td align='left'>Pr&eacute;nom : </td><td align='right'><input type='text' name='prenom' value='$prenomEtu' size='15' onChange='javascript:changeCase(this.form.prenom);'></td></tr><br>";
-					echo "<tr><td align='left'>Mail : </td><td align='right'><input type='text' name='mail' value='$mailEtu' size='15'></td></tr>";
-					echo "<tr><td align='left'>Login : </td><td align='right'><input type='text' name='login' value='$loginEtu' size='15'></td></tr><tr><td>&nbsp;</td></tr>";
-					echo "<tr><td align='left'>Mot de passe :</td><td align='right'><input type='password' name='password' size='16'></td></tr>";
-					echo "<tr><td align='left'>Confirmer le mot de passe :</td><td align='right'><input type='password' name='password2' size='16'></td></tr><tr><td>&nbsp;</td></tr>";
-					
-					$res=mysql_query("select intitule from diplome");
-  					echo "<tr><td align='left'>Selectionner votre annee:</td><td align=right><select size='1' name='combo'>";
-							
-					while($row = DB_fetchArray($res))
-					{		
-						echo "<option>". $row[0] ."</option>";
-					}
-					echo "</select></td></tr>";
-					echo "<tr><td>&nbsp;</td><td align=right><input type='submit' value='Valider'></td></tr>";
-					echo "</form>";
-					echo "</table>";
-					echo "</h2>";
-					
-				}
-				// Aucun champ n'est vide, on peut enregistrer dans la table
-				else
-				{
-					$res = mysql_query("SELECT * FROM etu_inscrit where num_etu='$num_etu'");
-					$nb = mysql_num_rows($res);
-					if ($nb == 0)
-					{
-						$password=md5($password);
-						mysql_query("INSERT INTO etudiant VALUES ('$num_etu','$nom','$prenom','$mail','$login','$password','')")
-						or die('Erreur SQL ! <br>'.mysql_error());
-						
-						$combo=$_POST['combo'];
-						$anne="2006 - 2007";
-						$res=mysql_query("select `id-diplome` from diplome where intitule='$combo'");
-						$id_diplome = DB_fetchArray($res);
-						mysql_query("INSERT INTO inscrit VALUES ('$num_etu','$id_diplome[0]','$anne')");
-						if(mysql_errno() != 0)
-						{
-							echo "Une erreur est survenue lors de la création du nouvel étudiant, vous allez être rediriger...";
-							print(mysql_error());
-							// echo "<script language='Javascript'>location.href='compte.php'</script>";
-						}
-						else{
-							$res=mysql_query("select `id-matiere` from matiere,etudiant,module,inscrit,diplome
-												 where inscrit.`id-etudiant`=etudiant.`id-etudiant`
-												 and inscrit.`id-diplome`=diplome.`id-diplome`
-												 and diplome.`id-diplome`=module.`id-diplome`
-												 and matiere.`id-module`=module.`id-module`
-												 and etudiant.`id-etudiant`='$num_etu';");
-							$chemin='etudiants/'.$num_etu.'/';
-							mkdir ($chemin, 0770);
-							while($row = DB_fetchArray($res))
-							{
-								$var=$chemin.$row[0].'/';
-								mkdir ($var, 0770);
-							}
-							print("<meta http-equiv=\"refresh\" content=\"5;url=espacereserve.php\">") ;						
-							echo 'Votre inscription a bien &eacute;t&eacute; valid&eacute;e, vous pouvez maintenant vous connecter.';						
-						}
-					}
-					else
-					{
-						print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php\">") ;
-						echo 'Inscription impossible.';
-					}
-				}
-				print("<center><table><tr><td><br><br><a href='espacereserve.php?'>retour</a></td></tr><tr><td>&nbsp;</td></tr></table></center>");
-				?>
-				
+<?php
+if(isset($_POST['nom']))      $nom=$_POST['nom'];
+	else      $nom="";
+	
+if(isset($_POST['prenom']))      $prenom=$_POST['prenom'];
+	else      $prenom="";
+	
+if(isset($_POST['mail']))      $mail=$_POST['mail'];
+	else      $mail="";
+	
+if(isset($_POST['num_etu']))      $num_etu=$_POST['num_etu'];
+	else      $num_etu="";
+	
+if(isset($_POST['login']))      $login=$_POST['login'];
+	else      $login="";
+	
+if(isset($_POST['password']))      $password=$_POST['password'];
+	else      $password="";
+	
+if(isset($_POST['password2']))      $password2=$_POST['password2'];
+	else      $password2="";
+
+if(empty($nom) OR empty($prenom) OR empty($num_etu) OR empty($mail) OR empty($password) OR empty($login) OR empty($password2) OR $password!=$password2)
+{
+	// S'affiche seulement si reload de la page
+	if (isset($_POST['nom_etu']) OR isset($_POST['nom']) OR isset($_POST['prenom']) OR isset($_POST['mail']) OR isset($_POST['login']) OR isset($_POST['password']))
+	{
+		print("Attention, aucun champ ne doit rester vide !");
+	}
+	if($password!=$password2)
+	{
+		print("\nAttention, les deux mots de passe sont diff&eacute;rents !");
+	}
+	
+	$numEtu = $_POST['num_etu'];
+	$nomEtu = $_POST['nom'];
+	$prenomEtu = $_POST['prenom'];
+	$mailEtu = $_POST['mail'];
+	$loginEtu = $_POST['login'];
+	  	/*		
+	echo "<center><table width='400' valign='top'>";
+	//echo "<table valign='top'>";
+	echo "<tr><td colspan=2><h2>Inscription</h2></td></tr>";
+	echo "<form method='post' action='compte.php'>";
+	*/
+	echo "<h2>Cr&eacute;ation d'un compte</h2>";
+	echo "<form action=\"compte.php\" method=\"post\">";
+	echo "<center><table width=\"400\">\n<tr>\n";
+	echo "<tr><td align='left'>N&deg;Etudiant : </td><td align='right'><input type='text' name='num_etu' value='$numEtu' size='8' maxlength='8'></td></tr><br>";
+	echo "<tr><td align='left'>Nom : </td><td align='right'><input type='text' name='nom' value='$nomEtu' size='15' onChange='javascript:this.value=this.value.toUpperCase();'></td></tr><br><br>";
+	echo "<tr><td align='left'>Pr&eacute;nom : </td><td align='right'><input type='text' name='prenom' value='$prenomEtu' size='15' onChange='javascript:changeCase(this.form.prenom);'></td></tr><br>";
+	echo "<tr><td align='left'>Mail : </td><td align='right'><input type='text' name='mail' value='$mailEtu' size='15'></td></tr>";
+	echo "<tr><td align='left'>Login : </td><td align='right'><input type='text' name='login' value='$loginEtu' size='15'></td></tr><tr><td>&nbsp;</td></tr>";
+	echo "<tr><td align='left'>Mot de passe :</td><td align='right'><input type='password' name='password' size='16'></td></tr>";
+	echo "<tr><td align='left'>Confirmer le mot de passe :</td><td align='right'><input type='password' name='password2' size='16'></td></tr><tr><td>&nbsp;</td></tr>";
+	echo "<tr><td>&nbsp;</td><td align=right><input type='submit' value='Valider'></td></tr>";
+	echo "</table>";
+	echo "</form>";
+	
+}
+// Aucun champ n'est vide, on peut enregistrer dans la table
+else
+{
+	// Si l'etudiant est present dans la base (si il suit les cours)
+	$res = mysql_query("SELECT * FROM `etudiant` WHERE `id-etudiant`=$num_etu AND `nom`='$nom' AND `prenom`='$prenom'");
+	$nb = mysql_num_rows($res);
+	$res = mysql_query("SELECT * FROM `etudiant` WHERE login='$login'");
+	$nb += mysql_num_rows($res);
+	if ($nb!=0)
+	{
+		$password=md5($password);
+		mysql_query("UPDATE etudiant SET email='$mail', login='$login', mdp='$password' WHERE `id-etudiant`='$num_etu'")
+		or die('Erreur SQL ! <br>'.mysql_error());
+		
+		$combo=$_POST['combo'];
+		//$anne="2006 - 2007";
+		$res=mysql_query("select `id-diplome` from diplome where intitule='$combo'");
+		$id_diplome = DB_fetchArray($res);
+		/*mysql_query("INSERT INTO inscrit VALUES ('$num_etu','$id_diplome[0]','$anne')");
+		if(mysql_errno() != 0)
+		{
+			echo "Une erreur est survenue lors de la création du nouvel étudiant, vous allez être rediriger...";
+			print(mysql_error());
+			// echo "<script language='Javascript'>location.href='compte.php'</script>";
+		}
+		else{*/
+			$res=mysql_query("select `id-matiere` from matiere,etudiant,module,inscrit,diplome
+								 where inscrit.`id-etudiant`=etudiant.`id-etudiant`
+								 and inscrit.`id-diplome`=diplome.`id-diplome`
+								 and diplome.`id-diplome`=module.`id-diplome`
+								 and matiere.`id-module`=module.`id-module`
+								 and etudiant.`id-etudiant`='$num_etu';");
+			$chemin='etudiants/'.$num_etu.'/';
+			mkdir ($chemin, 0770);
+			while($row = DB_fetchArray($res))
+			{
+				$var=$chemin.$row[0].'/';
+				mkdir ($var, 0770);
+			}
+			print("<meta http-equiv=\"refresh\" content=\"5;url=espacereserve.php\">") ;
+			echo 'Votre inscription a bien &eacute;t&eacute; valid&eacute;e, vous pouvez maintenant vous connecter.';						
+		//}
+	}
+	else
+	{
+		echo "<table><tr><td>Les informations que vous nous avez fournies ne nous permettent pas de vous inscrire<br>";
+		echo "Veuillez entrer des informations valides</td></tr></table>";
+		echo "<meta http-equiv=\"refresh\" content=\"3;url=compte.php\">";
+	}
+}
+print("<center><table><tr><td><br><br><a href='espacereserve.php?'>retour</a></td></tr><tr><td>&nbsp;</td></tr></table></center>");
+?>
 				<!---------------------------------------------------->
 				<!-- fin de la partie qui permet de creer un compte -->
 				<!---------------------------------------------------->

@@ -30,35 +30,6 @@
 			window.open("admin/admin.php?"+parameters, "Administration", "width=850,height=700,toolbar=no,scrollbars=yes,directories=no,status=yes,resizable=no");
 		}
 	</script>
-	<script>
-		function checkrequired(which)
-		{
-			var pass=true
-			if (document.images)
-			{
-				for (i=0;i<which.length;i++)
-				{
-					var tempobj=which.elements[i]
-					if (tempobj.name.substring(0,8)=="required")
-					{
-						if (((tempobj.type=="text"||tempobj.type=="textarea")&&tempobj.value=='')||(tempobj.type.toString().charAt(0)=="s"&&tempobj.selectedIndex==-1))
-						{
-							pass=false
-							break
-						}
-					}
-				}
-			}
-			if (!pass)
-			{
-				alert("Certains champs de ce formulaire sont obligatoires, merci de bien vouloir les renseigner")
-				return false
-			}
-			else
-			return true
-		}
-	</script>
-
 	<meta name="DC.Publisher" content="IUP ISI" />
 	<link rel="stylesheet" href="styles/isi.css" type="text/css" />
 </head>
@@ -111,7 +82,7 @@
 					<a href="http://www.ups-tlse.fr/" title="UPS"><img src="img/logoups.gif" alt="UPS" /></a>
 				</div>
 			</td>
-			<th valign="top">
+			<th align="left" valign="top">
 				<div id="espacereserve">
 				<!-------------------------------------------------->
 				<!-- partie qui permet de gerer la partie reservé -->
@@ -285,7 +256,7 @@
 						print("<h2>Ce compte n'est pas valide</h2>");
 						print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
 						print("<center><table width=\"400\"><tr>\n");
-						print("<tr><td align=center colspan=2>Si vous n'&egrave;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
+						print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 						print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
 						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
 						print("<tr>\n");
@@ -359,19 +330,25 @@
 				
 				print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>D&eacute;poser des fichiers</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\">D&eacute;poser des fichiers</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\"><u>Supprimer des fichiers</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\">Supprimer des fichiers</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\"><u>Gestion Excel</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\">Gestion Excel</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>Visualisation</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\">Visualisation</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>Saisie des notes</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\">Saisie des notes</a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=modif&b=pass\">Modifier password</a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=modif&b=login\">Modifier login</a></td>");
 				print("</tr>\n");
 				print("</table>\n");
 			}
@@ -381,16 +358,16 @@
 				print("<td width=\"800\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=etudiants&a=logout\">Deconnexion</a> &gt;</td>\n");
 				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
-				print("<td align=\"left\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers &agrave; t&eacute;l&eacute;charger</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\">Consulter les fichiers &agrave; t&eacute;l&eacute;charger</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"left\" width=\"800\"><a href=\"deposer_doc.php\"><u>Deposer fichier</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"deposer_doc.php\">D&eacute;poser un fichier</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=1\"><u>Modifier password</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=modif&b=pass\">Modifier password</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"left\" width=\"800\"><a href=\"modifier.php?i=0\"><u>Modifier login</u></a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=modif&b=login\">Modifier login</a></td>");
 				print("</tr>\n");
 				print("</table>\n");
 			}
