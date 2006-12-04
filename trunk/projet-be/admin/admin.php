@@ -216,14 +216,7 @@ if (isset($_GET['w']))
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=etudiants&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 			
-			// inscriptions
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"> &raquo; <b>Inscriptions</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=inscriptions&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=inscriptions&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=inscriptions&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			
+			// enseignants
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Gestion des enseignants</b></td>") ;
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=enseignants&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;

@@ -44,12 +44,18 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			$saveYear = $lastYear ;
 			$lastYear += 1 ;
 			
-			for ($i = $firstYear ; $i  <= $lastYear ; $i++)
+			for ($i = $firstYear ; $i  < $lastYear ; $i++)
 			{
 				$allYears[] = $i." - ".($i + 1) ;
 			}
 			$countDips = mysql_num_rows($dipsList) ;
 			
+			// si il n'y a aucun diplome
+			if ($countDips == 0)
+			{
+				centeredInfoMessage(2, 2, "Creez d'abord un diplome...") ;
+				return ;
+			}
 			
 			centeredInfoMessage(3, 3, "Administration des etudiants : ajout") ;
 			print("\t\t\t<form name=\"defaultForm\" action=\"database.php?w=etudiants\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
@@ -83,33 +89,26 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t</tr>\n") ;
 			
 			
-			if ($countDips > 0)
+			print("\t\t\t\t<tr>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Dipl&ocirc;me *</b></td><td width=\"300\" align=\"left\"><select class=\"defaultInput\" name=\"diplome\">") ;
+			for($i = 0 ; $i < $countDips ; $i++)
 			{
-				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\" height=\"30\" valign=\"bottom\"><input type=\"checkbox\" name=\"inscrire\" checked><b> Inscrire cet &eacute;tudiant </b></td>\n") ;
-				print("\t\t\t\t</tr>\n") ;
+				$dipsDetails = mysql_fetch_array($dipsList) ;
+				print("<option> {$dipsDetails['intitule']} </option>") ;
+			}
+			print("</select></td>\n") ;
+			print("\t\t\t\t</tr>\n") ;
 			
 			
-				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Dipl&ocirc;me *</b></td><td width=\"300\" align=\"left\"><select class=\"defaultInput\" name=\"diplome\">") ;
-				for($i = 0 ; $i < $countDips ; $i++)
-				{
-					$dipsDetails = mysql_fetch_array($dipsList) ;
-					print("<option> {$dipsDetails['intitule']} </option>") ;
-				}
-				print("</select></td>\n") ;
-				print("\t\t\t\t</tr>\n") ;
-				
-				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Promotion *</b></td><td width=\"300\" align=\"left\"><select class=\"defaultInput\" name=\"annee\">") ;
-				foreach ($allYears as $singleDate)
-				{
-					print("<option> $singleDate </option>") ;
-				}
-				print("</select></td>\n") ;
-				print("\t\t\t\t</tr>\n") ;
-			}				
-				
+			print("\t\t\t\t<tr>\n") ;
+			print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Promotion *</b></td><td width=\"300\" align=\"left\"><select class=\"defaultInput\" name=\"annee\">") ;
+			foreach ($allYears as $singleDate)
+			{
+				print("<option> $singleDate </option>") ;
+			}
+			print("</select></td>\n") ;
+			print("\t\t\t\t</tr>\n") ;
+			
 			
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"200\" align=\"left\" colspan=\"2\"><br><input type=\"hidden\" name=\"etuAdd\" value=\"true\"><input class=\"defaultButton\" type=\"button\" name=\"addButton\" value=\"Ajouter\" onClick=\"checkEtudiantAdd('defaultForm')\"></td>\n") ;
@@ -119,8 +118,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			
 			dbClose() ;
 		} // end of if add
-		
-		
 		
 		
 		// modification d'un element
@@ -223,7 +220,36 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					return ;
 				}
 				
+				//récupération des diplomes de la base
+				$dipsList = dbQuery('SELECT *
+					FROM diplome
+					ORDER BY intitule') ;
+					
+				// generation de la liste des annees (de 1995 jusqu'a l'annee en cours + 2)
+				$firstYear = 1995 ;
+				$lastYear = date("Y", mktime()) ;
+				$saveYear = $lastYear ;
+				$lastYear += 1 ;
+				
+				for ($i = $firstYear ; $i  < $lastYear ; $i++)
+				{
+					$allYears[] = $i." - ".($i + 1) ;
+				}
+				$countDips = mysql_num_rows($dipsList) ;
+				
+				// si il n'y a aucun diplome
+				if ($countDips == 0)
+				{
+					centeredInfoMessage(2, 2, "Creez d'abord un diplome...") ;
+					return ;
+				}
+				
+				$insDetails = dbQuery('SELECT *
+					FROM inscrit
+					WHERE `id-etudiant` = '.$eID ) ;
+				
 				$fetuDetails = mysql_fetch_array($etuDetails) ;
+				$finsDetails = mysql_fetch_array($insDetails) ;
 				print("\t\t\t<center><form name=\"defaultForm\" action=\"database.php?w=etudiants\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
 				print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 				
@@ -244,7 +270,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				print("\t\t\t\t</tr>\n") ;
 
 				print("</select></td>") ;
-				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Mot de passe de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mdpetu\"size=\"30\" value=\"{$fetuDetails['mdp']}\"></td>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Mot de passe de l'&eacute;tudiant </b></td><td width=\"300\" align=\"left\"><input class=\"defaultInput\" name=\"mdpetu\"size=\"30\" value=\"\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;
 		
 				print("\t\t\t\t<tr>\n") ;
@@ -254,7 +280,41 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				print("\t\t\t\t<tr>\n") ;
 				print("\t\t\t\t\t<td width=\"200\" align=\"left\" colspan=\"2\"><input type=\"checkbox\" class=\"defaultInput\" name=\"rmCV\"><b>Remplacer le CV</b></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;				
-					
+				
+				print("\t\t\t\t<tr>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Dipl&ocirc;me *</b></td><td width=\"300\" align=\"left\"><select class=\"defaultInput\" name=\"diplome\">") ;
+				for($i = 0 ; $i < $countDips ; $i++)
+				{
+					$dipsDetails = mysql_fetch_array($dipsList) ;
+					if ($dipsDetails['id-diplome'] == $finsDetails['id-diplome'])
+					{
+						print("<option selected> {$dipsDetails['intitule']} </option>") ;
+					}
+					else
+					{
+						print("<option> {$dipsDetails['intitule']} </option>") ;
+					}
+				}
+				print("</select></td>\n") ;
+				print("\t\t\t\t</tr>\n") ;
+				
+				
+				print("\t\t\t\t<tr>\n") ;
+				print("\t\t\t\t\t<td width=\"200\" align=\"left\"><b> Promotion *</b></td><td width=\"300\" align=\"left\"><select class=\"defaultInput\" name=\"annee\">") ;
+				foreach ($allYears as $singleDate)
+				{
+					if ($singleDate == $finsDetails['annee'])
+					{
+						print("<option selected> $singleDate </option>") ;
+					}
+					else
+					{
+						print("<option> $singleDate </option>") ;
+					}
+				}
+				print("</select></td>\n") ;
+				print("\t\t\t\t</tr>\n") ;
+				
 				print("\t\t\t\t<tr>\n") ;
 				print("\t\t\t\t\t<td width=\"200\" align=\"left\" colspan=\"3\"><br><input type=\"hidden\" name=\"etuMod\" value=\"true\"><input type=\"hidden\" name=\"etuID\" value=\"$eID\"><input class=\"defaultButton\" type=\"button\" name=\"modButton\" value=\"Modifier\" onClick=\"checkEtudiantMod('defaultForm')\"></td>\n") ;
 				print("\t\t\t\t</tr>\n") ;

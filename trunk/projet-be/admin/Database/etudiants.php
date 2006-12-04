@@ -65,6 +65,25 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			return ;
 		}
 		
+		// on verifie si le login est unique
+		$logEtu = dbQuery('SELECT COUNT(*) AS counter
+			FROM etudiant
+			WHERE login = "'.$login.'"') ;
+		$logEns = dbQuery('SELECT COUNT(*) AS counter
+			FROM enseignant
+			WHERE login = "'.$login.'"') ;
+			
+		$logEtu = mysql_fetch_array($logEtu) ;
+		$logEns = mysql_fetch_array($logEns) ;	
+		
+		// login existant
+		if ($logEtu['counter'] + $logEns['counter'] != 0)
+		{
+			centeredErrorMessage(3, 3, "Ce login semble d&eacute;j&egrave; exister, redirection...") ;
+			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=etudiants&a=add\">\n") ;				
+			return ;
+		}
+		
 		$finalCV = "" ;
 		// on verifie si le cv est uploade avec succes
 		if (is_uploaded_file($cvT))
@@ -74,30 +93,23 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			if ($success) { $finalCV = $numetu."_cv.".$finalExtension ; }
 		}
 		
-			
+		
 		// on insere le nouvel etudiant
 		dbQuery ('INSERT INTO etudiant				
 			VALUES ('.$numetu.', "'.$nom.'", "'.$prenom.'","'.$email.'", "'.$login.'", "'.$mdp.'","'.$finalCV.'")') ;
 		
-			
-			
 		//on recupere l'identification de son diplome
-		if (isset($_POST['inscrire']))
-		{
-			$dipInfo = dbQuery('SELECT `id-diplome`
-				FROM diplome
-				WHERE intitule = "'.$_POST['diplome'].'"') ;
-			$dipInfo = mysql_fetch_array($dipInfo) ;
-			$dipID = $dipInfo['id-diplome'] ;
-			
-			if (!empty($dipID))
-			{
-				//on insere les données relatifs a son inscription
-				dbQuery ('INSERT INTO inscrit
-					VALUES ('.$numetu.', '.$dipID.', "'.$_POST['annee'].'")') ;
-			}
-				
-		}
+		$dipInfo = dbQuery('SELECT `id-diplome`
+			FROM diplome
+			WHERE intitule = "'.$_POST['diplome'].'"') ;
+		$dipInfo = mysql_fetch_array($dipInfo) ;
+		$dipID = $dipInfo['id-diplome'] ;
+		
+		
+		//on insere les données relatifs a son inscription
+		dbQuery ('INSERT INTO inscrit
+			VALUES ('.$numetu.', '.$dipID.', "'.$_POST['annee'].'")') ;
+		
 			
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Etudiant ajout&eacute; avec succ&egrave;s, redirection...") ;
@@ -124,6 +136,26 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
         $mdp = md5($_POST['mdpetu']) ;
         $mdp = addslashes($mdp) ;
 		
+		// on verifie si le login est unique
+		$logEtu = dbQuery('SELECT COUNT(*) AS counter
+			FROM etudiant
+			WHERE login = "'.$login.'"
+			AND `id-etudiant` <> '.$_POST['etuID']) ;
+		$logEns = dbQuery('SELECT COUNT(*) AS counter
+			FROM enseignant
+			WHERE login = "'.$login.'"') ;
+			
+		$logEtu = mysql_fetch_array($logEtu) ;
+		$logEns = mysql_fetch_array($logEns) ;	
+		
+		// login existant
+		if ($logEtu['counter'] + $logEns['counter'] != 0)
+		{
+			centeredErrorMessage(3, 3, "Ce login semble d&eacute;j&egrave; exister, redirection...") ;
+			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=etudiants&a=add\">\n") ;				
+			return ;
+		}
+		
 		if (isset($_POST['rmCV']))
 		{		
 			$cv = $_FILES['cvetu']['name'] ;
@@ -145,17 +177,52 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			}
 			
 			// on met a jour les donnees de l'etudiant
-			dbQuery('UPDATE etudiant
-				SET nom = "'.$nom.'", prenom = "'.$prenom.'", email = "'.$email.'", login = "'.$login.'", mdp = "'.$mdp.'", CV ="'.$finalCV.'"
-				WHERE `id-etudiant` = '.$_POST['etuID']) ;
+			if ($mdp != "d41d8cd98f00b204e9800998ecf8427e")
+			{
+				// Si un mot de passe est defini
+				dbQuery('UPDATE etudiant
+					SET nom = "'.$nom.'", prenom = "'.$prenom.'", email = "'.$email.'", login = "'.$login.'", mdp = "'.$mdp.'", CV ="'.$finalCV.'"
+					WHERE `id-etudiant` = '.$_POST['etuID']) ;
+			}
+			else
+			{
+				// Si aucun mot de passe n'a été spécifié
+				dbQuery('UPDATE etudiant
+					SET nom = "'.$nom.'", prenom = "'.$prenom.'", email = "'.$email.'", login = "'.$login.'", CV ="'.$finalCV.'"
+					WHERE `id-etudiant` = '.$_POST['etuID']) ;
+			}
 		}
 		
 		// on met pas a jour le cv
 		else
 		{ 
-			// on met a jour les donnees de l'etudiant
-			dbQuery('UPDATE etudiant
-				SET nom = "'.$nom.'", prenom = "'.$prenom.'", email = "'.$email.'", login = "'.$login.'", mdp = "'.$mdp.'"
+			// on met a jour les donnees de l'etudiant	
+			if ($mdp != "d41d8cd98f00b204e9800998ecf8427e")
+			{
+				// Si un mot de passe est defini
+				dbQuery('UPDATE etudiant
+					SET nom = "'.$nom.'", prenom = "'.$prenom.'", email = "'.$email.'", login = "'.$login.'", mdp = "'.$mdp.'"
+					WHERE `id-etudiant` = '.$_POST['etuID']) ;
+			}
+			else
+			{
+				// Si aucun un mot de passe n'est defini
+				dbQuery('UPDATE etudiant
+					SET nom = "'.$nom.'", prenom = "'.$prenom.'", email = "'.$email.'", login = "'.$login.'"
+					WHERE `id-etudiant` = '.$_POST['etuID']) ;
+			}
+			
+			//on recupere l'identification de son diplome
+			$dipInfo = dbQuery('SELECT `id-diplome`
+				FROM diplome
+				WHERE intitule = "'.$_POST['diplome'].'"') ;
+			$dipInfo = mysql_fetch_array($dipInfo) ;
+			$dipID = $dipInfo['id-diplome'] ;
+			
+			
+			//on insere les données relatifs a son inscription
+			dbQuery ('UPDATE inscrit
+				SET `id-diplome` = "'.$dipID.'", annee = "'.$_POST['annee'].'"
 				WHERE `id-etudiant` = '.$_POST['etuID']) ;
 		}
 		
@@ -229,7 +296,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$cvDir = opendir("../Data/CV/") ;
 		while ($fileName = readdir($cvDir))
 		{
-			if (strcmp($fileName, ".") != 0 && strcmp($fileName, "..") != 0)
+			if (strcmp($fileName, ".") != 0 && strcmp($fileName, "..") && strcmp($fileName, ".svn") != 0)
 			{
 				unlink("../Data/CV/".$fileName) ;
 			}

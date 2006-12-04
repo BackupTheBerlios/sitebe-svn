@@ -8,7 +8,7 @@
 
 -- Serveur: localhost
 
--- Généré le : Mercredi 04 Janvier 2006 à 14:36
+-- Généré le : Dimanche 03 Decembre 2006 à 16:34
 
 -- Version du serveur: 4.1.8
 
@@ -83,7 +83,9 @@ CREATE TABLE `controle` (
 
 INSERT INTO `controle` (`type`) VALUES ('C. Continu');
 
-INSERT INTO `controle` (`type`) VALUES ('C. Terminal');
+INSERT INTO `controle` (`type`) VALUES ('C. Terminal'); 
+
+INSERT INTO `controle` (`type`) VALUES ('C. Partiel');
 
 
 
@@ -124,8 +126,6 @@ INSERT INTO `diplome` (`id-diplome`, `intitule`, `code`) VALUES (3, 'Master 1', 
 
 INSERT INTO `diplome` (`id-diplome`, `intitule`, `code`) VALUES (4, 'Master 2', 'S');
 
-INSERT INTO `diplome` (`id-diplome`, `intitule`, `code`) VALUES (0, 'Null', '');
-
 
 
 -- --------------------------------------------------------
@@ -160,39 +160,7 @@ CREATE TABLE `enseignant` (
 
 
 
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (1, 'ARCHANGELI', 'Jean-Paul', NULL, 'archangel', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (2, 'TESTE', 'Olivier', NULL, 'teste', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (3, 'JORDA', 'Jacques', NULL, 'jorda', 'test');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (4, 'MASSIE', 'Henri', NULL, 'massie', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (5, 'HAMEURLAIN', 'Abdelkader', NULL, 'hameurlain', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (6, 'NICHOLS', 'Peter', NULL, 'nichols', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (7, 'MAUREL', 'Christine', NULL, 'maurel', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (8, 'REGIS', 'Christine', NULL, 'regis', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (9, 'PALANQUE', 'Philippe', NULL, 'palanque', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (10, 'MONTALAN', 'Marie-Annick', NULL, 'montalan', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (11, 'BODEVEIX', 'Jean-Paul', NULL, '', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (12, 'FERAUD', 'Louis', NULL, '', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (13, 'BAZEX', 'Pierre', NULL, '', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (14, 'MILLAN', 'Thierry', NULL, '', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (15, 'SIBILLA', 'Michelle', NULL, '', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (16, 'OBER', 'Ileana', NULL, '', '');
-
-INSERT INTO `enseignant` (`id-enseignant`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES (17, 'DUTECH', 'Anne', NULL, '', '');
+-- rien
 
 
 
@@ -224,11 +192,35 @@ CREATE TABLE `enseignement` (
 
 
 
-INSERT INTO `enseignement` (`id-matiere`, `id-enseignant`) VALUES (1, '2');
+-- --------------------------------------------------------
 
-INSERT INTO `enseignement` (`id-matiere`, `id-enseignant`) VALUES (4, '3');
 
-INSERT INTO `enseignement` (`id-matiere`, `id-enseignant`) VALUES (19, '1');
+
+-- 
+
+-- Structure de la table `evaluation`
+
+-- 
+
+
+
+CREATE TABLE `evaluation` (
+  `id-evaluation` int(8) NOT NULL auto_increment, 
+  `id-matiere` int(8) NOT NULL default '0', 
+  `id-module` int(8) NOT NULL default '0',
+  `type` varchar(20) NOT NULL default '', 
+  PRIMARY KEY  (`id-evaluation`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
+-- 
+
+-- Contenu de la table `evaluation`
+
+-- 
+
+
 
 
 
@@ -238,26 +230,24 @@ INSERT INTO `enseignement` (`id-matiere`, `id-enseignant`) VALUES (19, '1');
 
 -- 
 
--- Structure de la table `est_evalue`
+-- Structure de la table `note`
 
 -- 
 
 
 
-CREATE TABLE `est_evalue` (
-  `id-matiere` int(8) NOT NULL default '0',
-  `type` varchar(20) NOT NULL default '',
-  `nature` varchar(20) NOT NULL default '',
-  `coefficient1` float default NULL,
-  `coefficient2` float default NULL,
-  PRIMARY KEY  (`id-matiere`,`type`,`nature`)
+CREATE TABLE `note` (
+  `id-evaluation` int(8) NOT NULL default '0', 
+  `id-etudiant` int(8) NOT NULL default '0', 
+  `note` float (10) NOT NULL default '-1', 
+  PRIMARY KEY  (`id-evaluation`, `id-etudiant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
 
 -- 
 
--- Contenu de la table `est_evalue`
+-- Contenu de la table `note`
 
 -- 
 
@@ -297,20 +287,32 @@ CREATE TABLE `etudiant` (
 -- 
 
 
+-- --------------------------------------------------------
 
-INSERT INTO `etudiant` (`id-etudiant`, `nom`, `prenom`, `email`, `login`, `mdp`, `CV`) VALUES (20106964, 'Conde', 'Mickael K.', 'astroaquarius@yahoo.fr', 'mumu', 'ghost', '');
 
-INSERT INTO `etudiant` (`id-etudiant`, `nom`, `prenom`, `email`, `login`, `mdp`, `CV`) VALUES (20106969, 'Badaoui', 'Kassem', 'kas_goal@hotmail.com', 'kassem', 'badaoui', '');
 
-INSERT INTO `etudiant` (`id-etudiant`, `nom`, `prenom`, `email`, `login`, `mdp`, `CV`) VALUES (20105428, 'Avetisyan', 'Gohar', 'avego_13@yahoo.fr', 'avego_13', 'maggy', '20105428_cv.txt');
+-- 
 
-INSERT INTO `etudiant` (`id-etudiant`, `nom`, `prenom`, `email`, `login`, `mdp`, `CV`) VALUES (20102567, 'Allogo Nkouna', 'Etienne', 'allogoe@yahoo.com', 'allogoe', 'allogo', '');
+-- Structure de la table `inscrit`
 
-INSERT INTO `etudiant` (`id-etudiant`, `nom`, `prenom`, `email`, `login`, `mdp`, `CV`) VALUES (20131345, 'dfuydfg', 'ygjsdfgug', 'iugiukdsfguk', 'guifgu', 'gdfghfgdg', '');
+-- 
 
-INSERT INTO `etudiant` (`id-etudiant`, `nom`, `prenom`, `email`, `login`, `mdp`, `CV`) VALUES (20552150, 'de la noe', 'maete', 'jsdkjdgziu', 'kugfu', 'ugfeu', '');
 
-INSERT INTO `etudiant` (`id-etudiant`, `nom`, `prenom`, `email`, `login`, `mdp`, `CV`) VALUES (23673276, 'fvdsfsdfds', 'fdsfsdfsdf', 'fdsfsdfsdf', 'salut', 'salut', '');
+
+CREATE TABLE `inscrit` (
+  `id-etudiant` int(10) NOT NULL default '0',
+  `id-diplome` int(10) NOT NULL default '0',
+  `annee` varchar(11) NOT NULL default '',
+  PRIMARY KEY  (`id-etudiant`,`id-diplome`,`annee`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
+-- 
+
+-- Contenu de la table `inscrit`
+
+-- 
 
 
 
@@ -330,7 +332,8 @@ CREATE TABLE `fichier` (
   `id-fichier` int(4) NOT NULL auto_increment,
   `titre` varchar(40) NOT NULL default '',
   `id-diplome` int(2) NOT NULL default '0',
-  `id-enseignant` int(8) NOT NULL default '0',
+  `id-enseignant` int(8) NOT NULL default '0', 
+  `id-etudiant` int(8) NOT NULL default '0',
   `URL` varchar(100) NOT NULL default '',
   `commentaire` text,
   PRIMARY KEY  (`id-fichier`)
@@ -343,24 +346,6 @@ CREATE TABLE `fichier` (
 -- Contenu de la table `fichier`
 
 -- 
-
-
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (12, 'L&#146;association IUP ISI', 1, 1, '12_fich', 'Un petit fichier de presentation de l&#146;association.');
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (13, 'test8', 2, 3, 'TutorielXUL-28082005.pdf', 'Test');
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (14, 'test8', 2, 3, 'TutorielXUL-28082005.pdf', 'Test');
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (15, 'test8', 2, 3, 'TutorielXUL-28082005.pdf', 'Test');
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (16, 'test8', 2, 3, 'TutorielXUL-28082005.pdf', 'Test');
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (17, 'test8', 2, 3, 'TutorielXUL-28082005.pdf', 'Test');
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (18, 'nouveau', 2, 4, 'ISIM2MCC2005complet.slk', 'deazjkhrezr');
-
-INSERT INTO `fichier` (`id-fichier`, `titre`, `id-diplome`, `id-enseignant`, `URL`, `commentaire`) VALUES (19, 'nouveau', 2, 3, 'ISIM1MCC2005complet.xls', 'nouveau commentiare');
 
 
 
@@ -413,51 +398,6 @@ INSERT INTO `information` (`id-information`, `titre`, `DATE_CREATION`, `DATE_MOD
 
 -- 
 
--- Structure de la table `inscrit`
-
--- 
-
-
-
-CREATE TABLE `inscrit` (
-  `id-etudiant` int(10) NOT NULL default '0',
-  `id-diplome` int(10) NOT NULL default '0',
-  `annee` varchar(11) NOT NULL default '',
-  PRIMARY KEY  (`id-etudiant`,`id-diplome`,`annee`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
--- 
-
--- Contenu de la table `inscrit`
-
--- 
-
-
-
-INSERT INTO `inscrit` (`id-etudiant`, `id-diplome`, `annee`) VALUES (20102567, 1, '1995 - 1996');
-
-INSERT INTO `inscrit` (`id-etudiant`, `id-diplome`, `annee`) VALUES (20105428, 1, '1995 - 1996');
-
-INSERT INTO `inscrit` (`id-etudiant`, `id-diplome`, `annee`) VALUES (20106964, 2, '2004 - 2005');
-
-INSERT INTO `inscrit` (`id-etudiant`, `id-diplome`, `annee`) VALUES (20106969, 2, '2004 - 2005');
-
-INSERT INTO `inscrit` (`id-etudiant`, `id-diplome`, `annee`) VALUES (20131345, 3, '1995 - 1996');
-
-INSERT INTO `inscrit` (`id-etudiant`, `id-diplome`, `annee`) VALUES (20552150, 1, '1995 - 1996');
-
-INSERT INTO `inscrit` (`id-etudiant`, `id-diplome`, `annee`) VALUES (23673276, 1, '1995 - 1996');
-
-
-
--- --------------------------------------------------------
-
-
-
--- 
-
 -- Structure de la table `matiere`
 
 -- 
@@ -472,12 +412,10 @@ CREATE TABLE `matiere` (
   `intitule` varchar(200) NOT NULL default '',
   `nature_epreuve` varchar(200) NOT NULL default '',
   `nbre-heures` int(3) NOT NULL default '0',
-  `PS_ECRIT` tinyint(2) NOT NULL default '0',
-  `PS_TP` tinyint(2) NOT NULL default '0',
-  `PS_ORAL` tinyint(2) NOT NULL default '0',
-  `SS_ECRIT` tinyint(2) NOT NULL default '0',
-  `SS_TP` tinyint(2) NOT NULL default '0',
-  `SS_ORAL` tinyint(2) NOT NULL default '0',
+  `CT` tinyint(2) NOT NULL default '0',
+  `CC` tinyint(2) NOT NULL default '0',
+  `CP` tinyint(2) NOT NULL default '0', 
+  `apogee` varchar(20) NOT NULL default '', 
   PRIMARY KEY  (`id-matiere`,`id-module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -488,24 +426,6 @@ CREATE TABLE `matiere` (
 -- Contenu de la table `matiere`
 
 -- 
-
-
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (1, 6, 0, 5.5, 'Anglais g&eacute;n&eacute;ral', '', 11, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (2, 3, 0, 23, 'Architecture des systèmes informatiques', '', 10, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (3, 2, 0, 11, 'Construction et r&eacute;utilisation des composants logiciels 1', '', 10, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (4, 1, 0, 0, 'Logique et programmation logique', '', 23, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (5, 0, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (6, 37, 2, 0, 'Mod&eacute;lisation et m&eacute;tamod&eacute;lisation', 'CC', 0, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (7, 37, 2, 0, 'Mod&eacute;lisation et m&eacute;tamod&eacute;lisation', 'CP', 0, 0, 0, 0, 0, 0, 0);
-
-INSERT INTO `matiere` (`id-matiere`, `id-module`, `no_matiere`, `coefficient`, `intitule`, `nature_epreuve`, `nbre-heures`, `PS_ECRIT`, `PS_TP`, `PS_ORAL`, `SS_ECRIT`, `SS_TP`, `SS_ORAL`) VALUES (8, 37, 2, 0, 'Mod&eacute;lisation et m&eacute;tamod&eacute;lisation', 'CT', 0, 0, 0, 0, 0, 0, 0);
 
 
 
@@ -576,16 +496,13 @@ CREATE TABLE `module` (
   `id-diplome` int(2) NOT NULL default '0',
   `intitule` varchar(200) NOT NULL default '',
   `no_module` tinyint(2) NOT NULL default '0',
-  `description` text,
-  `ECTS` float NOT NULL default '0',
-  `PS_CC` tinyint(2) NOT NULL default '0',
-  `PS_CP` tinyint(2) NOT NULL default '0',
-  `PS_CT` tinyint(2) NOT NULL default '0',
-  `SS_CC` tinyint(2) NOT NULL default '0',
-  `SS_CP` tinyint(2) NOT NULL default '0',
-  `SS_CT` tinyint(2) NOT NULL default '0',
+  `description` text, 
+  `CC` tinyint(2) NOT NULL default '0',
+  `CP` tinyint(2) NOT NULL default '0',
+  `CT` tinyint(2) NOT NULL default '0', 
   `no_semestre` tinyint(2) unsigned NOT NULL default '1' COMMENT 'Num&eacute;ro du semestre auquel le moduleest enseign&eacute;',
-  `id-responsable` int(8) NOT NULL default '0' COMMENT 'Identifiant de l&#146;enseignant responsable du module',
+  `id-responsable` int(8) NOT NULL default '0' COMMENT 'Identifiant de l&#146;enseignant responsable du module', 
+  `apogee` varchar(20) NOT NULL default '', 
   `id_node` int(10) NOT NULL default '0' COMMENT 'Identifiant du noeud de page associ&eacute;',
   PRIMARY KEY  (`id-module`,`id-diplome`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -597,101 +514,6 @@ CREATE TABLE `module` (
 -- Contenu de la table `module`
 
 -- 
-
-
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (1, 2, 'Logique et programmation logique', 1, '', 4, 50, 0, 50, 25, 0, 75, 5, 1, 18);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (2, 2, 'Construction et r&eacute;utilisation de composants logiciels 1', 2, '', 3.5, 25, 0, 75, 20, 0, 80, 5, 2, 17);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (3, 2, 'Achitectures des systèmes informatiques', 3, '', 7, 40, 0, 60, 30, 0, 70, 5, 3, 16);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (4, 2, 'M&#233;thodologie du d&#233;v&#233;loppement du logiciel 1', 4, '', 6, 25, 0, 75, 25, 0, 75, 5, 4, 18);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (5, 2, 'Base de donn&#233;es', 5, '', 3.5, 20, 0, 80, 20, 0, 80, 5, 5, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (6, 2, 'Anglais', 6, NULL, 3.5, 100, 0, 0, 0, 0, 100, 5, 1, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (7, 2, 'Bureau d&#146;&#233;tudes Maintenance d&#146;un projet', 7, '', 2.5, 50, 0, 50, 50, 0, 50, 5, 4, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (8, 2, 'Langages, formels, automates', 8, '', 2.5, 0, 0, 0, 0, 0, 0, 6, 7, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (9, 2, 'Construction et r&#233;utilisation de composants logiciels 2', 9, '', 3.5, 0, 0, 0, 0, 0, 0, 6, 8, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (10, 2, 'M&#233;thodologie du d&#233;v&#233;loppement du logiciel 2', 10, '', 4, 0, 0, 0, 0, 0, 0, 6, 4, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (11, 2, 'Interfaces Homme/Machine', 11, '', 3.5, 0, 0, 0, 0, 0, 0, 6, 9, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (12, 2, 'Anglais', 12, NULL, 3.5, 0, 0, 0, 0, 0, 0, 6, 1, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (13, 2, 'Gestion et techniques de communication', 13, '', 3.5, 0, 0, 0, 0, 0, 0, 6, 10, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (14, 2, 'Bureau d&#146;&#233;tudes D&#233;veloppement d&#146;un projet', 14, '', 3.5, 0, 0, 0, 0, 0, 0, 6, 4, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (15, 2, 'Stage (4mois minimum)', 15, '', 6, 0, 0, 0, 0, 0, 0, 6, 4, 1);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (37, 4, 'Mod&eacute;lisation temps r&eacute;el', 2, 'NULL', 5, 0, 0, 100, 100, 0, 0, 10, 11, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (35, 4, 'Stage 1', 7, 'NULL', 7, 0, 0, 100, 100, 0, 0, 9, 14, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (36, 4, 'Mod&eacute;lisation et mise en œuvre de logiciels r&eacute;partis', 1, 'NULL', 5, 0, 0, 100, 100, 0, 0, 10, 15, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (34, 4, 'Bureaux d&#146;&eacute;tudes professionnels 1', 6, 'NULL', 3, 0, 0, 100, 100, 0, 0, 9, 13, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (33, 4, 'Anglais et techniques de communication', 5, 'NULL', 5, 0, 0, 100, 100, 0, 0, 9, 10, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (32, 4, 'Mod&eacute;lisation et analyse de systèmes à &eacute;v&eacute;nements discrets', 4, 'NULL', 5, 0, 0, 100, 100, 0, 0, 9, 2, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (31, 4, 'Application des concepts de m&eacute;tamod&eacute;lisation à la v&eacute;rification et à la distribution', 3, 'NULL', 3, 0, 0, 100, 100, 0, 0, 9, 13, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (30, 4, 'Mod&eacute;lisation et m&eacute;tamod&eacute;lisation', 2, 'NULL', 3, 0, 0, 100, 100, 0, 0, 9, 12, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (29, 4, 'M&eacute;thodes formelles appliqu&eacute;es au d&eacute;veloppement de logiciels', 1, 'NULL', 4, 0, 0, 100, 100, 0, 0, 9, 11, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (38, 4, 'Validation de systèmes r&eacute;actifs ou temps-r&eacute;el', 3, 'NULL', 5, 0, 0, 100, 100, 0, 0, 10, 16, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (39, 4, 'Anglais et gestion', 4, 'NULL', 5, 0, 0, 100, 100, 0, 0, 10, 17, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (40, 4, 'Bureaux d&#146;&eacute;tudes professionnels 2', 5, 'NULL', 3, 0, 0, 100, 100, 0, 0, 10, 14, 0);
-
-INSERT INTO `module` (`id-module`, `id-diplome`, `intitule`, `no_module`, `description`, `ECTS`, `PS_CC`, `PS_CP`, `PS_CT`, `SS_CC`, `SS_CP`, `SS_CT`, `no_semestre`, `id-responsable`, `id_node`) VALUES (41, 4, 'Stage 2', 6, 'NULL', 7, 0, 0, 100, 100, 0, 0, 10, 13, 0);
-
-
-
--- --------------------------------------------------------
-
-
-
--- 
-
--- Structure de la table `nature`
-
--- 
-
-
-
-CREATE TABLE `nature` (
-  `nature` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`nature`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
--- 
-
--- Contenu de la table `nature`
-
--- 
-
-
-
-INSERT INTO `nature` (`nature`) VALUES ('Ecrit');
-
-INSERT INTO `nature` (`nature`) VALUES ('Oral');
-
-INSERT INTO `nature` (`nature`) VALUES ('Rapport');
-
-INSERT INTO `nature` (`nature`) VALUES ('TP');
 
 
 
@@ -806,105 +628,6 @@ INSERT INTO `page` (`id-page`, `id-menu`, `position`, `titre`) VALUES (6, 4, 4, 
 
 -- 
 
--- Structure de la table `promotion`
-
--- 
-
-
-
-CREATE TABLE `promotion` (
-  `annee` varchar(11) NOT NULL default '',
-  PRIMARY KEY  (`annee`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
--- 
-
--- Contenu de la table `promotion`
-
--- 
-
-
-
-
-
--- --------------------------------------------------------
-
-
-
--- 
-
--- Structure de la table `resp-diplome`
-
--- 
-
-
-
-CREATE TABLE `resp-diplome` (
-  `id-diplome` int(2) NOT NULL default '0',
-  `id-enseignant` int(8) NOT NULL default '0',
-  PRIMARY KEY  (`id-diplome`,`id-enseignant`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
--- 
-
--- Contenu de la table `resp-diplome`
-
--- 
-
-
-
-INSERT INTO `resp-diplome` (`id-diplome`, `id-enseignant`) VALUES (1, 2);
-
-INSERT INTO `resp-diplome` (`id-diplome`, `id-enseignant`) VALUES (2, 1);
-
-INSERT INTO `resp-diplome` (`id-diplome`, `id-enseignant`) VALUES (3, 7);
-
-
-
--- --------------------------------------------------------
-
-
-
--- 
-
--- Structure de la table `resp-module`
-
--- 
-
-
-
-CREATE TABLE `resp-module` (
-  `id-enseignant` int(8) NOT NULL default '0',
-  `id-module` int(3) NOT NULL default '0',
-  PRIMARY KEY  (`id-enseignant`,`id-module`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
--- 
-
--- Contenu de la table `resp-module`
-
--- 
-
-
-
-INSERT INTO `resp-module` (`id-enseignant`, `id-module`) VALUES (1, 1);
-
-INSERT INTO `resp-module` (`id-enseignant`, `id-module`) VALUES (7, 21);
-
-
-
--- --------------------------------------------------------
-
-
-
--- 
-
 -- Structure de la table `section`
 
 -- 
@@ -944,20 +667,4 @@ INSERT INTO `section` (`id-section`, `id-page`, `contenu`, `ordre`, `titre`) VAL
 
 -- --------------------------------------------------------
 
-
-
--- 
-
--- Structure de la table ` etu_inscrit `
-
--- 
-
-
-CREATE TABLE `etu_inscrit` ( 
-  `num_etu` int(11) NOT NULL default '0', 
-  `nom` varchar(50) NOT NULL default '', 
-  `prenom` varchar(50) NOT NULL default '', 
-  `email` varchar(50) NOT NULL default '', 
-  PRIMARY KEY  (`num_etu`) 
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
