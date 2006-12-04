@@ -48,7 +48,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\">Supprimer des fichiers</a></td></tr>") ;
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\">Gestion excel</a></td></tr>") ;
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\">Visualisation</a></td></tr>") ;
-			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\">saisie des notes</a></td></tr>") ;
+			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\">Saisie des notes</a></td></tr>") ;
+			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=mail&b=form&mat=".$_POST['matiereListe']."\">Envoyer un mail a tous les etudiants</a></td></tr>") ;
 			print("</tr>\n") ;	
 			print "</table>";
 		}
@@ -383,6 +384,58 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print "<table align='center'><tr><td><a href='Evaluation/".$_POST['file']."'>copie du fichier</a></td></tr></table>";
 			}
 		}
+		
+		if ($_GET['a'] == "mail")
+		{
+		  if($_GET['b'] == 'form')
+			{
+			 print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+		  	print("<tr>\n") ;
+		  	print("<td align=\"center\" width=\"800\"><br><b> Envoie d'un mail <br><br></b></td>") ;
+		  	print("</tr>\n") ;
+		  	print("</table>\n") ;
+		  	print("<center><form method=\"post\" action=\"espacereserve.php?p=connexion&w=enseignants&a=mail&b=envoie&mat=".$_GET['mat']."\" >\n") ;
+		  	print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+		  	print("<tr>\n") ;
+		  	print("<td align=\"left\"><b> Sujet </b></td><td width=\"700\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"sujet\" size=\"40\"></td>\n") ;
+		  	print("</tr>\n") ;
+		  	print("<tr>\n") ;
+		  	print("<td align=\"left\" colspan=\"3\"><b> Contenu</b></td>\n") ;
+		  	print("</tr>\n") ;
+		  	print("<tr>\n") ;
+		  	print("<td width=\"800\" colspan=\"3\" align=\"left\"><textarea class=\"defaultInput\" rows=\"10\" cols=\"50\" name=\"contenu\"></textarea><br><br></td>\n") ;
+		  	print("</tr>\n") ;
+		  	print("<tr>\n") ;
+		  	print("<td width=\"800\" align=\"left\" colspan=\"3\"><br><input type=hidden name=subject value=formmail><input class=\"defaultButton\" type=\"submit\" value=\"Envoyer\"\"> - <input class=\"defaultButton\" type=\"reset\" value=\"Annuler\"></td>\n") ;
+		  	print("</tr>\n") ;
+		  	print("</table>\n") ;
+		  	print("</form></center>\n") ;
+      }
+      
+      if($_GET['b'] == 'envoie')
+			{
+			 $requeteMail = DB_Query('SELECT etu.email FROM Etudiant etu, Inscrit ins, Module mo, Matiere mat 
+        WHERE (etu.`id-etudiant` = ins.`id-etudiant`)
+          and (ins.`id-diplome` = mo.`id-diplome`)
+	       and (mo.`id-module` = mat.`id-module`)
+	      and (mat.`id-matiere` = "'.$_GET['mat'].'")');
+
+       $entete="FROM : ".$_SESSION['nom']." ".$_SESSION['prenom']." ";
+
+        while ($tableau=mysql_fetch_array($requeteMail))
+      	{
+            mail($tableau['email'],$_POST['sujet'],$_POST['contenu'],$entete);
+    	   }
+    	  
+    	  print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+		  	print("<tr>\n") ;
+		  	print("<td align=\"center\" width=\"800\"><br>Votre mail a ete envoy&eacute; &agrave; tous les &eacute;l&egrave;ves avec succes. Redirection...</td>") ;
+		  	print("</tr>\n") ;
+		  	print("</table>\n") ;
+			   print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;
+		  }
+		}
+		
 		// deconnexion
 		if ($_GET['a'] == "logout")
 		{
