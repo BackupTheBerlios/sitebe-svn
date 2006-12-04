@@ -106,7 +106,7 @@
 					mysql_query("UPDATE `enseignant` set login='$login' where `id-enseignant`='$ens'")
 					or die('Erreur SQL ! <br>'.mysql_error());
 				}
-				print("Votre login a ete modifie avec succes. Redirection...");
+				print("Votre login a ete modifi&eacute; avec succes. Redirection...");
 				print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;  							
 			}
 		}
