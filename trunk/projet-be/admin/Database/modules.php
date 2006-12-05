@@ -104,7 +104,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			
 		// Ajout module		
 		dbQuery('INSERT INTO module
-			VALUES (NULL, '.$dipID.', "'.$intitule.'", 1, "'.$description.'", "'. (int)$_POST['ects'] . '", "'. (int)$_POST['pscc'] . '", "'. (int)$_POST['pscp'] . '", "'. (int)$_POST['psct'] . '", "'. (int)$_POST['sscc'] . '", "'. (int)$_POST['sscp'] . '", "'. (int)$_POST['ssct'] . '", "'. (int)$_POST['semestre'] . '", "'. (int)$_POST['moduleResp'] . '","0")') ;
+			VALUES (NULL, '.$dipID.', "'.$intitule.'", 1, "'.$description.'", "0", "0", "0", "'.(((int)$_POST['semestre'])+($dipID*2)).'", "'. (int)$_POST['moduleResp'] . '", "", "0")') ;
 		
 		// on recupere l'identifiant du module cree
 		$modID = mysql_insert_id();
@@ -115,7 +115,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		{
 			if($_POST['respMod'] == 'oui' && $_POST['moduleResp'] != '0')
 			{
-				$req = "INSERT INTO `resp-module` VALUES (". $_POST['moduleResp'] .",". $modID .")";
+				$req = "UPDATE module
+						SET `id-responsable` = ".$_POST['moduleResp']."
+						WHERE `id-module` = ".$modID;
 				dbQuery($req);
 			}
 		}else{
@@ -174,10 +176,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 				
 		$moduleExists = mysql_num_rows($moduleInfo) ; 
 			
-		// si quelque chose existe deja
+		// si un module de meme nom existe deja
 		if ($moduleExists > 0)
 		{
-			centeredInfoMessage(3, 3, "Impossible de modifier ce module car il existe d&eacute;j&agrave;, redirection...") ;
+			centeredInfoMessage(3, 3, "Impossible de modifier l'intitule de ce module car il en existe d&eacute;j&agrave; un de meme nom, redirection...") ;
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=modules&a=mod&id={$_POST['moduleID']}\">\n") ;
 			return ;
 		}
@@ -191,27 +193,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		
 		// on ajoute sinon	
 		dbQuery('UPDATE module
-			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", description = "'.$description.'", `id-responsable` = "'. $moduleResp . '", ECTS = "'. (int)$_POST['ects'] . '", PS_CC = "'. (int)$_POST['pscc'] . '", PS_CP = "'. (int)$_POST['pscp'] . '", PS_CT = "'. (int)$_POST['psct'] . '", SS_CC = "'. (int)$_POST['sscc'] . '", SS_CP = "'. (int)$_POST['sscp'] . '", SS_CT = "'. (int)$_POST['ssct'] . '", no_semestre = "'. (int)$_POST['semestre'] . '", id_node = "0"
+			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", description = "'.$description.'", no_semestre = "'.(((int)$_POST['semestre']) + 2*$dipID).'", `id-responsable` = "'. $moduleResp . '", id_node = "0"
 			WHERE `id-module` = '.$_POST['moduleID']) ;
-		
-		// suppression du responsable de module actuel
-		dbQuery('DELETE
-				FROM `resp-module`
-				WHERE `id-module` = '.$_POST['moduleID']) ;
-		
-		// ajout du nouveau responsable de module s'il y a
-		if(isset($_POST['respMod']))
-		{
-			if($_POST['respMod'] == 'oui' && $_POST['moduleResp'] != '0')
-			{
-				$req = "INSERT INTO `resp-module` VALUES (". $_POST['moduleResp'] .",".$_POST['moduleID'].")";
-				dbQuery($req);
-			}
-		}
-		else
-		{
-			print("Erreur le champ demandé n'existe pas !");
-		}
 		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module modifi&eacute; avec succ&egrave;s, redirection...") ;
@@ -248,17 +231,44 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 				dbQuery('DELETE
 					FROM enseignement
 					WHERE `id-matiere` = '.$details['id-matiere']) ;
+					
+				// Suppression des eventuels contrôles de module
+				$evalList = dbQuery('SELECT `id-evaluation`
+					FROM evaluation
+					WHERE `id-matiere` = '.$details['id-matiere']) ;
+				// et donc suppression des notes	
+				while ($detailsEval = mysql_fetch_array($evalList))	
+				{
+					dbQuery('DELETE
+						FROM note
+						WHERE `id-evaluation` = '.$detailsEval['id-evaluation']) ;
+				}
+				
+				// suppression des controles de matiere
 				dbQuery('DELETE
-					FROM est_evalue
+					FROM evaluation
 					WHERE `id-matiere` = '.$details['id-matiere']) ;
 			}
 			
 			dbQuery('DELETE
 				FROM matiere
-				WHERE `id-module` = '.$idKey) ;	
+				WHERE `id-module` = '.$idKey) ;
 			
+			// Suppression des eventuels contrôles de module
+			$evalList = dbQuery('SELECT `id-evaluation`
+				FROM evaluation
+				WHERE `id-module` = '.$idKey) ;
+			// et donc suppression des notes	
+			while ($details = mysql_fetch_array($evalList))	
+			{
+				dbQuery('DELETE
+					FROM note
+					WHERE `id-evaluation` = '.$details['id-evaluation']) ;
+			}
+			
+			// suppression des controles de module
 			dbQuery('DELETE
-				FROM `resp-module`
+				FROM evaluation
 				WHERE `id-module` = '.$idKey) ;
 					
 			dbQuery('DELETE
