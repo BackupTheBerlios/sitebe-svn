@@ -41,7 +41,26 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$mdp = md5($_POST['mdpEnseignant']);
 		$mdp = addslashes($mdp) ;
 		$idUe = $_POST['ue'];
-
+		
+		// on verifie si le login est unique
+		$logEtu = dbQuery('SELECT COUNT(*) AS counter
+			FROM etudiant
+			WHERE login = "'.$login.'"') ;
+		$logEns = dbQuery('SELECT COUNT(*) AS counter
+			FROM enseignant
+			WHERE login = "'.$login.'"') ;
+			
+		$logEtu = mysql_fetch_array($logEtu) ;
+		$logEns = mysql_fetch_array($logEns) ;	
+		
+		// login existant
+		if ($logEtu['counter'] + $logEns['counter'] != 0)
+		{
+			centeredErrorMessage(3, 3, "Ce login semble d&eacute;j&egrave; exister, redirection...") ;
+			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignant&a=add\">\n") ;				
+			return ;
+		}
+		
 		// on insere le nouveau enseignant
 		dbQuery('INSERT INTO enseignant
 			VALUES (NULL, "'.$nom.'", "'.$prenom.'", "'.$mail.'", "'.$login.'", "'.$mdp.'")') ;
@@ -53,7 +72,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			if($_POST['respUe'] == 'oui')
 			{
 				$idProf = mysql_insert_id();
-				$req = "INSERT INTO `resp-module` VALUES (". $idProf .",". $idUe .")";
+				$req = "UPDATE module
+						SET `id-module` = ".$idUe."
+						WHERE `id-responsable` = ".$idProf ;
 				dbQuery($req);
 			}
 		}else{
@@ -83,7 +104,27 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$login = addslashes($login) ;
 		$mdp = md5($_POST['mdpEnseignant']);
 		$mdp = addslashes($mdp) ;
+		
+		// on verifie si le login est unique
+		$logEtu = dbQuery('SELECT COUNT(*) AS counter
+			FROM etudiant
+			WHERE login = "'.$login.'"') ;
+		$logEns = dbQuery('SELECT COUNT(*) AS counter
+			FROM enseignant
+			WHERE login = "'.$login.'"
+			AND `id-enseignant` <> '.$_POST['enseignantID']) ;
 			
+		$logEtu = mysql_fetch_array($logEtu) ;
+		$logEns = mysql_fetch_array($logEns) ;	
+		
+		// login existant
+		if ($logEtu['counter'] + $logEns['counter'] != 0)
+		{
+			centeredErrorMessage(3, 3, "Ce login semble d&eacute;j&egrave; exister, redirection...") ;
+			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignant&a=mod\">\n") ;				
+			return ;
+		}
+		
 		// on met a jour l'enseignant
 		dbQuery('UPDATE enseignant
 			SET nom = "'.$nom.'", prenom = "'.$prenom.'", mail = "'.$mail.'", login = "'.$login.'", mdp = "'.$mdp.'"
@@ -121,12 +162,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 				dbQuery('DELETE
 					FROM enseignement				
 					WHERE `id-enseignant` = '.$idKey) ;
-				dbQuery('DELETE
-					FROM `resp-diplome`				
-					WHERE `id-enseignant` = '.$idKey) ;
-				dbQuery('DELETE
-					FROM `resp-module`				
-					WHERE `id-enseignant` = '.$idKey) ;
+				dbQuery('UPDATE module
+					SET `id-responsable` = 0				
+					WHERE `id-responsable` = '.$idKey) ;
 			}
 			dbClose() ;
 			centeredInfoMessage(3, 3, "Enseignant(s) supprim&eacute;(s) avec succ&egrave;s, redirection...") ;

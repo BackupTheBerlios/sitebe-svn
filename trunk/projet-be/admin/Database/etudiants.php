@@ -152,7 +152,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		if ($logEtu['counter'] + $logEns['counter'] != 0)
 		{
 			centeredErrorMessage(3, 3, "Ce login semble d&eacute;j&egrave; exister, redirection...") ;
-			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=etudiants&a=add\">\n") ;				
+			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=etudiants&a=mod\">\n") ;				
 			return ;
 		}
 		

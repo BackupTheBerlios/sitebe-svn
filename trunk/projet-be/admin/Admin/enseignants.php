@@ -199,7 +199,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					print("\t\t\t\t</tr>\n") ; 
 
 					print("\t\t\t\t<tr>\n") ;
-					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Mot de passe :</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"mdpEnseignant\" size=\"25\" value=\"{$enseignantDetails['mdp']}\"></td>\n") ;
+					print("\t\t\t\t\t<td width=\"400\" align=\"left\"><b> Mot de passe :</td><td width=\"300\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"mdpEnseignant\" size=\"25\" value=\"\"></td>\n") ;
 					print("\t\t\t\t</tr>\n") ;
 
 					print("\t\t\t\t<tr>\n") ;
@@ -214,9 +214,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			}
 		
 		} // end of if mod
-		
-		
-		
 		
 		// suppression d'un element
 		elseif ($_GET['a'] == "del")
