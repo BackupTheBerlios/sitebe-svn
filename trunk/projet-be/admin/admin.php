@@ -177,7 +177,7 @@ if (isset($_GET['w']))
 		print("\t\t\t<table cellpadding=\"0\" cellspacing=\"3\">\n") ;
 		print("\t\t\t\t<tr>\n") ;
 		print("\t\t\t\t\t<td width=\"100\" align=\"left\">Session</td>\n") ;
-		print("\t\t\t\t\t<td width=\"100\" align=\"left\" colspan=\"2\">&lt; <a href=\"admin.php?w=logout\">Deconnexion</a> &gt;</td>\n") ;
+		print("\t\t\t\t\t<td width=\"100\" align=\"left\" colspan=\"2\">&lt; <a href=\"admin.php?w=logout\">D&eacute;connexion</a> &gt;</td>\n") ;
 		print("\t\t\t\t</tr>\n") ;
 		print("\t\t\t\t<tr>\n") ;
 		print("\t\t\t\t<td width=\"100\" align=\"left\">Navigation</td>\n") ;

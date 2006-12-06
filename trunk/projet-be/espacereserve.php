@@ -46,6 +46,9 @@
 			<td width="150" valign="top">
 				<div id="theme">
 <?php
+	/**********************
+	*     Menu lateral     
+	**********************/
 	$sql = "SELECT * FROM menu WHERE ID_PMENU='0' ORDER BY ORDRE";
 	$res = DB_query($sql);
 	while($row = DB_fetchArray($res))
@@ -65,7 +68,7 @@
 ?>
 				</div>
 				<div id="direction">
-					<!--debut direction-->
+					<!--====================== debut direction =================-->
 					<h1>Responsable</h1>Henri MASSIE&nbsp;<br />
 					<a href="mailto:massie@irit.fr">massie@irit.fr</a>&nbsp;<br />
 					T&eacute;l : 05 61 55 63 52<br />
@@ -310,16 +313,16 @@
 				}
 				else
 				{
-				  print("<form name=\"formMatiere\" action=\"espacereserve.php?p=connexion&w=enseignants&a=acces\" method=\"post\">\n");
-				  print("<tr align=\"center\">\n") ;
-				  print("<td width=\"200\"><select class=\"defaultInput\" name=\"matiereListe\">") ;
+					print("<form name=\"formMatiere\" action=\"espacereserve.php?p=connexion&w=enseignants&a=acces\" method=\"post\">\n");
+					print("<tr align=\"center\">\n") ;
+					print("<td width=\"200\"><select class=\"defaultInput\" name=\"matiereListe\">") ;
 					
 					for ($i = 0 ; $i < $matiereCount ; $i++)
 					{
 						$fmatiereList = mysql_fetch_array($matiereList) ;
 						print("<option value=\"{$fmatiereList['id-matiere']}\"> {$fmatiereList['intitule']} </option>\n");
 					}
-				  print("</selected></td></tr>\n") ;
+					print("</selected></td></tr>\n") ;
 					print("<tr align=\"center\">\n") ;
 					print("<td width=\"200\"><input type=\"submit\" name=\"valider\" value=\"Valider\">\n</td>\n") ;
 					print("</tr>\n") ;
@@ -338,13 +341,13 @@
 			//un etudiant est connecte
 			elseif(isset($_SESSION['etuConnecte']) && $_SESSION['etuConnecte'])
 			{
-				print("<td width=\"800\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=etudiants&a=logout\">Deconnexion</a> &gt;</td>\n");
+				print("<td width=\"800\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?p=connexion&w=etudiants&a=logout\">D&eacute;connexion</a> &gt;</td>\n");
 				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
 				print("<tr>\n");
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\">Consulter les fichiers &agrave; t&eacute;l&eacute;charger</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"deposer_doc.php\">D&eacute;poser un fichier</a></td>");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=dep\">D&eacute;poser un fichier</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=etudiants&a=modif&b=pass\">Modifier password</a></td>");
@@ -370,7 +373,6 @@
 			else
 			{
 				print("Page introuvable ".$_GET['w']);
-				//print("<br><br><center>[ <a href=\"admin.php\">menu principal</a> ]</center>\n");
 			}
 		}
 	}

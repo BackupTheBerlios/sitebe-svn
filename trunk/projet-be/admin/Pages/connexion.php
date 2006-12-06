@@ -542,7 +542,7 @@ else
 
     print("\t\t\t\t\t<td width=\"400\" align=\"left\"><br><br><div id=\"centerTitle\">Bienvenue ".$_SESSION['nom']." ".$_SESSION['prenom']." !!!!</div><br><br></td>");
 
-    print("\t\t\t\t\t<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"index.php?p=connexion&w=".$_GET['w']."&a=logout\">Deconnexion</a> &gt;</td>\n");
+    print("\t\t\t\t\t<td width=\"400\" align=\"right\"><br><br>&lt; <a href=\"index.php?p=connexion&w=".$_GET['w']."&a=logout\">D&eacute;connexion</a> &gt;</td>\n");
 
     print("\t\t\t\t</tr>\n") ;
 
@@ -672,7 +672,7 @@ else
 
 	print("\t\t\t\t\t<td width=\"100\" align=\"left\">Session</td>\n") ;
 
-	print("\t\t\t\t\t<td width=\"100\" align=\"left\" colspan=\"2\">&lt; <a href=\"index.php?p=connexion&w=logout\">Deconnexion</a> &gt;</td>\n") ;
+	print("\t\t\t\t\t<td width=\"100\" align=\"left\" colspan=\"2\">&lt; <a href=\"index.php?p=connexion&w=logout\">D&eacute;connexion</a> &gt;</td>\n") ;
 
 	print("\t\t\t\t</tr>\n") ;
 
