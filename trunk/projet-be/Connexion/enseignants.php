@@ -84,7 +84,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$dip_count = mysql_num_rows($id_diplome);
 			$id_diplome = mysql_fetch_array($id_diplome);
 			$id_diplome = $id_diplome['id-diplome'];
-			$fichList = DB_Query('SELECT `id-fichier`, titre FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-enseignant` ="'.$_SESSION['id-enseignant'].'" ORDER BY titre') ;
+			$fichList = DB_Query('SELECT `id-fichier`, titre FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-prop` ="'.$_SESSION['id-enseignant'].'" ORDER BY titre') ;
 			$fichCount = mysql_num_rows($fichList) ;
 			// aucun enseignant pour le moment
 			if ($fichCount == 0)
