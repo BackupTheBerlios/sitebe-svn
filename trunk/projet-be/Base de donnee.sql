@@ -86,7 +86,7 @@ CREATE TABLE `secretaire` (
 
 
 
-INSERT INTO `secretaire` (`login`, `passwd`) VALUES ('secretaire', 'secretaire');
+INSERT INTO `secretaire` (`id-secretaire`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES ('1', 'AIROLA', 'Christine', 'airola@cict.fr', 'secretaire', 'secretaire');
 
 
 
