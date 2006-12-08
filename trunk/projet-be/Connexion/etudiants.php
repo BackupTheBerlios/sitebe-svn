@@ -10,7 +10,7 @@
 
 // on verifie toujours que cette page a ete appelee a partir de l'espace reserve
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
-{
+{	
 	/*
 	if (!isset($_GET['a']))
 	{
@@ -30,28 +30,57 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		}
 		
 		/* visu ...*/
-		if($_GET['a']== "tele")
+		if ($_GET['a'] == "load")
+
 		{
-			if(isset($_POST['depot']))
+        	$requettediplome = "select * from diplome where `intitule` = '".$_SESSION['diplome']."'";
+        	$res= DB_Query($requettediplome);
+        	$liste = mysql_fetch_array($res);
+            $fileList = DB_Query('SELECT *
+                                   FROM fichier
+                                   WHERE `id-diplome` = "'.$liste['id-diplome'].'"
+                                   ORDER BY `id-fichier`');
+            $fileCount = mysql_num_rows($fileList);
+            
+            //print("<table  cellspacing=\"1\" cellpadding=\"0\>") ;
+
+            if ($fileCount == 0)
 			{
-				$valeur=stripslashes($_POST['depot']);
-				$valeur2=stripslashes($_POST['file']);
-				$valeur3=stripslashes($valeur2);
-				// teste de toutes les facons
-				copy($_POST['file'], $valeur."".$_POST['fic']);
-				//if ($success) { $finalCV = $fileId."_fich.".$finalExtension ; }
+				print("<table cellspacing=\"3\" cellpadding=\"0\">") ;
+				print("<tr>\n") ;
+				print("<td width=\"600\" align=\"center\"> ");
+				print "Aucun fichier pr&eacute;sent pour ce diplome !" ;
+				print("</td></tr>") ;
 			}
-			else
+			if ($fileCount > 0)
 			{
-				print("\t\t\t<center><form name=\"Form\" action=\"espacereserve.php?p=connexion&w=etudiants&a=tele\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
-				print("\t\t\t<table  cellspacing=\"1\" cellpadding=\"0\>\n") ;
-				print("\t\t\t\t<tr>\n") ;
-				print("\t\t\t\t\t<td align=\"left\"><input type=\"hidden\" name=\"fic\" value=\"".$_GET['fic']."\"><input type=\"hidden\" name=\"file\" value=\"".$_GET['chemin']."\"><b> repertoire de telechargement </b></td><td width=\"700\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"depot\" size=\"40\"></td>\n") ;
-				print("\t\t\t\t</tr>\n") ;
-				print "<tr><td><input class=\"defaultButton\" type=\"submit\" name=\"addButton\" value=\"D&eacute;poser\" ></td></tr>  ";      
-				print("\t\t\t\t</table");
-			}
-		}
+				for ($i=0; $i<$fileCount; $i++)
+				{
+				       $fFileList = mysql_fetch_array($fileList);
+					   $fensDetails = DB_Query('SELECT nom, prenom
+                                                           FROM enseignant
+                                                           WHERE `id-enseignant` = "'.$fFileList['id-prop'].'"');
+						
+                        $ensDetails = mysql_fetch_array($fensDetails);
+						print("\t\t\t\t<tr>\n") ;
+						print("<td align=\"left\" width=\"400\">");
+						//print("<div class=\"blueZone\">");
+						print("<h1><u>".$ensDetails['nom']." ".$ensDetails['prenom']."</h1></u><br>") ;
+						print("<u>".$fFileList['titre']."</u><br><br>") ;
+						$fFileList['commentaire'] = nl2br($fFileList['commentaire']);
+						print($fFileList['commentaire']."<br>") ;
+						$chaine = explode(" ",$liste['intitule']);
+						$finalchaine = $chaine[0]."".$chaine[1];
+						print("<a href=Data/Telechargement/".$finalchaine."/".$fFileList['URL'].">Telechargement</a>");
+						//print("</div>");
+						print("\t\t\t\t</tr>\n") ;
+				}
+            }
+			//infoMessage(3,3,"Page en cours de construction......");
+			print("\t\t\t</table>\n");
+        }
+		
+		
 		
 		/****************************************************
 		*     Partie modification (login ou mot de passe)    
