@@ -209,6 +209,7 @@ CREATE TABLE `evaluation` (
   `id-matiere` int(8) NOT NULL default '0', 
   `id-module` int(8) NOT NULL default '0',
   `type` varchar(20) NOT NULL default '', 
+  `apogee` varchar(20) NOT NULL default '', 
   PRIMARY KEY  (`id-evaluation`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -332,8 +333,7 @@ CREATE TABLE `fichier` (
   `id-fichier` int(4) NOT NULL auto_increment,
   `titre` varchar(40) NOT NULL default '',
   `id-diplome` int(2) NOT NULL default '0',
-  `id-enseignant` int(8) NOT NULL default '0', 
-  `id-etudiant` int(8) NOT NULL default '0',
+  `id-prop` int(8) NOT NULL default '0', 
   `URL` varchar(100) NOT NULL default '',
   `commentaire` text,
   PRIMARY KEY  (`id-fichier`)
@@ -346,49 +346,6 @@ CREATE TABLE `fichier` (
 -- Contenu de la table `fichier`
 
 -- 
-
-
-
--- --------------------------------------------------------
-
-
-
--- 
-
--- Structure de la table `information`
-
--- 
-
-
-
-CREATE TABLE `information` (
-  `id-information` int(8) NOT NULL auto_increment,
-  `titre` varchar(40) NOT NULL default '',
-  `DATE_CREATION` datetime NOT NULL default '0000-00-00 00:00:00' COMMENT 'Date de création de la nouvelle',
-  `DATE_MODIFICATION` datetime NOT NULL default '0000-00-00 00:00:00' COMMENT 'Date de modification de la nouvelle',
-  `contenu` text NOT NULL,
-  `URL` varchar(200) NOT NULL default '',
-  `etat` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`id-information`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
--- 
-
--- Contenu de la table `information`
-
--- 
-
-
-
-INSERT INTO `information` (`id-information`, `titre`, `DATE_CREATION`, `DATE_MODIFICATION`, `contenu`, `URL`, `etat`) VALUES (19, 'Bonjour', '0000-00-00 00:00:00', '2005-11-25 16:10:36', '0', '', 0);
-
-INSERT INTO `information` (`id-information`, `titre`, `DATE_CREATION`, `DATE_MODIFICATION`, `contenu`, `URL`, `etat`) VALUES (34, 'Ceci est encore un test', '2005-11-28 09:06:29', '2005-11-28 09:06:29', 'Salut', '', 1);
-
-INSERT INTO `information` (`id-information`, `titre`, `DATE_CREATION`, `DATE_MODIFICATION`, `contenu`, `URL`, `etat`) VALUES (31, 'salut c&#146;est moi', '2005-11-27 00:00:00', '2005-11-27 21:38:36', 'Ceci est un test !', '', 1);
-
-INSERT INTO `information` (`id-information`, `titre`, `DATE_CREATION`, `DATE_MODIFICATION`, `contenu`, `URL`, `etat`) VALUES (33, 'test', '2005-11-21 10:03:02', '2005-11-21 10:05:29', 'Ceci est une news test !', '', 1);
 
 
 
