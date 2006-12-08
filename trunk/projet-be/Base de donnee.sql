@@ -50,7 +50,44 @@ CREATE TABLE `administrateur` (
 
 
 
-INSERT INTO `administrateur` (`login`, `passwd`) VALUES ('gogo', 'maggy');
+INSERT INTO `administrateur` (`login`, `passwd`) VALUES ('admin', 'admin');
+
+
+
+-- --------------------------------------------------------
+
+
+
+-- 
+
+-- Structure de la table `secretaire`
+
+-- 
+
+
+
+CREATE TABLE `secretaire` (
+  `id-secretaire` int(8) NOT NULL auto_increment,
+  `nom` varchar(30) NOT NULL default '',
+  `prenom` varchar(30) NOT NULL default '',
+  `mail` varchar(100) default NULL,
+  `login` varchar(20) NOT NULL default '',
+  `mdp` varchar(40) NOT NULL default '',
+  PRIMARY KEY  (`id-secretaire`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
+-- 
+
+-- Contenu de la table `secretaire`
+
+-- 
+
+
+
+INSERT INTO `secretaire` (`login`, `passwd`) VALUES ('secretaire', 'secretaire');
+
 
 
 
