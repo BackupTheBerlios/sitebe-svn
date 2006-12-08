@@ -7,7 +7,7 @@
 ** Description : Contient toutes les variables de configuration du site
 */
 // database settings
-$db['name'] = "l3isb3" ;
+$db['name'] = "be3" ;
 $db['host'] = "localhost" ;
 $db['user'] = "root" ;
 $db['pass'] = "" ; 

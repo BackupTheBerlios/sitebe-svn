@@ -2,7 +2,7 @@
 
 // Informations relatives à la BD
 $_DB_host = 'localhost';
-$_DB_name = 'l3isb3';
+$_DB_name = 'be3';
 $_DB_user = 'root';
 $_DB_pass = '';
 
