@@ -179,19 +179,6 @@ if (isset($_GET['w']))
 		print("\t\t\t\t\t<td width=\"100\" align=\"left\">Session</td>\n") ;
 		print("\t\t\t\t\t<td width=\"100\" align=\"left\" colspan=\"2\">&lt; <a href=\"admin.php?w=logout\">D&eacute;connexion</a> &gt;</td>\n") ;
 		print("\t\t\t\t</tr>\n") ;
-		print("\t\t\t\t<tr>\n") ;
-		print("\t\t\t\t<td width=\"100\" align=\"left\">Navigation</td>\n") ;
-		if (isset($_SESSION['rootNavigation']) && ($_SESSION['rootNavigation'] == true))
-		{
-			print("\t\t\t\t\t<td width=\"100\" align=\"left\">&lt; <a href=\"admin.php?w=changenavigation\">Normale</a> &gt;</td>\n") ;
-			print("\t\t\t\t\t<td align=\"left\">Vous utiliserez le site principal comme un utilisateur normal</td>\n") ;
-		}
-		else
-		{
-			print("\t\t\t\t\t<td width=\"100\" align=\"left\">&lt; <a href=\"admin.php?w=changenavigation\">Admin</a> &gt;</td>\n") ;
-			print("\t\t\t\t\t<td align=\"left\">Vous pourrez administrer certaines parties &agrave; partir du site principal</td>\n") ;
-		}
-		print("\t\t\t\t</tr>\n") ;
 		print("\t\t\t</table>\n") ;
 		// rien n'est encore defini, on affiche le menu general
 		if (! isset($_GET['w']))
@@ -264,18 +251,6 @@ if (isset($_GET['w']))
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=responsable_module&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=responsable_module&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;		
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=responsable_module&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"><b>Gestion des dipl&ocirc;mes</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=diplomes&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=diplomes&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=diplomes&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"> &raquo; <b>Responsables de dipl&ocirc;mes</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=responsable_diplome&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=responsable_diplome&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=responsable_diplome&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;		
 			print("\t\t\t</table><br><br>\n") ;	
 		}

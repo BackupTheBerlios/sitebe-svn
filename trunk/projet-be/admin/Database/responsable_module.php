@@ -30,7 +30,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$enseignant = trim($_POST['enseignant']) ;
 		$module = trim($_POST['module']) ;
 			
-		// on teste si l'enseignant et la module existent bien
+		// on teste si l'enseignant et le module existent bien
 		$enseignantCount = dbQuery('SELECT COUNT(`id-enseignant`) AS n
 			FROM enseignant
 			WHERE `id-enseignant` = '.$enseignant) ;
@@ -51,10 +51,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		}
 				
 		// on teste si la liaison existe deja
-		$respModCount = dbQuery('SELECT COUNT(`id-enseignant`) AS n
-			FROM `resp-module`
-			WHERE `id-enseignant` = '.$enseignant.' AND
-				`id-module` = '.$module) ;
+		$respModCount = dbQuery('SELECT COUNT(`id-module`) AS n
+			FROM module
+			WHERE `id-responsable` = '.$enseignant.'
+				AND `id-module` = '.$module) ;
 					
 		$respModCount = mysql_fetch_array($respModCount) ;
 			
@@ -64,22 +64,24 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
 			return ;
 		}
-	   
-    //on regarde s'il y a deja un responsable pour le module
-    $requette=dbQuery('SELECT `id-module` FROM `resp-module` WHERE 1');
-    while($resultat = mysql_fetch_array($requette))
-    {
-        if($resultat['id-module'] == $module)
-        {
-          centeredInfoMessage(3, 3, "un responsable existe d&eacute;j&agrave; pour ce module, redirection...") ;
-		    	print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
-		    	return ;
-        }
-    }
-    			
+		
+		//on regarde s'il y a deja un responsable pour le module
+		$resultat = mysql_fetch_array(dbQuery('SELECT COUNT(`id-module`) AS n
+											FROM `module`
+											WHERE `id-module` = '.$module.'
+											AND `id-responsable` <> 0'));
+		
+		if ($resultat['n'] > 0)
+		{
+			centeredInfoMessage(3, 3, "Ce module a d&eacute;j&agrave; un responsable, redirection...") ;
+			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
+			return ;
+		}
+    				
 		// on ajoute
-		dbQuery('INSERT INTO `resp-module`
-			VALUES ('.$enseignant.', '.$module.')') ;
+		dbQuery('UPDATE module
+				SET `id-responsable` = "'.$enseignant.'"
+				WHERE `id-module` = "'.$module.'"') ;
 				
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Responsabilit&eacute; ajout&eacute;e avec succ&egrave;s, redirection...") ;
@@ -95,10 +97,11 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 	{
 		dbConnect() ;
 			
-		$enseignant = $_POST['enseignant'] ;
+		$enseignant = $_POST['oldEns'] ;
 		$module = trim($_POST['module']) ;
+		$responsable = $_POST['responsable'];
 			
-		// on teste si la module existe bien			
+		// on teste si le module existe bien			
 		$moduleCount = dbQuery('SELECT COUNT(`id-module`) AS n
 			FROM module
 			WHERE `id-module` = '.$module) ;
@@ -111,25 +114,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module&a=mod\">\n") ;
 			return ;
 		}
-				
-		// on teste si cette existe deja
-		$ensCount = dbQuery('SELECT COUNT(`id-enseignant`) AS n
-			FROM `resp-module`
-			WHERE `id-enseignant` = '.$enseignant.' AND
-				`id-module` = '.$module) ;
-					
-		$ensCount = mysql_fetch_array($ensCount) ;
-			
-		if ($ensCount['n'] > 0)
-		{
-			centeredInfoMessage(3, 3, "Cette liaison existe d&eacute;j&agrave;, redirection...") ;
-			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
-			return ;
-		}
 		
-		dbQuery('UPDATE `resp-module`
-			SET `id-module` = '.$module.'
-			WHERE `id-enseignant` = '.$enseignant.' AND `id-module` = '.$_POST['oldModule']) ;
+		dbQuery('UPDATE `module`
+			SET `id-responsable` = '.$responsable.'
+			WHERE `id-module` = '.$module) ;
 				
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Responsable module modifi&eacute; avec succ&egrave;s, redirection...") ;
@@ -146,23 +134,20 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		// aucun choix defini
 		if (!isset($_POST['id']))
 		{
-			centeredErrorMessage(3, 3, "Aucune responsabilit&eacute; de module selectionn&eacute;, redirection...") ;
+			centeredErrorMessage(3, 3, "Aucun module selectionn&eacute;, redirection...") ;
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module&a=del\">\n") ;
 			return ;
 		}
 		
 		dbConnect() ;			
-			
-		foreach ($_POST['id'] as $module)
-		{				
-			dbQuery('DELETE FROM `resp-module`
-				WHERE `id-module` = '.$module.' AND
-					`id-enseignant` = '.$_POST['enseignant']) ;
-		}
-			
+						
+		dbQuery('UPDATE `module`
+			SET `id-responsable` = 0
+			WHERE `id-module` = '.$_POST['id']);
+		
 			
 		dbClose() ;
-		centeredInfoMessage(3, 3, "Liaison(s) supprim&eacute;e(s) avec succ&egrave;s, redirection...") ;
+		centeredInfoMessage(3, 3, "Responsable supprim&eacute;e avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
 			
 	} // end of menuDel
