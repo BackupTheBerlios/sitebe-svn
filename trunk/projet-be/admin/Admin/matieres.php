@@ -34,14 +34,18 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			centeredInfoMessage(3, 3, "Administration des mati&egrave;res : ajout") ;
 			dbConnect() ;
 			
-			// liste des diplomes
-			$moduleList = dbQuery('SELECT COUNT(`id-module`) AS modNumb
-				FROM module') ;
+			// liste des diplomes contenant un ou plusieurs modules
+			$diplomeList = dbQuery('SELECT `id-diplome`, intitule
+				FROM diplome
+				WHERE 0 < (SELECT COUNT(`id-module`)
+						FROM module
+						WHERE module.`id-diplome` = diplome.`id-diplome`
+						GROUP BY module.`id-diplome`)') ;
+				
+			$diplomeCount = mysql_num_rows($diplomeList) ;
+			$diplomeList = mysql_fetch_array($diplomeList) ;
 			
-			$moduleList = mysql_fetch_array($moduleList) ;	
-			$moduleCount = $moduleList['modNumb'] ;
-			
-			if ($moduleCount == 0)
+			if ($diplomeCount == 0)
 			{
 				centeredInfoMessage(2, 2, "Il faut d'abord ajouter des modules") ;
 				return ;
@@ -60,22 +64,30 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Nombre d'heures *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereHeures\" size=\"7\" maxlength=\"7\"></td>") ;
 			print("\t\t\t\t</tr>\n") ;
-    
-            $modulesList = dbQuery('SELECT `id-module`, intitule
+    
+
+            $modulesList = dbQuery('SELECT `id-module`, intitule, no_semestre
                 FROM module
-                ORDER BY intitule') ;
+                ORDER BY no_semestre, intitule') ;
+
                 
 			print("\t\t\t\t<tr>\n") ;   
-			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute; *</td><td width=\"100\" align=\"left\">");
-            
-            print("<select class=\"defaultInput\" name=\"matiereModule\">") ;
-            $modulesCount = mysql_num_rows($modulesList) ;
+			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute; *</td><td width=\"100\" align=\"left\">");
+
+            
+
+            print("<select class=\"defaultInput\" name=\"matiereModule\">") ;
+
+            $modulesCount = mysql_num_rows($modulesList) ;
+
             for ($i = 0 ; $i < $modulesCount ; $i++)
             {
                 $fModulesList = mysql_fetch_array($modulesList) ;
-                echo "<option value=\"".$fModulesList[0]."\">".$fModulesList[1]."</option>\n";
-            }
-            print("</select></td>");
+                echo "<option value=\"".$fModulesList[0]."\">s".$fModulesList[2]." - ".$fModulesList[1]."</option>\n";
+            }
+
+            print("</select></td>");
+
             
 			print("\t\t\t\t</tr>\n") ;			
 			
@@ -259,6 +271,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				if ($matiereExists == 0)
 				{
 					centeredInfoMessage(2, 2, "Rien ne correspond &agrave; cette mati&egrave;re") ;
+					return;
 				}
 				
 				else
@@ -281,19 +294,26 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			
                     $modulesList = dbQuery('SELECT `id-module`, intitule
                         FROM module
-                        ORDER BY intitule') ;
+                        ORDER BY intitule') ;
+
                         
                     print("\t\t\t\t<tr>\n") ;   
-                    print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute; *</td><td width=\"100\" align=\"left\">");
-                    
-                    print("<select class=\"defaultInput\" name=\"matiereModule\">") ;
-                    $modulesCount = mysql_num_rows($modulesList) ;
+                    print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute; *</td><td width=\"100\" align=\"left\">");
+
+                    
+
+                    print("<select class=\"defaultInput\" name=\"matiereModule\">") ;
+
+                    $modulesCount = mysql_num_rows($modulesList) ;
+
                     for ($i = 0 ; $i < $modulesCount ; $i++)
                     {
                         $fModulesList = mysql_fetch_array($modulesList) ;
                         echo "<option value=\"".$fModulesList[0]."\" " . (($fModulesList[0]==$matiereDetails['id-module'])?(" selected"):("")). ">".$fModulesList[1]."</option>\n";
-                    }
-                    print("</select></td>");
+                    }
+
+                    print("</select></td>");
+
                     
                     print("\t\t\t\t</tr>\n") ;		
 			

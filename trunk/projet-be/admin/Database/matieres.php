@@ -41,7 +41,8 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		// on verifie si la matiere existe deja
 		$matiereInfo = dbQuery('SELECT COUNT(`id-matiere`) AS matNumb
 			FROM matiere
-			WHERE intitule = "'.$intitule.'" AND `id-module` = '.$moduleID) ;
+			WHERE intitule = "'.$intitule.'"
+			AND `id-module` = '.$moduleID) ;
 				
 		$matiereInfo = mysql_fetch_array($matiereInfo) ; 
 			
@@ -54,7 +55,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		}
 		
 		dbQuery('INSERT INTO matiere
-			VALUES (NULL, '.$moduleID.', 0, '.$coeff.', "'.$intitule.'",'.$heures.', 0,0,0,0,0,0)') ;
+			VALUES (NULL, '.$moduleID.', 0, '.$coeff.', "'.$intitule.'",'.$heures.', 0,0,0,"")') ;
 					
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Mati&egrave;re ajout&eacute;e avec succ&egrave;s, redirection...") ;
@@ -130,17 +131,23 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			dbQuery('DELETE
 				FROM matiere						
 				WHERE `id-matiere` = '.$idKey) ;
-				
-			dbQuery('DELETE
-				FROM est_evalue						
-				WHERE `id-matiere` = '.$idKey) ;
 					
 			dbQuery('DELETE
 				FROM enseignement						
 				WHERE `id-matiere` = '.$idKey) ;
+			
+			dbQuery('DELETE
+				FROM note						
+				WHERE `id-evaluation` in (SELECT E.`id-evaluation`
+										FROM evaluation E
+										WHERE E.`id-matiere` = '.$idKey.')') ;
+			
+			dbQuery('DELETE
+				FROM evaluation						
+				WHERE `id-matiere` = '.$idKey) ;
 		}
-			
-			
+		
+		
 		dbClose() ;
 		centeredInfoMessage(3, 3, "Mati&egrave;re(s) et enseignements supprim&eacute;(s) avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=matieres\">\n") ;
