@@ -6,18 +6,18 @@
 		{
 			switch ($_FILES['fichier']['error'])
   			{
-        				case 1: // UPLOAD_ERR_INI_SIZE
-         				echo"Le fichier dépasse la limite autorisée par le serveur (fichier php.ini) !";
-         				break;
-         				case 2: // UPLOAD_ERR_FORM_SIZE
-         				echo "Le fichier dépasse la limite autorisée dans le formulaire HTML !";
-         				break;
-         				case 3: // UPLOAD_ERR_PARTIAL
-         				echo "L'envoi du fichier a été interrompu pendant le transfert !";
-         				break;
-         				case 4: // UPLOAD_ERR_NO_FILE
-         				echo "Le fichier que vous avez envoyé a une taille nulle !";
-         				break;
+					case 1: // UPLOAD_ERR_INI_SIZE
+					echo"Le fichier dépasse la limite autorisée par le serveur (fichier php.ini) !";
+					break;
+					case 2: // UPLOAD_ERR_FORM_SIZE
+					echo "Le fichier dépasse la limite autorisée dans le formulaire HTML !";
+					break;
+					case 3: // UPLOAD_ERR_PARTIAL
+					echo "L'envoi du fichier a été interrompu pendant le transfert !";
+					break;
+					case 4: // UPLOAD_ERR_NO_FILE
+					echo "Le fichier que vous avez envoyé a une taille nulle !";
+					break;
 			}
 			echo '</table>';
 		}
@@ -67,7 +67,15 @@
 				$diplome=$row[0];
 				
 				echo '</table>';
-				DB_Query('INSERT INTO fichier	VALUES (NULL, "'.$_POST['titreDepot'].'", "'.$diplome.'", "'.$prop.'", "'.$content_dir.$id_etu.$name_file.'", "'.$_POST['commentaireDepot'].'")') ;
+				if ($_GET['w']=='enseignants')
+				{
+					DB_Query('INSERT INTO fichier	VALUES (NULL, "'.$_POST['titreDepot'].'", "'.$diplome.'", "", "'.$prop.'", "'.$content_dir.$id_etu.$name_file.'", "'.$_POST['commentaireDepot'].'")') ;
+				}
+				elseif ($_GET['w']=='etudiants')
+				{
+					DB_Query('INSERT INTO fichier	VALUES (NULL, "'.$_POST['titreDepot'].'", "'.$diplome.'", "'.$prop.'","" , "'.$content_dir.$id_etu.$name_file.'", "'.$_POST['commentaireDepot'].'")') ;
+				} 
+				
 			}
 			print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=".$_GET['w']."\">\n") ;
 		}
@@ -90,7 +98,6 @@
 			
 			while($row = DB_fetchArray($res))
 			{
-				
 				print("<option value=\"$row[0]\">$row[1]</option>");
 			}
 			print("</select></td></tr>");
@@ -112,7 +119,6 @@
 		print("<td width=\"800\" colspan=\"3\" align=\"left\"><textarea class=\"defaultInput\" rows=\"10\" cols=\"50\" name=\"commentaireDepot\"></textarea><br><br></td>\n") ;
 		print("</tr>\n") ;
 		print("<tr><td><input type=submit value=\"D&eacute;poser\"></td></tr>");
-		print("</form></table>");           					
+		print("</form></table>");
 	}
 ?>
-

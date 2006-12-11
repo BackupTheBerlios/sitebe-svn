@@ -12,10 +12,10 @@
 	{
 		if(isset($_POST['password']))      $password=$_POST['password'];
 		else      $password="";
-	
+
 		if(isset($_POST['password2']))      $password2=$_POST['password2'];
 		else      $password2="";
-		
+
 		if(empty($password2) OR $password!=$password2)
 		{
 			if (isset($_POST['password']) OR isset($_POST['password2']))
@@ -48,15 +48,15 @@
 				$ens=$_SESSION['id-enseignant'];
 				mysql_query("UPDATE enseignant SET mdp='$password' where `id-enseignant`='$ens'")
 				or die('Erreur SQL ! <br>'.mysql_error());
-			}			
+			}
 			print("Votre mot de passe a ete modifie avec succes. Redirection...");
 			print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;
-		}					
+		}
 	}
 	elseif ($_GET['b']=='login')
 	{
-		if(isset($_POST['login']))      $login=$_POST['login'];
-		else      $login="";
+		if(isset($_POST['login']))	$login=$_POST['login'];
+		else	$login="";
 		if(empty($login))
 		{
 			if (isset($_POST['login']))
@@ -72,7 +72,7 @@
 		}
 		else
 		{
-			
+
 			//$res=mysql_query("SELECT count(*) FROM etudiant WHERE `id-etudiant`=(SELECT `id-etudiant` FROM etudiant WHERE login='$login')");
 			/*$res=mysql_query("SELECT count(*) FROM etudiant WHERE login='$login'");
 			$nb=mysql_fetch_array($res);*/
@@ -107,7 +107,7 @@
 					or die('Erreur SQL ! <br>'.mysql_error());
 				}
 				print("Votre login a ete modifi&eacute; avec succes. Redirection...");
-				print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;  							
+				print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;
 			}
 		}
 	}

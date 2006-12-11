@@ -6,7 +6,7 @@
 ** Version : 1.0
 ** Auteurs : julien SIEGA,emilien PERICO
 ** version : 2.0
-** 
+**
 ** Version Finale ! VAR Sovanramy & Dang Laurent !!
 ** Description : Fichier inclu charge de la gestion des fichiers par un enseignant
 **	depot, suppression
@@ -24,30 +24,30 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\">Gestion excel</a></td></tr>") ;
 		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>Visualisation</u></a></td>") ;
 		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>saisie des notes</u></a></td>") ;
-		print("</tr>\n") ;	
+		print("</tr>\n") ;
 		print "</table>";
 	}
 	else*/
 	if (isset($_GET['a']))
 	{
 		/****************************************************
-		*     Partie modification (login ou mot de passe)    
+		*     Partie modification (login ou mot de passe)
 		****************************************************/
 		if($_GET['a']=='modif')
 		{
 			// on include le fichier modif
 			require("modifier.php");
 		}
-		
+
 		/************************************************************
-		*     Affichage des options apres le choix de la matiere     
+		*     Affichage des options apres le choix de la matiere
 		************************************************************/
 		if ($_GET['a'] == "acces")
 		{
 			$intituleMat = DB_Query('SELECT intitule FROM matiere WHERE `id-matiere` ="'.$_POST['matiereListe'].'"');
 			$intituleFetch = mysql_fetch_array($intituleMat);
 			$inti = $intituleFetch['intitule'];
-			
+
 			print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("<tr>\n") ;
 			print("<td align=\"center\" width=\"800\"><br><b> Enseignement : ");
@@ -55,7 +55,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<br><br></b></td>") ;
 			print("</tr>\n") ;
 			print("</table>\n") ;
-			
+
 			print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep&mat=".$_POST['matiereListe']."\">D&eacute;poser des fichiers</a></td></tr>") ;
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep&mat=".$_POST['matiereListe']."\">Supprimer des fichiers</a></td></tr>") ;
@@ -63,20 +63,21 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation&mat=".$_POST['matiereListe']."\">Visualisation</a></td></tr>") ;
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note&mat=".$_POST['matiereListe']."\">Saisie des notes</a></td></tr>") ;
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=mail&b=form&mat=".$_POST['matiereListe']."\">Envoyer un mail a tous les etudiants</a></td></tr>") ;
-			print("</tr>\n") ;	
+			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=mkdir&mat=".$_POST['matiereListe']."\">Cr&eacute;er un dossier de d&eacute;p&ocirc;t pour les &eacute;tudiants</a></td></tr>") ;
+			print("</tr>\n") ;
 			print("</table>");
 		}
-		
+
 		/****************************
-		*     Depot d'un fichier     
+		*     Depot d'un fichier
 		****************************/
 		if ($_GET['a'] == "dep")
 		{
 			require ("deposer_doc.php");
 		}
-		
+
 		/**********************************
-		*     Suppression d'un fichier     
+		*     Suppression d'un fichier
 		**********************************/
 		if ($_GET['a'] == "undep")
 		{
@@ -98,7 +99,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			}
 			else
 			{
-				print("<center><form name=\"deleteForm\" action=\"espacereserve.php?w=enseignants&a=su\" method=\"post\" onSubmit=\"return checkItemsToDelete($fichCount)\">\n") ;
+				print("<center><form name=\"deleteForm\" action=\"espacereserve.php?w=enseignants\" method=\"post\" onSubmit=\"return checkItemsToDelete($fichCount)\">\n") ;
 				print("<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 				for ($i = 0 ; $i < $fichCount ; $i++)
 				{
@@ -114,9 +115,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("</form></center>\n") ;
 			}
 		}
-		
+
 		/***********************************
-		*     Importer un fichier excel     
+		*     Importer un fichier excel
 		***********************************/
 		/* choix fichier excel */
 		if($_GET['a']== 'excel')
@@ -129,7 +130,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("</table>");
 			print("</form></center>\n") ;
 		}
-		
+
 		/* traitement fichier excel */
 		if($_GET['a']=='enregexcel')
 		{
@@ -141,14 +142,14 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			//print_r($tab_fichier);
 			$tableau = traite_tableau($tab_fichier);
 			//print_r($tableau);
-			insertion_base($tableau);   
+			insertion_base($tableau);
 			unlink("Tmp/".$file);
 //			echo "<table align='center'><tr><td><h2> L'insertion s'est bien deroul&eacute;e ... Redirection ... </h2></td></tr></table>";
 			print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 		}
-		
+
 		/******************************************
-		*    partie visualisation des fichiers     
+		*    partie visualisation des fichiers
 		******************************************/
 		/* visualiser */
 		if($_GET['a'] == 'visualisation')
@@ -169,7 +170,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("</table>") ;
 			}
 			else
-			{	
+			{
 				$dip = explode(" ", $_SESSION['diplome']);
 				print "<table align='center'>";
 				while($liste_fichier = mysql_fetch_array($fichList))
@@ -181,9 +182,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print "</table>";
 			}
 		}
-		
+
 		/***********************************************
-		*     partie qui permet de gerer les notes      
+		*     partie qui permet de gerer les notes
 		***********************************************/
 		/* note ? */
 		if($_GET['a'] == 'note')
@@ -205,7 +206,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("</td></tr></table>") ;
 			}
 			else
-			{ 
+			{
 				//debut de la creation de la liste deroulante qui va contenir les différentes matieres
 				print("<center><form name=\"validenote\" action=\"espacereserve.php?w=enseignants&a=enregnote\" method=\"post\" enctype=\"multipart/form-data\">\n") ;
 				print "<table><tr>";
@@ -220,7 +221,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				// fin de la liste
 			}
 		}
-		
+
 		/* enreg note ? */
 		if($_GET['a'] == 'enregnote')
 		{
@@ -300,7 +301,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				}
 			}
 		}
-		
+
 		/* eNote ? */
 		if($_GET['a'] == 'enote')
 		{
@@ -339,50 +340,41 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print "<table><tr><td>enregistrement effectuer avec succes</td></tr></table>";
 				print "<table align='center'><tr><td><a href='Evaluation/".$_POST['file']."'>copie du fichier</a></td></tr></table>";
 			}
-		}		
-		
+		}
+
 		/*******************************************************************
-		*     Envoi du mail a tous les etudiants qui suivent la matiere     
+		*     Envoi du mail a tous les etudiants qui suivent la matiere
 		*******************************************************************/
 		if ($_GET['a'] == "mail")
 		{
 			/* formulaire */
 			if($_GET['b'] == 'form')
 			{
-				print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
-				print("<tr>\n") ;
-				print("<td align=\"center\" width=\"800\"><br><b> Envoie d'un mail <br><br></b></td>") ;
-				print("</tr>\n") ;
-				print("</table>\n") ;
-				print("<center><form method=\"post\" action=\"espacereserve.php?p=connexion&w=enseignants&a=mail&b=envoie&mat=".$_GET['mat']."\" >\n") ;
-				print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
-				print("<tr>\n") ;
-				print("<td align=\"left\"><b> Sujet </b></td><td width=\"700\" align=\"left\" colspan=\"2\"><input class=\"defaultInput\" name=\"sujet\" size=\"40\"></td>\n") ;
-				print("</tr>\n") ;
-				print("<tr>\n") ;
-				print("<td align=\"left\" colspan=\"3\"><b> Contenu</b></td>\n") ;
-				print("</tr>\n") ;
-				print("<tr>\n") ;
-				print("<td width=\"800\" colspan=\"3\" align=\"left\"><textarea class=\"defaultInput\" rows=\"10\" cols=\"50\" name=\"contenu\"></textarea><br><br></td>\n") ;
-				print("</tr>\n") ;
-				print("<tr>\n") ;
-				print("<td width=\"800\" align=\"left\" colspan=\"3\"><br><input type=hidden name=subject value=formmail><input class=\"defaultButton\" type=\"submit\" value=\"Envoyer\"\"> - <input class=\"defaultButton\" type=\"reset\" value=\"Annuler\"></td>\n") ;
-				print("</tr>\n") ;
-				print("</table>\n") ;
-				print("</form></center>\n") ;
+				print("<center><table cellspacing=\"3\" cellpadding=\"0\"\n") ;
+				print("<tr><td align=\"center\" width=\"800\" colspan=\"2\"><h2>Envoi d'un mail</h2></td></tr>\n") ;
+				print("<form method=\"post\" action=\"espacereserve.php?p=connexion&w=enseignants&a=mail&b=envoi&mat=".$_GET['mat']."\" >\n") ;
+				print("<tr><td align=\"left\"><b> Sujet </b></td><td><input class=\"defaultInput\" name=\"sujet\" size=\"40\"></td></tr>\n") ;
+				print("<tr><td colspan=\"2\" align=\"left\" ><b> Contenu</b></td></tr>\n") ;
+				print("<tr><td colspan=\"2\" align=\"left\"width=\"800\"><textarea class=\"defaultInput\" rows=\"10\" cols=\"50\" name=\"contenu\"></textarea><br><br></td></tr>\n") ;
+				print("<tr><td colspan=\"2\" align=\"left\"width=\"800\"><input class=\"defaultButton\" type=\"submit\" value=\"Envoyer\"\"> - <input class=\"defaultButton\" type=\"reset\" value=\"Annuler\"></td></tr>\n") ;
+				print("</form>\n") ;
+				print("</table></center>\n") ;
 			}
 			
 			/* envoi */
-			if($_GET['b'] == 'envoie')
+			if($_GET['b'] == 'envoi')
 			{
-				$requeteMail = DB_Query('SELECT etu.email FROM Etudiant etu, Inscrit ins, Module mo, Matiere mat 
-						WHERE (etu.`id-etudiant` = ins.`id-etudiant`)
-						and (ins.`id-diplome` = mo.`id-diplome`)
-						and (mo.`id-module` = mat.`id-module`)
-						and (mat.`id-matiere` = "'.$_GET['mat'].'")');
-				$entete="FROM : ".$_SESSION['nom']." ".$_SESSION['prenom']." ";
+				$requeteMail = DB_Query('SELECT Etudiant.email FROM Etudiant, Inscrit, Module, Matiere
+						WHERE (Etudiant.`id-etudiant` = Inscrit.`id-etudiant`)
+						and (Inscrit.`id-diplome` = Module.`id-diplome`)
+						and (Module.`id-module` = Matiere.`id-module`)
+						and (Matiere.`id-matiere` = "'.$_GET['mat'].'")');
+				$entete="From: [email=mastasushi@hotmail.fr]Masta[/email]\n";
+				$entete.="Bcc: [email=mastasushi@hotmail.fr]Masta[/email]\n";
+			//	$entete="FROM : ".$_SESSION['nom']." ".$_SESSION['prenom']." \n";
 				while ($tableau=mysql_fetch_array($requeteMail))
 				{
+					echo $tableau[0];echo $_POST['sujet'];echo $_POST['contenu'];echo $entete;
 					mail($tableau['email'],$_POST['sujet'],$_POST['contenu'],$entete);
 				}
 				print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
@@ -395,7 +387,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		}
 		
 		/*********************
-		*     Deconnexion     
+		*     Deconnexion
 		*********************/
 		if ($_GET['a'] == "logout")
 		{
@@ -405,16 +397,24 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion\">\n") ;
 			print("</td></tr></table>") ;
 		}
+		
+		/************************************
+		*     Creer un dossier de depot
+		************************************/
+		if ($_GET['a'] == "mkdir")
+		{
+			$entry = readdir("/Data/UL3A01M/UL3A011/");
+			
+		}
 	}
-	
-	
+
 	if($_GET['a']=='visu')
 	{
 		print("<table align='center'><tr><td><a href=\"{$_GET['fichier']}\">Visualiser</a></td></tr></table>");
 		fopen(realpath($_GET['fichier']), 'r');
 	}
 	if (isset($_POST['fileUndep']))
-	{		
+	{
 		// aucun choix defini
 		if (!isset($_POST['id']))
 		{
@@ -452,4 +452,3 @@ else
 ** EOF enseignants
 */
 ?>
-

@@ -56,31 +56,27 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			{
 				for ($i=0; $i<$fileCount; $i++)
 				{
-				       $fFileList = mysql_fetch_array($fileList);
-					   $fensDetails = DB_Query('SELECT nom, prenom
-                                                           FROM enseignant
-                                                           WHERE `id-enseignant` = "'.$fFileList['id-prop'].'"');
-						
-                        $ensDetails = mysql_fetch_array($fensDetails);
-						print("\t\t\t\t<tr>\n") ;
-						print("<td align=\"left\" width=\"400\">");
-						//print("<div class=\"blueZone\">");
-						print("<h1><u>".$ensDetails['nom']." ".$ensDetails['prenom']."</h1></u><br>") ;
-						print("<u>".$fFileList['titre']."</u><br><br>") ;
-						$fFileList['commentaire'] = nl2br($fFileList['commentaire']);
-						print($fFileList['commentaire']."<br>") ;
-						$chaine = explode(" ",$liste['intitule']);
-						$finalchaine = $chaine[0]."".$chaine[1];
-						print("<a href=Data/Telechargement/".$finalchaine."/".$fFileList['URL'].">Telechargement</a>");
-						//print("</div>");
-						print("\t\t\t\t</tr>\n") ;
+					$fFileList = mysql_fetch_array($fileList);
+					$fensDetails = DB_Query('SELECT nom, prenom
+										FROM enseignant
+										WHERE `id-enseignant` = "'.$fFileList['id-ens'].'"');
+					$ensDetails = mysql_fetch_array($fensDetails);
+					print("\t\t\t\t<tr>\n") ;
+					print("<td align=\"left\" width=\"400\">");
+					//print("<div class=\"blueZone\">");
+					print("<h1><u>".$ensDetails['nom']." ".$ensDetails['prenom']."</h1></u><br>") ;
+					print("<u>".$fFileList['titre']."</u><br><br>") ;
+					$fFileList['commentaire'] = nl2br($fFileList['commentaire']);
+					print($fFileList['commentaire']."<br>") ;
+					$chaine = explode(" ",$liste['intitule']);
+					$finalchaine = $chaine[0]."".$chaine[1];
+					print("<a href=Data/Telechargement/".$finalchaine."/".$fFileList['URL'].">Telechargement</a>");
+					//print("</div>");
+					print("\t\t\t\t</tr>\n") ;
 				}
-            }
-			//infoMessage(3,3,"Page en cours de construction......");
+			}
 			print("\t\t\t</table>\n");
-        }
-		
-		
+		}
 		
 		/****************************************************
 		*     Partie modification (login ou mot de passe)    

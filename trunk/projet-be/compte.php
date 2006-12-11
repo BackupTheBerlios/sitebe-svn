@@ -132,26 +132,26 @@
 				<!-- debut de la partie qui permet de creer un compte -->
 				<!------------------------------------------------------>
 <?php
-	if(isset($_POST['nom']))      $nom=$_POST['nom'];
-		else      $nom="";
+	if(isset($_POST['nom']))	$nom=$_POST['nom'];
+		else	$nom="";
 		
-	if(isset($_POST['prenom']))      $prenom=$_POST['prenom'];
-		else      $prenom="";
+	if(isset($_POST['prenom']))	$prenom=$_POST['prenom'];
+		else	$prenom="";
 		
-	if(isset($_POST['mail']))      $mail=$_POST['mail'];
-		else      $mail="";
+	if(isset($_POST['mail']))	$mail=$_POST['mail'];
+		else	$mail="";
 		
-	if(isset($_POST['num_etu']))      $num_etu=$_POST['num_etu'];
-		else      $num_etu="";
+	if(isset($_POST['num_etu']))	$num_etu=$_POST['num_etu'];
+		else	$num_etu="";
 		
-	if(isset($_POST['login']))      $login=$_POST['login'];
-		else      $login="";
+	if(isset($_POST['login']))	$login=$_POST['login'];
+		else	$login="";
 		
-	if(isset($_POST['password']))      $password=$_POST['password'];
-		else      $password="";
+	if(isset($_POST['password']))	$password=$_POST['password'];
+		else	$password="";
 		
-	if(isset($_POST['password2']))      $password2=$_POST['password2'];
-		else      $password2="";
+	if(isset($_POST['password2']))	$password2=$_POST['password2'];
+		else	$password2="";
 	
 	// Etudiant existe ?
 	$res = mysql_query("SELECT * FROM `etudiant` WHERE `id-etudiant`=$num_etu AND `nom`='$nom' AND `prenom`='$prenom'");
