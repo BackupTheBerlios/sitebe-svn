@@ -49,43 +49,5 @@ function checkEnseignementAdd(formName)
 }
 
 /*
-** fonction 	: checkEnseignementMod
-** entrees	: formName : nom du formulaire a tester
-** sorties	: rien
-** description	: verifie si le formulaire de modification de l'enseignement est correct et soumet dans ce cas
-*/
-function checkEnseignementMod(formName)
-{ 
-	var formIsCorrect = true ;
-	var message = "Impossible de continuer pour les raisons suivantes :" ;
-	var correct = /^\s*\d+\s*$/ ;		// un nombre entier, on ne teste pas la longueur
-	
-	// debut de verification
-	var matiere = window.document.forms[formName].matiere.value ;	
-	
-	if (!correct.test(matiere)) // numero incorrect
-	{
-		formIsCorrect = false ;
-		message += "\n- identifiant matiere incorrect" ;
-	}
-	
-	// si on peut ajouter
-	if (formIsCorrect)
-	{
-		window.document.forms[formName].submit() ;
-	}
-	
-	// affichage du message d'erreur
-	else
-	{
-		alert(message) ;
-	}
-	
-}
-
-
-
-
-/*
 ** EOF scripts_admin_enseignements
 */

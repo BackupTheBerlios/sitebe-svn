@@ -46,7 +46,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			print("</select></td></tr>");
 					
 					
-			$requette= 'SELECT intitule,`id-module`, no_semestre FROM `module` order by intitule';
+			$requette= 'SELECT intitule,`id-module`, no_semestre FROM `module` order by no_semestre, intitule';
 			$resultat=dbQuery($requette);
 			print("<tr><td><b>choix du module :</b></td>");
 			print("<td><select class='defaultInput' name='module'>");

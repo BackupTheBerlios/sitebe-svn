@@ -216,16 +216,10 @@ if (isset($_GET['w']))
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=matieres&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=matieres&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
-			/*print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td align=\"left\" width=\"200\"> &raquo; <b>Evaluations</b></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=evaluation_matieres&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=evaluation_matieres&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=evaluation_matieres&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;*/
 			print("\t\t\t\t<tr>\n") ;
 			print("\t\t\t\t\t<td align=\"left\" width=\"200\"> &raquo; <b>Enseignements</b></td>") ;
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=enseignements&a=add\"><img src=\"Gfx/admin_icon_add.gif\"></a></td>") ;
-			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=enseignements&a=mod\"><img src=\"Gfx/admin_icon_modify.gif\"></a></td>") ;	
+			print("<td align=\"center\" width=\"150\"></td>") ;	
 			print("<td align=\"center\" width=\"150\"><a href=\"admin.php?w=enseignements&a=del\"><img src=\"Gfx/admin_icon_delete.gif\"></a></td>\n") ;
 			print("\t\t\t\t</tr>\n") ;
 			print("\t\t\t\t<tr>\n") ;

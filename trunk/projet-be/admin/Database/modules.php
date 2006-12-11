@@ -70,7 +70,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$description = addslashes($description) ;
 			
 		// on recupere l'identifiant du diplome
-		$dipID = dbQuery('SELECT `id-diplome`
+		$dipID = dbQuery('SELECT `id-diplome`, code
 			FROM diplome
 			WHERE intitule = "'.$_POST['moduleDiplome'].'"') ;
 		
@@ -84,6 +84,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 	
 				
 		$dipID = mysql_fetch_array($dipID) ;
+		$dipCode = $dipID['code'] ;
 		$dipID = $dipID['id-diplome'] ;
 			
 			
@@ -101,10 +102,27 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=modules&a=add\">\n") ;
 			return ;
 		}
-			
+		
+		// Creation du code apogee
+		$apogee = "U".$dipCode ;
+		if ((((int)$_POST['semestre'])+($dipID*2)) == 10)
+		{
+			$apogee = $apogee."A" ;
+		}
+		else
+		{
+			$apogee = $apogee.(((int)$_POST['semestre'])+($dipID*2)) ;
+		}
+		$apogee = $apogee."A" ;
+		if ($_POST['moduleNo'] < 10)
+		{
+			$apogee = $apogee."0" ;
+		}
+		$apogee = $apogee.$_POST['moduleNo']."M" ;
+		
 		// Ajout module		
 		dbQuery('INSERT INTO module
-			VALUES (NULL, '.$dipID.', "'.$intitule.'", 1, "'.$description.'", "0", "0", "0", "'.(((int)$_POST['semestre'])+($dipID*2)).'", "'. (int)$_POST['moduleResp'] . '", "", "0")') ;
+			VALUES (NULL, '.$dipID.', "'.$intitule.'", '.$_POST['moduleNo'].', "'.$description.'", "0", "0", "0", "'.(((int)$_POST['semestre'])+($dipID*2)).'", "'. (int)$_POST['moduleResp'] . '", "'.$apogee.'", "0")') ;
 		
 		// on recupere l'identifiant du module cree
 		$modID = mysql_insert_id();
@@ -125,7 +143,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		}
 		
 		// Ajout du repertoire associe
-		mkdir("../Data/".$modID, 0755) ;
+		mkdir("../Data/".$apogee, 0755) ;
 		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module ajout&eacute; avec succ&egrave;s, redirection...") ;
@@ -148,7 +166,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$description = addslashes($description) ;
 			
 		// on recupere l'identifiant du diplome
-		$dipID = dbQuery('SELECT `id-diplome`
+		$dipID = dbQuery('SELECT `id-diplome`, code
 			FROM diplome
 			WHERE intitule = "'.$_POST['moduleDiplome'].'"') ;
 			
@@ -164,18 +182,19 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		}	
 			
 		$dipID = mysql_fetch_array($dipID) ;
+		$dipCode = $dipID['code'] ;
 		$dipID = $dipID['id-diplome'] ;
 			
 			
 		// on verifie si le module existe deja
 		$moduleInfo = dbQuery('SELECT `id-module`
 			FROM module
-			WHERE intitule = "'.$intitule.'" AND 
-			`id-diplome` = '.$dipID.' AND
-			`id-module` != '.$_POST['moduleID']) ;
-				
+			WHERE intitule = "'.$intitule.'"
+			AND `id-diplome` = '.$dipID.'
+			AND `id-module` != '.$_POST['moduleID']) ;
+		
 		$moduleExists = mysql_num_rows($moduleInfo) ; 
-			
+		
 		// si un module de meme nom existe deja
 		if ($moduleExists > 0)
 		{
@@ -183,7 +202,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=modules&a=mod&id={$_POST['moduleID']}\">\n") ;
 			return ;
 		}
-				
+		
 		// recupere l'id du nouveau responsable de module, si la case 'oui' était cochee
 		$moduleResp = (int)$_POST['moduleResp'];
 		if ($_POST['respMod'] == 'non')
@@ -191,10 +210,37 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			$moduleResp = 0;
 		}
 		
+		// On recupere l'ancien code apogee
+		$ancApogee = dbQuery('SELECT apogee
+			FROM module
+			WHERE `id-module` = '.$_POST['moduleID']) ;
+		$ancApogee = mysql_fetch_array($ancApogee);
+		$ancApogee = $ancApogee['apogee'];
+		
+		// Creation du code apogee
+		$apogee = "U".$dipCode ;
+		if ((((int)$_POST['semestre'])+($dipID*2)) == 10)
+		{
+			$apogee = $apogee."A" ;
+		}
+		else
+		{
+			$apogee = $apogee.(((int)$_POST['semestre'])+($dipID*2)) ;
+		}
+		$apogee = $apogee."A" ;
+		if ($_POST['moduleNo'] < 10)
+		{
+			$apogee = $apogee."0" ;
+		}
+		$apogee = $apogee.$_POST['moduleNo']."M" ;
+		
 		// on ajoute sinon	
 		dbQuery('UPDATE module
-			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", description = "'.$description.'", no_semestre = "'.(((int)$_POST['semestre']) + 2*$dipID).'", `id-responsable` = "'. $moduleResp . '", id_node = "0"
+			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", no_module = '.$_POST['moduleNo'].', description = "'.$description.'", no_semestre = "'.(((int)$_POST['semestre']) + 2*$dipID).'", `id-responsable` = "'. $moduleResp . '", apogee = "'.$apogee.'", id_node = "0"
 			WHERE `id-module` = '.$_POST['moduleID']) ;
+		
+		// Modification du nom du repertoire associe
+		rename("../Data/".$ancApogee, "../Data/".$apogee) ;
 		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module modifi&eacute; avec succ&egrave;s, redirection...") ;
@@ -270,13 +316,18 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			dbQuery('DELETE
 				FROM evaluation
 				WHERE `id-module` = '.$idKey) ;
-					
+			
+			$apogee = dbQuery('SELECT apogee
+				FROM module						
+				WHERE `id-module` = '.$idKey) ;
+			$apogee = mysql_fetch_array($apogee) ;
+			
 			dbQuery('DELETE
 				FROM module						
 				WHERE `id-module` = '.$idKey) ;
 			
 			// On supprime le dossier lié au module
-			sup_repertoire("../Data/".$idKey) ;
+			sup_repertoire("../Data/".$apogee['apogee']) ;
 		}
 			
 			

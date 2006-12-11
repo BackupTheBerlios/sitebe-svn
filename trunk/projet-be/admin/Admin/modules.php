@@ -53,6 +53,15 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			centeredInfoMessage(3, 3, "Administration des modules : ajout") ;
 			dbConnect() ;
 			
+			
+			// Numeros de module deja utilises
+			$nomodutil = dbQuery('SELECT DISTINCT no_module
+				FROM module
+				ORDER BY no_module') ;
+			$nomodutilcount = mysql_num_rows($nomodutil);
+			$nomodutildetail = mysql_fetch_array($nomodutil);
+			
+			
 			// liste des diplomes
 			$dipList = dbQuery('SELECT *
 				FROM diplome
@@ -73,9 +82,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 
                 ORDER BY titre');
 
-                    
-
-                    
+            
 			$dipCount = mysql_num_rows($dipList) ;
 			
 			if ($dipCount == 0)
@@ -99,6 +106,30 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			}
 			print("\t\t\t\t\t</select>\n");
 			print("\t\t\t\t\t<label> 1er semestre<input type=\"radio\" class=\"defaultInput\" name=\"semestre\" size=\"25\" value=\"1\" checked></label><label> 2eme semestre<input type=\"radio\" class=\"defaultInput\" name=\"semestre\" size=\"25\" value=\"2\"></label></td>\n") ;			
+			print("\t\t\t\t</tr>\n") ;
+			
+			print("\t\t\t\t<tr>\n") ;
+			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Num&eacute;ro de module </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleNo\">\n") ;
+			$nbnoutil = 0;
+			for ($i = 1 ; $i < 100 ; $i++)
+			{
+				// On recupere le numéro utilise suivant si il est depasse
+				if ($nomodutildetail['no_module'] < $i && $nbnoutil < $nomodutilcount)
+				{
+					$nomodutildetail = mysql_fetch_array($nomodutil) ;
+				}
+				
+				// On verifie si le numero est utilise ou non
+				if ($nomodutildetail['no_module'] != $i)
+				{
+					print("<option value=$i>{$i}</option>\n") ;
+				}
+				else
+				{
+					$nbnoutil++;
+				}
+			}
+			print("\t\t\t\t\t</select></td>\n") ;			
 			print("\t\t\t\t</tr>\n") ;
 			
             print("\t\t\t\t<tr>\n");
@@ -258,6 +289,14 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					return ;
 				}
 				
+				// Numeros de module deja utilises
+				$nomodutil = dbQuery('SELECT DISTINCT no_module
+					FROM module
+					WHERE `id-module` <> '.$eID.'
+					ORDER BY no_module') ;
+				$nomodutilcount = mysql_num_rows($nomodutil);
+				$nomodutildetail = mysql_fetch_array($nomodutil);
+				
 				$moduleDetails = mysql_fetch_array($moduleDetails) ;
 					
 				$dipList = dbQuery('SELECT *
@@ -295,6 +334,37 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					$sem1 = "";
 				}
 				print("\t\t\t\t\t<label> 1er semestre<input type=\"radio\" class=\"defaultInput\" name=\"semestre\" size=\"25\" value=\"1\"".$sem1."></label><label> 2eme semestre<input type=\"radio\" class=\"defaultInput\" name=\"semestre\" size=\"25\" value=\"2\"".$sem2."></label></td>\n") ;			
+				print("\t\t\t\t</tr>\n") ;
+				
+				print("\t\t\t\t<tr>\n") ;
+				print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Num&eacute;ro de module </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"moduleNo\">\n") ;
+				$nbnoutil = 0;
+				for ($i = 1 ; $i < 100 ; $i++)
+				{
+					// On recupere le numéro utilise suivant si il est depasse
+					if ($nomodutildetail['no_module'] < $i && $nbnoutil < $nomodutilcount)
+					{
+						$nomodutildetail = mysql_fetch_array($nomodutil) ;
+					}
+					
+					// On verifie si le numero est utilise ou non
+					if ($nomodutildetail['no_module'] != $i)
+					{
+						if ($moduleDetails['no_module'] == $i)
+						{
+							print("<option value=$i selected>{$i}</option>\n") ;
+						}
+						else
+						{
+							print("<option value=$i>{$i}</option>\n") ;
+						}
+					}
+					else
+					{
+						$nbnoutil++;
+					}
+				}
+				print("\t\t\t\t\t</select></td>\n") ;			
 				print("\t\t\t\t</tr>\n") ;
 				
 				// on verifie si le module a déjà un responsable

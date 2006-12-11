@@ -76,59 +76,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 	} // end of menuAdd
 	
 	
-	
-	// second cas : modification
-	elseif (isset($_POST['enseignementMod']))
-	{
-		dbConnect() ;
-			
-		$enseignant = $_POST['enseignant'] ;
-		$matiere = trim($_POST['matiere']) ;
-			
-		// on teste si la matiere existe bien
-				
-			
-		$matiereCount = dbQuery('SELECT COUNT(`id-matiere`) AS n
-			FROM matiere
-			WHERE `id-matiere` = '.$matiere) ;
-				
-		$matiereCount = mysql_fetch_array($matiereCount) ;
-			
-		if ($matiereCount['n'] == 0)
-		{
-			centeredErrorMessage(3, 3, "Erreur lors de la modification, mati&egrave;re inexistante, redirection...") ;
-			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignements&a=mod\">\n") ;
-			return ;
-		}
-			
-		// on teste si cet enseignement existe deja
-		$ensCount = dbQuery('SELECT COUNT(`id-enseignant`) AS n
-			FROM enseignement
-			WHERE `id-enseignant` = '.$enseignant.' AND
-				`id-matiere` = '.$matiere) ;
-					
-		$ensCount = mysql_fetch_array($ensCount) ;
-			
-		if ($ensCount['n'] > 0)
-		{
-			centeredInfoMessage(3, 3, "Cet enseignement existe d&eacute;j&agrave;, redirection...") ;
-			print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignements\">\n") ;
-			return ;
-		}
-		
-		dbQuery('UPDATE enseignement
-			SET `id-matiere` = '.$matiere.'
-			WHERE `id-enseignant` = '.$enseignant.' AND `id-matiere` = '.$_POST['oldMatiere']) ;
-				
-		// felicitations et redirection
-		centeredInfoMessage(3, 3, "Enseignement modifi&eacute; avec succ&egrave;s, redirection...") ;
-		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignements\">\n") ;
-		
-		dbClose() ;
-	} // end of menuMod
-	
-	
-	
 	// dernier cas : suppression
 	elseif (isset($_POST['enseignementDel']))
 	{		
