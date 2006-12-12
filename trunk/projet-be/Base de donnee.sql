@@ -1,4 +1,4 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 
 -- version 2.6.0-pl3
 
@@ -20,11 +20,7 @@
 
 -- 
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
@@ -32,15 +28,11 @@
 
 -- 
 
-
-
 CREATE TABLE `administrateur` (
   `login` varchar(15) NOT NULL default '',
   `passwd` varchar(40) NOT NULL default '',
   PRIMARY KEY  (`login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
 
 -- 
 
@@ -48,23 +40,15 @@ CREATE TABLE `administrateur` (
 
 -- 
 
-
-
 INSERT INTO `administrateur` (`login`, `passwd`) VALUES ('admin', 'admin');
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `secretaire`
 
 -- 
-
-
 
 CREATE TABLE `secretaire` (
   `id-secretaire` int(8) NOT NULL auto_increment,
@@ -76,24 +60,15 @@ CREATE TABLE `secretaire` (
   PRIMARY KEY  (`id-secretaire`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `secretaire`
 
 -- 
 
-
-
-INSERT INTO `secretaire` (`id-secretaire`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES ('1', 'AIROLA', 'Christine', 'airola@cict.fr', 'secretaire', 'secretaire');
-
-
-
+INSERT INTO `secretaire` (`id-secretaire`, `nom`, `prenom`, `mail`, `login`, `mdp`) VALUES ('1', 'AIROLA', 'Christine', 'airola@cict.fr', 'secretaire', 'be5f28a5f7f765371423d514f06147b2');
 
 -- --------------------------------------------------------
-
-
 
 -- 
 
@@ -101,14 +76,10 @@ INSERT INTO `secretaire` (`id-secretaire`, `nom`, `prenom`, `mail`, `login`, `md
 
 -- 
 
-
-
 CREATE TABLE `controle` (
   `type` char(20) NOT NULL default '',
   PRIMARY KEY  (`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
 
 -- 
 
@@ -116,27 +87,19 @@ CREATE TABLE `controle` (
 
 -- 
 
-
-
 INSERT INTO `controle` (`type`) VALUES ('C. Continu');
 
 INSERT INTO `controle` (`type`) VALUES ('C. Terminal'); 
 
 INSERT INTO `controle` (`type`) VALUES ('C. Partiel');
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `diplome`
 
 -- 
-
-
 
 CREATE TABLE `diplome` (
   `id-diplome` int(2) NOT NULL auto_increment,
@@ -145,15 +108,11 @@ CREATE TABLE `diplome` (
   PRIMARY KEY  (`id-diplome`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `diplome`
 
 -- 
-
-
 
 INSERT INTO `diplome` (`id-diplome`, `intitule`, `code`) VALUES (1, 'Licence 2', 'L');
 
@@ -163,19 +122,13 @@ INSERT INTO `diplome` (`id-diplome`, `intitule`, `code`) VALUES (3, 'Master 1', 
 
 INSERT INTO `diplome` (`id-diplome`, `intitule`, `code`) VALUES (4, 'Master 2', 'S');
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `enseignant`
 
 -- 
-
-
 
 CREATE TABLE `enseignant` (
   `id-enseignant` int(8) NOT NULL auto_increment,
@@ -187,23 +140,15 @@ CREATE TABLE `enseignant` (
   PRIMARY KEY  (`id-enseignant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `enseignant`
 
 -- 
 
-
-
 -- rien
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
@@ -211,15 +156,11 @@ CREATE TABLE `enseignant` (
 
 -- 
 
-
-
 CREATE TABLE `enseignement` (
   `id-matiere` int(4) NOT NULL default '0',
   `id-enseignant` varchar(8) NOT NULL default '',
   PRIMARY KEY  (`id-matiere`,`id-enseignant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
 
 -- 
 
@@ -227,19 +168,13 @@ CREATE TABLE `enseignement` (
 
 -- 
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `evaluation`
 
 -- 
-
-
 
 CREATE TABLE `evaluation` (
   `id-evaluation` int(8) NOT NULL auto_increment, 
@@ -250,29 +185,19 @@ CREATE TABLE `evaluation` (
   PRIMARY KEY  (`id-evaluation`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `evaluation`
 
 -- 
 
-
-
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `note`
 
 -- 
-
-
 
 CREATE TABLE `note` (
   `id-evaluation` int(8) NOT NULL default '0', 
@@ -281,29 +206,19 @@ CREATE TABLE `note` (
   PRIMARY KEY  (`id-evaluation`, `id-etudiant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `note`
 
 -- 
 
-
-
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `etudiant`
 
 -- 
-
-
 
 CREATE TABLE `etudiant` (
   `id-etudiant` int(8) NOT NULL default '0',
@@ -316,26 +231,19 @@ CREATE TABLE `etudiant` (
   PRIMARY KEY  (`id-etudiant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `etudiant`
 
 -- 
 
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `inscrit`
 
 -- 
-
-
 
 CREATE TABLE `inscrit` (
   `id-etudiant` int(10) NOT NULL default '0',
@@ -344,27 +252,19 @@ CREATE TABLE `inscrit` (
   PRIMARY KEY  (`id-etudiant`,`id-diplome`,`annee`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `inscrit`
 
 -- 
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `fichier`
 
 -- 
-
-
 
 CREATE TABLE `fichier` (
   `id-fichier` int(4) NOT NULL auto_increment,
@@ -376,27 +276,19 @@ CREATE TABLE `fichier` (
   PRIMARY KEY  (`id-fichier`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `fichier`
 
 -- 
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `matiere`
 
 -- 
-
-
 
 CREATE TABLE `matiere` (
   `id-matiere` int(4) NOT NULL auto_increment,
@@ -412,27 +304,19 @@ CREATE TABLE `matiere` (
   PRIMARY KEY  (`id-matiere`,`id-module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `matiere`
 
 -- 
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `menu`
 
 -- 
-
-
 
 CREATE TABLE `menu` (
   `ID-MENU` tinyint(10) unsigned NOT NULL auto_increment COMMENT 'Identifiant d&#146;une branche du menu',
@@ -444,15 +328,11 @@ CREATE TABLE `menu` (
   PRIMARY KEY  (`ID-MENU`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
-
-
 -- 
 
 -- Contenu de la table `menu`
 
 -- 
-
-
 
 INSERT INTO `menu` (`ID-MENU`, `ID_PMENU`, `INTITULE`, `DESCRIPTION`, `PATH`, `ORDRE`) VALUES (1, 0, 'IUP ISI', '', '', 0);
 
@@ -470,19 +350,13 @@ INSERT INTO `menu` (`ID-MENU`, `ID_PMENU`, `INTITULE`, `DESCRIPTION`, `PATH`, `O
 
 INSERT INTO `menu` (`ID-MENU`, `ID_PMENU`, `INTITULE`, `DESCRIPTION`, `PATH`, `ORDRE`) VALUES (22, 1, 'Espace Reserve', '', 'espacereserve.php', 5);
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `module`
 
 -- 
-
-
 
 CREATE TABLE `module` (
   `id-module` int(3) NOT NULL auto_increment,
@@ -500,27 +374,19 @@ CREATE TABLE `module` (
   PRIMARY KEY  (`id-module`,`id-diplome`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `module`
 
 -- 
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `node`
 
 -- 
-
-
 
 CREATE TABLE `node` (
   `ID_NODE` tinyint(10) unsigned NOT NULL auto_increment COMMENT 'Identifiant d&#146;un noeud',
@@ -535,15 +401,11 @@ CREATE TABLE `node` (
   PRIMARY KEY  (`ID_NODE`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci PACK_KEYS=1;
 
-
-
 -- 
 
 -- Contenu de la table `node`
 
 -- 
-
-
 
 INSERT INTO `node` (`ID_NODE`, `TITRE`, `DATE_CREATION`, `DATE_MODIFICATION`, `CONTENT`, `NOTE`, `NOTE_STYLE`, `MENU`, `FILTER`) VALUES (1, 'Acceuil', '2005-11-12 00:00:00', '2005-11-27 20:47:54', '===== Acceuil IUP ISI =====\r\n\r\nCr&#233;&#233; en 1992, avec chaque ann&#233;e en moyenne 120 &#233;tudiants r&#233;partis sur les quatre ann&#233;es de la formation, l&#146;IUP ISI a pour objectif de former de futurs cadres aux divers m&#233;tiers impliqu&#233;s dans le d&#233;veloppement, le d&#233;ploiement et la maintenance de logiciels et de syst&#232;mes informatiques.\r\nLes enseignements de l&#146;IUP ISI sont d&#233;finis et planifi&#233;s pour r&#233;pondre aux besoins des entreprises ayant en charge la r&#233;alisation de produits souvent complexes, dans des domaines de haute technologie tels que le spatial, l&#146;a&#233;ronautique, les transports, le m&#233;dical, le pharmaceutique ... o&#249; les contraintes de qualit&#233;, de performances et de fiabilit&#233; (voire de certification) sont tr&#232;s &#233;lev&#233;es.', '===== Nouveaut&#233;s =====\r\n==== Forums ====\r\n12.10.2005\r\n\r\nPlusieurs forums sont ouverts et utilis&#233;s en particulier par le secr&#233;tariat et les enseignants pour communiquer avec les &#233;tudiants (propositions de stages, informations BE, informations diverses).\r\nSuivre le lien Association &#233;l&#232;ves ci-contre.', 'nouveaute', '[[Acceuil|?p=1]]\r\n[[Actualit&#233;s|?p=6]]', 'wiki');
 
@@ -571,19 +433,13 @@ INSERT INTO `node` (`ID_NODE`, `TITRE`, `DATE_CREATION`, `DATE_MODIFICATION`, `C
 
 INSERT INTO `node` (`ID_NODE`, `TITRE`, `DATE_CREATION`, `DATE_MODIFICATION`, `CONTENT`, `NOTE`, `NOTE_STYLE`, `MENU`, `FILTER`) VALUES (21, 'essai', '2005-12-09 10:54:38', '2005-12-09 10:54:38', '**essa**', '', '', '', 'wiki');
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `page`
 
 -- 
-
-
 
 CREATE TABLE `page` (
   `id-page` int(3) NOT NULL auto_increment,
@@ -595,15 +451,11 @@ CREATE TABLE `page` (
   FULLTEXT KEY `titre_2` (`titre`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `page`
 
 -- 
-
-
 
 INSERT INTO `page` (`id-page`, `id-menu`, `position`, `titre`) VALUES (1, 4, 1, 'La formation IUP ISI');
 
@@ -613,19 +465,13 @@ INSERT INTO `page` (`id-page`, `id-menu`, `position`, `titre`) VALUES (5, 4, 3, 
 
 INSERT INTO `page` (`id-page`, `id-menu`, `position`, `titre`) VALUES (6, 4, 4, 'wazaaaaaaaaa');
 
-
-
 -- --------------------------------------------------------
-
-
 
 -- 
 
 -- Structure de la table `section`
 
 -- 
-
-
 
 CREATE TABLE `section` (
   `id-section` int(7) NOT NULL auto_increment,
@@ -636,15 +482,11 @@ CREATE TABLE `section` (
   PRIMARY KEY  (`id-section`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- 
 
 -- Contenu de la table `section`
 
 -- 
-
-
 
 INSERT INTO `section` (`id-section`, `id-page`, `contenu`, `ordre`, `titre`) VALUES (1, 1, 'L&#146;<b>I</b>nstitut  <b>U</b>niversitaire <b>P</b>rofessionnalis? en <b> I</b>ng?nierie des <b>S</b>yst?mes <b>I</b>nformatiques  a pour objectif de former des ?tudiants de niveau <b>Bac + 4</b>  et <b>Bac + 6</b> dans le domaine des concepts, m?thodes, techniques et outils des logiciels.\r\n\r\nLes enseignements de l&#146;IUP ISI sont d?finis et planifi?s de mani?re ? r?pondre aux besoins des entreprises ayant une tr?s forte activit? dans le domaine de la conception et de la r?alisation de logiciels tr?s complexes n?cessitant, sur une dur?e qui peut ?tre tr?s longue, le concours d&#146;equipes d&#146;ing?nieurs <b>pluridisciplinaires</b> venant des societ?s assez diff?rentes. Etant destin?s ? des applications industrielles de haute technologie (a?ronautiques, spatiales, m?dicales, ou autres), ces logiciels doivent  r?pondre ? des exigences et des normes de qualit? tr?s strictes garantissant pleinement ce pour quoi ils ont ?t? developp?s. Ils doivent !\r\n ?tre con?us de mani?re ? faciliter leur maintenance et ?tre capables d&#146;int?grer de nouvelles fonctionnalit?s. Ils doivent, aussi, ?tre capables de suivre les ?volutions, toujours plus rapides, des nouvelles technologies (mat?rielles et logicielles) sur lesquelles ils doivent ?tre implant?s.\r\n\r\nToutes les ?tapes de la vie d&#146;un logiciel sont enseign?es aux ?tudiants qui sauront concevoir et r?aliser diff?rents types de d&#146;applications, temps r?els en particulier, sous environnement <b>UNIX</b>  et <b>X-WINDOW</b> au travers d&#146;approches m?thodologiques de l&#146;ing?nierie des syst?mes informatiques issues du monde industriel et en respectant les standards de d?veloppement  utilis?s en milieu professionnel.\r\nLes connaissances de base n?cessaires ? tout ing?nieur seront donn?es aux ?tudiants de mani?re ? leur permettre de suivre l&#146;?volution des techniques informatiques. Des enseignements intensifs d&#146;anglais g?n?ral et scientifique et de gestion d&#146;entreprises informatiqu!\r\n es compl?tent cette formation.\r\n\r\nAu terme de la formation l&#146;etud\r\niant devient sp?cialiste dans les domaines suivants :\r\n<ul>\r\n<li> Conception et d?veloppement de logiciels\r\n<li> Sp?cification et validation de logiciels\r\n<li> Tests et maintenance de logiciels\r\n<li> Qualit? des syst?mes\r\n<li> Interface homme-machine\r\n<li> Ing?nierie du logiciel\r\n<li> D?veloppement d&#146;applications bases de donn?es\r\n<li> D?veloppement d&#146;applications temps r?el\r\n<li> Applications r?parties (internet, intranet)\r\n<li> Architecture de machines, calculateurs d?di?s\r\n</ul><i>bonjour</i>', 2, 'Finalit? de la formation');
 
@@ -659,5 +501,3 @@ INSERT INTO `section` (`id-section`, `id-page`, `contenu`, `ordre`, `titre`) VAL
 INSERT INTO `section` (`id-section`, `id-page`, `contenu`, `ordre`, `titre`) VALUES (6, 6, 'salut ca fatre moi ca farte bien ntu a l&#146;air super glissade de loin mdrrrrrrrrrrrr', 1, 'kjhfedhjkdshgjfgbdskjgfsdgfkjsdhgfsd');
 
 -- --------------------------------------------------------
-
-
