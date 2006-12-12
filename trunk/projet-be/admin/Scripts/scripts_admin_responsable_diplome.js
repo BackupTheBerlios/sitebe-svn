@@ -31,7 +31,7 @@ function checkRDAdd(formName)
 	if (!correct.test(diplome)) // numero incorrect
 	{
 		formIsCorrect = false ;
-		message += "\n- identifiant diplome incorrect" ;
+		message += "\n- identifiant diplôme incorrect" ;
 	}
 	
 	// si on peut ajouter
@@ -66,7 +66,7 @@ function checkRDMod(formName)
 	if (!correct.test(diplome)) // numero incorrect
 	{
 		formIsCorrect = false ;
-		message += "\n- identifiant diplome incorrect" ;
+		message += "\n- identifiant diplôme incorrect" ;
 	}
 	
 	// si on peut ajouter

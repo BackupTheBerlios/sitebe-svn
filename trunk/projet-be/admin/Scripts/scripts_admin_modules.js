@@ -26,7 +26,7 @@ function checkModule(formName)
 	if (incorrectText.test(intitule))
 	{
 		formIsCorrect = false ;
-		message += "\n- intitule du module vide" ;
+		message += "\n- intitulé du module vide" ;
 	}
 		
 	

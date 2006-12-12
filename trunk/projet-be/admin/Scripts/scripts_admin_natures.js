@@ -25,7 +25,7 @@ function checkMenu(formName)
 	if (incorrect.test(natureExamen)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "- intitule de la nature vide" ;
+		message += "- intitulé de la nature vide" ;
 	}
 	
 	// si on peut ajouter

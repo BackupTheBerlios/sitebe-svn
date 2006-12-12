@@ -32,7 +32,7 @@ function checkEnseignant(formName)
 	if (incorrect.test(prenomEnseignant)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- prenom de l'enseignant vide" ;
+		message += "\n- prénom de l'enseignant vide" ;
 	}
 	
 	// si on peut ajouter
@@ -65,7 +65,7 @@ function checkFileDep(formName)
 	if (incorrect.test(fileTitre)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- saisi de titre incorrect" ;
+		message += "\n- saisie de titre incorrecte" ;
 	}
 	
 	if (incorrect.test(fileCommentaire)) // champ vide

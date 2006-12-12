@@ -29,19 +29,19 @@ function checkEtudiantAdd(formName)
 	if (!intCorrect.test(numEtudiant)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- num&eacute;ro de carte &eacute;tudiant incorrect" ;
+		message += "\n- numéro de carte étudiant incorrect" ;
 	}
 	
 	if (incorrect.test(nomEtudiant)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- nom de l'&eacute;tudiant vide" ;
+		message += "\n- nom de l'étudiant vide" ;
 	}
 	
 	if (incorrect.test(prenomEtudiant)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- prenom de l'&eacute;tudiant vide" ;
+		message += "\n- prénom de l'étudiant vide" ;
 	}
 	
 		
@@ -82,13 +82,13 @@ function checkEtudiantMod(formName)
 	if (incorrect.test(nomEtudiant)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- nom de l'&eacute;tudiant vide" ;
+		message += "\n- nom de l'étudiant vide" ;
 	}
 	
 	if (incorrect.test(prenomEtudiant)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- prenom de l'&eacute;tudiant vide" ;
+		message += "\n- prénom de l'étudiant vide" ;
 	}
 	
 		

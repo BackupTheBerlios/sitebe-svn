@@ -39,12 +39,12 @@ function checkItemsToDelete(formLength)
 
 	if (!acceptSubmission)
 	{
-		alert("Pour supprimer, selectionnez au moins un element") ;
+		alert("Pour supprimer, sélectionnez au moins un élément") ;
 	}
 	
 	else
 	{
-		acceptSubmission = confirm("Supprimer definitivement ces elements ?") ;
+		acceptSubmission = confirm("Supprimer définitivement ces éléments ?") ;
 	}
 	
 	return acceptSubmission ; ;
@@ -105,7 +105,7 @@ function makeURL(formName, fieldName, mode)
 function makeMail(formName, fieldName)
 {
 	var targetField = window.document.forms[formName].elements[fieldName] ;
-	var url = prompt("Saisissez une adresse éléctronique", "mail") ;
+	var url = prompt("Saisissez une adresse électronique", "mail") ;
 	if (url)	
 	{		
 		targetField.value += "<a href=\"mailto:"+url+"\"> "+url+" </a>" ;

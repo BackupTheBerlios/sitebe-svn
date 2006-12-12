@@ -31,25 +31,25 @@ function checkMatiere(formName)
 	if (incorrect.test(intitule)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- intitule de la mati&egrave;re vide" ;
+		message += "\n- intitulé de la matière vide" ;
 	}
 	
 	if (!floatCorrect.test(coeff))
 	{
 		formIsCorrect = false ;
-		message += "\n- coefficient de la mati&egrave;re incorrect" ;
+		message += "\n- coefficient de la matière incorrect" ;
 	}
 	
 	if (!intCorrect.test(heures))
 	{
 		formIsCorrect = false ;
-		message += "\n- nombre d'heures de la mati&egrave;re incorrect" ;
+		message += "\n- nombre d'heures de la matière incorrect" ;
 	}
 	
 	if (!intCorrect.test(module))
 	{
 		formIsCorrect = false ;
-		message += "\n- module de la mati&egrave;re incorrect" ;
+		message += "\n- module de la matière incorrect" ;
 	}
 		
 	// si on peut ajouter ou modifier

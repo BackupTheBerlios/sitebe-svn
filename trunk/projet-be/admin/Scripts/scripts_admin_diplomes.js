@@ -25,7 +25,7 @@ function checkDiplome(formName)
 	if (incorrect.test(dipIntitule)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- intitule du diplome vide" ;
+		message += "\n- intitule du diplôme vide" ;
 	}
 	
 	// si on peut ajouter

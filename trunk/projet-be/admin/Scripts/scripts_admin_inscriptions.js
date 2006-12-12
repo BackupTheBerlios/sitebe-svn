@@ -25,7 +25,7 @@ function checkInscription(formName)
 	if (!correct.test(etudiant)) // numero incorrect
 	{
 		formIsCorrect = false ;
-		message += "- numero etudiant incorrect" ;
+		message += "- numéro etudiant incorrect" ;
 	}
 	
 	// si on peut ajouter

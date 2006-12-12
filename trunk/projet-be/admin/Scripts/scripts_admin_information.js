@@ -78,14 +78,14 @@ function checkInformationMod(formName)
 	if (incorrectText.test(titre))
 	{
 		formIsCorrect = false ;
-		message += "\n- titre incorrecte de l'information" ;
+		message += "\n- titre incorrect de l'information" ;
 	}
 
         // test du contenu
 	if (incorrectText.test(contenu))
 	{
 		formIsCorrect = false ;
-		message += "\n- contenu incorrecte de l'information " ;
+		message += "\n- contenu incorrect de l'information " ;
 	}
 
 	// si on peut ajouter

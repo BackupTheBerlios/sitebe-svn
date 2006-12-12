@@ -25,7 +25,7 @@ function checkMenu(formName)
 	if (incorrect.test(menuIntitule)) // champ vide
 	{
 		formIsCorrect = false ;
-		message += "\n- intitule du menu vide" ;
+		message += "\n- intitulé du menu vide" ;
 	}
 	
 	// si on peut ajouter
