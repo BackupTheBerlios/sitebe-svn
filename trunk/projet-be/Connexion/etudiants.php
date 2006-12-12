@@ -31,48 +31,42 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		
 		/* visu ...*/
 		if ($_GET['a'] == "load")
-
 		{
-        	$requettediplome = "select * from diplome where `intitule` = '".$_SESSION['diplome']."'";
-        	$res= DB_Query($requettediplome);
-        	$liste = mysql_fetch_array($res);
-            $fileList = DB_Query('SELECT *
-                                   FROM fichier
-                                   WHERE `id-diplome` = "'.$liste['id-diplome'].'"
-                                   ORDER BY `id-fichier`');
-            $fileCount = mysql_num_rows($fileList);
-            
-            //print("<table  cellspacing=\"1\" cellpadding=\"0\>") ;
-
-            if ($fileCount == 0)
+		$res= DB_Query("select * from diplome where `intitule` = '".$_SESSION['diplome']."'");
+		$diplome = mysql_fetch_array($res);
+		$fics = DB_Query('SELECT * FROM fichier
+						WHERE `id-diplome` = "'.$diplome['id-diplome'].'"
+						AND `id-etu` = 0
+						ORDER BY `id-fichier`');
+		$nbFic = mysql_num_rows($fics);
+		//print("<table  cellspacing=\"1\" cellpadding=\"0\>") ;
+		if ($nbFic == 0)
+		{
+			print("<table cellspacing=\"3\" cellpadding=\"0\">") ;
+			print("<tr>\n") ;
+			print("<td width=\"600\" align=\"center\"> ");
+			print "Aucun fichier pr&eacute;sent pour ce diplome !" ;
+			print("</td></tr>") ;
+		}
+		elseif ($nbFic > 0)
+		{
+			for ($i=0; $i<$nbFic; $i++)
 			{
-				print("<table cellspacing=\"3\" cellpadding=\"0\">") ;
-				print("<tr>\n") ;
-				print("<td width=\"600\" align=\"center\"> ");
-				print "Aucun fichier pr&eacute;sent pour ce diplome !" ;
-				print("</td></tr>") ;
-			}
-			if ($fileCount > 0)
-			{
-				for ($i=0; $i<$fileCount; $i++)
-				{
-					$fFileList = mysql_fetch_array($fileList);
-					$fensDetails = DB_Query('SELECT nom, prenom
-										FROM enseignant
-										WHERE `id-enseignant` = "'.$fFileList['id-ens'].'"');
-					$ensDetails = mysql_fetch_array($fensDetails);
-					print("\t\t\t\t<tr>\n") ;
-					print("<td align=\"left\" width=\"400\">");
-					//print("<div class=\"blueZone\">");
-					print("<h1><u>".$ensDetails['nom']." ".$ensDetails['prenom']."</h1></u><br>") ;
-					print("<u>".$fFileList['titre']."</u><br><br>") ;
-					$fFileList['commentaire'] = nl2br($fFileList['commentaire']);
-					print($fFileList['commentaire']."<br>") ;
-					$chaine = explode(" ",$liste['intitule']);
-					$finalchaine = $chaine[0]."".$chaine[1];
-					print("<a href=Data/Telechargement/".$finalchaine."/".$fFileList['URL'].">Telechargement</a>");
-					//print("</div>");
-					print("\t\t\t\t</tr>\n") ;
+				$fichier = mysql_fetch_array($fics);
+				$fensDetails = DB_Query('SELECT nom, prenom
+									FROM enseignant
+									WHERE `id-enseignant` = "'.$fichier['id-ens'].'"');
+				$ensDetails = mysql_fetch_array($fensDetails);
+				print("\t\t\t\t<tr>\n") ;
+				print("<td align=\"left\" width=\"400\">");
+				print("<h1><u>".$ensDetails['nom']." ".$ensDetails['prenom']."</h1></u><br>") ;
+				print("<u>".$fichier['titre']."</u><br><br>") ;
+				$fichier['commentaire'] = nl2br($fichier['commentaire']);
+				print($fichier['commentaire']."<br>") ;
+// 				$chaine = explode(" ",$diplome['intitule']);
+// 				$finalchaine = $chaine[0]."".$chaine[1];
+				print("<a href=".$fichier['URL'].">Telechargement</a>");
+				print("\t\t\t\t</tr>\n") ;
 				}
 			}
 			print("\t\t\t</table>\n");

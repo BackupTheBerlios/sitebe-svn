@@ -48,6 +48,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$intituleFetch = mysql_fetch_array($intituleMat);
 			$inti = $intituleFetch['intitule'];
 
+			print("<center>");
 			print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("<tr>\n") ;
 			print("<td align=\"center\" width=\"800\"><br><b> Enseignement : ");
@@ -56,7 +57,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("</tr>\n") ;
 			print("</table>\n") ;
 
-			print("<table cellspacing=\"1\" cellpadding=\"0\">\n");
+			print("<table width=\"800\" cellspacing=\"1\" cellpadding=\"0\">\n");
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep&mat=".$_POST['matiereListe']."\">D&eacute;poser des fichiers</a></td></tr>") ;
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep&mat=".$_POST['matiereListe']."\">Supprimer des fichiers</a></td></tr>") ;
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel&mat=".$_POST['matiereListe']."\">Gestion excel</a></td></tr>") ;
@@ -66,6 +67,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=mkdir&mat=".$_POST['matiereListe']."\">Cr&eacute;er un dossier de d&eacute;p&ocirc;t pour les &eacute;tudiants</a></td></tr>") ;
 			print("</tr>\n") ;
 			print("</table>");
+			print("</center>");
 		}
 
 		/****************************
@@ -85,7 +87,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$dip_count = mysql_num_rows($id_diplome);
 			$id_diplome = mysql_fetch_array($id_diplome);
 			$id_diplome = $id_diplome['id-diplome'];
-			$fichList = DB_Query('SELECT `id-fichier`, titre FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-prop` ="'.$_SESSION['id-enseignant'].'" ORDER BY titre') ;
+			$fichList = DB_Query('SELECT `id-fichier`, titre FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-ens` ="'.$_SESSION['id-enseignant'].'" ORDER BY titre') ;
 			$fichCount = mysql_num_rows($fichList) ;
 			// aucun enseignant pour le moment
 			if ($fichCount == 0)
@@ -157,7 +159,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$id_diplome1 = DB_Query('SELECT `id-diplome` FROM diplome WHERE intitule ="'.$_SESSION['diplome'].'"');
 			$id_diplome2 = mysql_fetch_array($id_diplome1);
 			$id_diplome = $id_diplome2['id-diplome'];
-			$fichList = DB_Query('SELECT `id-fichier`, titre, URL FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-enseignant` ="'.$_SESSION['id-enseignant'].'"	ORDER BY titre') ;
+			$fichList = DB_Query('SELECT * FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-ens` ="'.$_SESSION['id-enseignant'].'" ORDER BY titre') ;
 			$fichCount = mysql_num_rows($fichList) ;
 			// aucun enseignant pour le moment
 			if ($fichCount == 0)
@@ -172,11 +174,12 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			else
 			{
 				$dip = explode(" ", $_SESSION['diplome']);
-				print "<table align='center'>";
+				print "<table cellspacing=1 align=\"center\" border=\"1\">";
+				print("<th>Titre</th><th>Commentaire</th>");
 				while($liste_fichier = mysql_fetch_array($fichList))
 				{
 					print "<tr><td>";
-					print "titre : ".$liste_fichier['titre']."  </td><td> <a href='Data/Telechargement/".$dip[0].$dip[1]."/".$liste_fichier['URL']."'> visualisation du fichier</a>";
+					print "<a href=\"".$liste_fichier['URL']."\">".$liste_fichier['titre']."</a> </td><td>".$liste_fichier['commentaire']." ";
 					print "</td></tr>";
 				}
 				print "</table>";

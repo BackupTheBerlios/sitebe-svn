@@ -292,8 +292,9 @@ th {
 	border : 0px;
 }
 #espacereserve th {
-	border-style : solid;
-	border-width : 3px;
+	color : #FFFFFF;
+	border-style : solid
+	border-width : 1px;
 	border-color : #000000;
 	background-color: #66A8E7;
 }
