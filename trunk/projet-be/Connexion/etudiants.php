@@ -11,14 +11,6 @@
 // on verifie toujours que cette page a ete appelee a partir de l'espace reserve
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 {	
-	/*
-	if (!isset($_GET['a']))
-	{
-		print("\t\t\t<center>[ <a href=\"espacereserve.php?p=connexion&w=etudiants&a=load\"><u>Consulter les fichiers &agrave; t&eacute;l&eacute;charger</u></a> ] - ") ;
-	}
-	else
-	*/
-		
 	if (isset($_GET['a']))
 	{
 		/****************************
@@ -29,7 +21,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			require ("deposer_doc.php");
 		}
 		
-		/* visu ...*/
+		/******************************
+		*     Partie visualisation
+		******************************/		
 		if ($_GET['a'] == "load")
 		{
 		$res= DB_Query("select * from diplome where `intitule` = '".$_SESSION['diplome']."'");
@@ -46,10 +40,11 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<tr>\n") ;
 			print("<td width=\"600\" align=\"center\"> ");
 			print "Aucun fichier pr&eacute;sent pour ce diplome !" ;
-			print("</td></tr>") ;
+			print("</td></tr></table>") ;
 		}
 		elseif ($nbFic > 0)
 		{
+			print ("<table align=\"center\" border=\"1\" width=\"90%\" cellspacing=\"1\"><tr><th>Enseignant</th><th>Fichier</th><th>Commentaire</th></tr>");
 			for ($i=0; $i<$nbFic; $i++)
 			{
 				$fichier = mysql_fetch_array($fics);
@@ -58,14 +53,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 									WHERE `id-enseignant` = "'.$fichier['id-ens'].'"');
 				$ensDetails = mysql_fetch_array($fensDetails);
 				print("\t\t\t\t<tr>\n") ;
-				print("<td align=\"left\" width=\"400\">");
-				print("<h1><u>".$ensDetails['nom']." ".$ensDetails['prenom']."</h1></u><br>") ;
-				print("<u>".$fichier['titre']."</u><br><br>") ;
+				print("<td nowrap> ".$ensDetails['nom']." ".$ensDetails['prenom']." </td>") ;
+				print("<td><a href=\"".$fichier['URL']."\">".$fichier['titre']."</a></td>") ;
 				$fichier['commentaire'] = nl2br($fichier['commentaire']);
-				print($fichier['commentaire']."<br>") ;
-// 				$chaine = explode(" ",$diplome['intitule']);
-// 				$finalchaine = $chaine[0]."".$chaine[1];
-				print("<a href=".$fichier['URL'].">Telechargement</a>");
+				print("<td nowrap>".$fichier['commentaire']."</td>") ;
 				print("\t\t\t\t</tr>\n") ;
 				}
 			}
@@ -86,7 +77,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		*********************/
 		if ($_GET['a'] == "logout")
 		{
-			// rien de critique
 			session_destroy() ;
 			print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion\">\n") ;
 		} 

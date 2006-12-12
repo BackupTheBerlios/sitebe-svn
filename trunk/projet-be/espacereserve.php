@@ -92,7 +92,7 @@
 				<!-------------------------------------------------->
 <?php
 	// L'utilisateur n'est pas authentifie
-	if (! isset($_SESSION['etuConnecte']) && !isset($_SESSION['ensConnecte']))
+	if (!isset($_SESSION['etuConnecte']) && !isset($_SESSION['ensConnecte']) && !isset($_SESSION['secConnecte']))
 	{
 		// si l'utilisateur n'a pas essaye de se connecter
 		if (!isset($_POST['usrAuth']))
@@ -100,8 +100,8 @@
 			$dipsList = DB_query('SELECT * FROM diplome ORDER BY intitule');
 			$countDips = mysql_num_rows($dipsList);
 			// alors affichage du formulaire
-          		print("<h2>Vous devez vous connecter pour acc&eacute;der &agrave; cette page</h2>");
-          		print("\t<form action=\"espacereserve.php\" method=\"post\">\n");
+     		print("<h2>Vous devez vous connecter pour acc&eacute;der &agrave; cette page</h2>");
+     		print("\t<form action=\"espacereserve.php\" method=\"post\">\n");
 			print("<center><table width=\"400\">\n<tr>\n");
 			print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 			print("<td align=\"left\" width=\"200\"><b> Login </b></td>");
@@ -130,7 +130,7 @@
 			if ($_POST['usrLogin']=="")
 			{
 				print("<h2>Param&egrave;tres de connexion incorrects, r&eacute;essayez</h2>");
-				print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
+				print("<form action=\"espacereserve.php?\" method=\"post\">\n");
 				print("<center><table width=\"400\"><tr>\n");
 				print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 				print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
@@ -171,7 +171,6 @@
 				$ensDetails = mysql_fetch_array($connect_result);
 				$connect_result = mysql_num_rows($connect_result);
 				
-				
 				//un ou pusieurs resultats trouves pour le cas d'enseignant
 				if ($connect_result != 0)
 				{
@@ -179,7 +178,7 @@
 					if ($connect_result != 1)
 					{
 						print("<h2>Param&egrave;tres de connexion incorrects, r&eacute;essayez</h2>");
-						print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
+						print("<form action=\"espacereserve.php?\" method=\"post\">\n");
 						print("<center><table width=\"400\"><tr>\n");
 						print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
 						print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
@@ -209,12 +208,12 @@
 					//un resultat retrouve pour le cas d'enseignant
 					else
 					{
-					$_SESSION['ensConnecte'] = true;
-					$_SESSION['nom'] = $ensDetails['nom'];
-					$_SESSION['prenom'] = $ensDetails['prenom'];
-					$_SESSION['id-enseignant'] = $ensDetails['id-enseignant'];
-					$_SESSION['diplome'] = $diplome;
-					print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion&w=enseignants\">\n");
+						$_SESSION['ensConnecte'] = true;
+						$_SESSION['nom'] = $ensDetails['nom'];
+						$_SESSION['prenom'] = $ensDetails['prenom'];
+						$_SESSION['id-enseignant'] = $ensDetails['id-enseignant'];
+						$_SESSION['diplome'] = $diplome;
+						print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?p=connexion&w=enseignants\">\n");
 					}
 				}
 				//aucun resultat pour le cas de l'enseignant
@@ -256,31 +255,47 @@
 					//aucun resultat ni pour le cas d'etudiant ni pour le cas d'enseignant
 					else
 					{
-						print("<h2>Ce compte n'est pas valide</h2>");
-						print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
-						print("<center><table width=\"400\"><tr>\n");
-						print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
-						print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
-						print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
-						print("<tr>\n");
-						print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
-						print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
-						$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
-						$countDips = mysql_num_rows($dipsList);
-						if ($countDips > 0)
+						//on retrouve la secretaire
+						$secDetails = DB_query('SELECT * FROM secretaire WHERE login = "'.$usrlogin.'" AND mdp = "'.$usrpass.'"');
+						$connect_result = mysql_num_rows($secDetails);
+						//un ou plusieurs resultats trouves pour le cas d'etudiant
+						if ($connect_result == 1)
 						{
-							print("<tr>\n");
-							print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
-							for($i = 0; $i < $countDips; $i++)
-							{
-								$dipsDetails = mysql_fetch_array($dipsList);
-								print("<option> {$dipsDetails['intitule']} </option>");
-							}
-							print("</select></td>\n</tr>\n");
+							$_SESSION['secConnecte'] = true;
+							$_SESSION['nom'] = $etuDetails['nom'];
+							$_SESSION['prenom'] = $etuDetails['prenom'];
+							$_SESSION['id-etu'] = $etuDetails['id-etudiant'];
+							$_SESSION['diplome'] = $diplome;
+							print("<meta http-equiv=\"refresh\" content=\"0;url=espacereserve.php?w=secretaire\">\n");
 						}
-						print("<tr>\n");
-						print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
-						print("</table>\n</center>\n");
+						else
+						{
+							print("<h2>Ce compte n'est pas valide</h2>");
+							print("<form action=\"espacereserve.php?p=connexion\" method=\"post\">\n");
+							print("<center><table width=\"400\"><tr>\n");
+							print("<tr><td align=center colspan=2>Si vous n'&ecirc;tes pas inscrit(e), cliquez <b><a href=compte.php>ici</a></b></td></tr>");
+							print("<td align=\"left\" width=\"200\"><b>Login</b></td>");
+							print("<td align=\"right\" width=\"200\"><input name=\"usrLogin\" class=\"defaultInput\" maxlength=\"15\" size=\"15\"></td>\n</tr>\n");
+							print("<tr>\n");
+							print("<td align=\"left\" width=\"200\"><b>Mot de passe</b></td>");
+							print("<td align=\"right\" width=\"200\"><input name=\"usrPass\" class=\"defaultInput\" maxlength=\"15\" type=\"password\" size=\"15\"></td>\n</tr>\n");
+							$dipsList = DB_Query('SELECT * FROM diplome ORDER BY intitule');
+							$countDips = mysql_num_rows($dipsList);
+							if ($countDips > 0)
+							{
+								print("<tr>\n");
+								print("<td align=\"left\" width=\"200\"><b>Dipl&ocirc;me *</b></td><td width=\"200\" align=\"right\"><select class=\"defaultInput\" name=\"diplome\">");
+								for($i = 0; $i < $countDips; $i++)
+								{
+									$dipsDetails = mysql_fetch_array($dipsList);
+									print("<option> {$dipsDetails['intitule']} </option>");
+								}
+								print("</select></td>\n</tr>\n");
+							}
+							print("<tr>\n");
+							print("<td colspan=\"2\" align=\"center\" width=\"400\"><input type=\"submit\" class=\"defaultInput\" name=\"usrAuth\" class=\"defaultButton\" value=\"Connexion\"></td>\n</tr>\n");
+							print("</table>\n</center>\n");
+						}
 					}
 				}
 			}
@@ -357,6 +372,25 @@
 				print("</tr>\n");
 				print("</table>\n");
 			}
+			elseif(isset($_SESSION['secConnecte']) && $_SESSION['secConnecte'])
+			{
+				print("<td width=\"800\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?w=secretaire&a=logout\">D&eacute;connexion</a> &gt;</td>\n");
+				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
+				print("<tr>\n");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=load\">Consulter les fichiers &agrave; t&eacute;l&eacute;charger</a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=dep\">D&eacute;poser un fichier</a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=modif&b=pass\">Modifier password</a></td>");
+				print("</tr>\n");
+				print("<tr>\n");
+				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=modif&b=login\">Modifier login</a></td>");
+				print("</tr>\n");
+				print("</table>\n");
+			}
+			
 		}
 		else
 		{

@@ -14,20 +14,6 @@
 // on verifie toujours que cette page a ete appelee a partir de l'espace reserve
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 {
-	/*
-	// aucune action precisee : section principal
-	if (!isset($_GET['a']))
-	{
-		print("<table border=\"1\">");
-		print("<tr><td align='right'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep\"><u>D&eacute;poser des fichiers</u></a></td></tr>") ;
-		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep\">Supprimer des fichiers</a></td></tr>") ;
-		print("<tr><td align='center'> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=excel\">Gestion excel</a></td></tr>") ;
-		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation\"><u>Visualisation</u></a></td>") ;
-		print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note\"><u>saisie des notes</u></a></td>") ;
-		print("</tr>\n") ;
-		print "</table>";
-	}
-	else*/
 	if (isset($_GET['a']))
 	{
 		/****************************************************
@@ -38,7 +24,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			// on include le fichier modif
 			require("modifier.php");
 		}
-
+		
 		/************************************************************
 		*     Affichage des options apres le choix de la matiere
 		************************************************************/
@@ -47,7 +33,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$intituleMat = DB_Query('SELECT intitule FROM matiere WHERE `id-matiere` ="'.$_POST['matiereListe'].'"');
 			$intituleFetch = mysql_fetch_array($intituleMat);
 			$inti = $intituleFetch['intitule'];
-
+			
 			print("<center>");
 			print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
 			print("<tr>\n") ;
@@ -56,7 +42,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<br><br></b></td>") ;
 			print("</tr>\n") ;
 			print("</table>\n") ;
-
+			
 			print("<table width=\"800\" cellspacing=\"1\" cellpadding=\"0\">\n");
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=dep&mat=".$_POST['matiereListe']."\">D&eacute;poser des fichiers</a></td></tr>") ;
 			print("<tr><td align=\"center\"> <a href=\"espacereserve.php?p=connexion&w=enseignants&a=undep&mat=".$_POST['matiereListe']."\">Supprimer des fichiers</a></td></tr>") ;
@@ -69,7 +55,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("</table>");
 			print("</center>");
 		}
-
+		
 		/****************************
 		*     Depot d'un fichier
 		****************************/
@@ -77,7 +63,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		{
 			require ("deposer_doc.php");
 		}
-
+		
 		/**********************************
 		*     Suppression d'un fichier
 		**********************************/
@@ -89,7 +75,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$id_diplome = $id_diplome['id-diplome'];
 			$fichList = DB_Query('SELECT `id-fichier`, titre FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-ens` ="'.$_SESSION['id-enseignant'].'" ORDER BY titre') ;
 			$fichCount = mysql_num_rows($fichList) ;
-			// aucun enseignant pour le moment
+			
 			if ($fichCount == 0)
 			{
 				print("<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
@@ -117,7 +103,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("</form></center>\n") ;
 			}
 		}
-
+		
 		/***********************************
 		*     Importer un fichier excel
 		***********************************/
@@ -132,7 +118,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("</table>");
 			print("</form></center>\n") ;
 		}
-
+		
 		/* traitement fichier excel */
 		if($_GET['a']=='enregexcel')
 		{
@@ -149,17 +135,16 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 //			echo "<table align='center'><tr><td><h2> L'insertion s'est bien deroul&eacute;e ... Redirection ... </h2></td></tr></table>";
 			print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 		}
-
+		
 		/******************************************
 		*    partie visualisation des fichiers
 		******************************************/
-		/* visualiser */
 		if($_GET['a'] == 'visualisation')
 		{
 			$id_diplome1 = DB_Query('SELECT `id-diplome` FROM diplome WHERE intitule ="'.$_SESSION['diplome'].'"');
 			$id_diplome2 = mysql_fetch_array($id_diplome1);
 			$id_diplome = $id_diplome2['id-diplome'];
-			$fichList = DB_Query('SELECT * FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-ens` ="'.$_SESSION['id-enseignant'].'" ORDER BY titre') ;
+			$fichList = DB_Query('SELECT * FROM fichier WHERE `id-diplome` = "'.$id_diplome.'" and `id-ens` ="'.$_SESSION['id-enseignant'].'" ORDER BY `id-fichier`') ;
 			$fichCount = mysql_num_rows($fichList) ;
 			// aucun enseignant pour le moment
 			if ($fichCount == 0)
@@ -173,7 +158,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			}
 			else
 			{
-				$dip = explode(" ", $_SESSION['diplome']);
 				print "<table cellspacing=1 align=\"center\" border=\"1\">";
 				print("<th>Titre</th><th>Commentaire</th>");
 				while($liste_fichier = mysql_fetch_array($fichList))
@@ -185,7 +169,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print "</table>";
 			}
 		}
-
+		
 		/***********************************************
 		*     partie qui permet de gerer les notes
 		***********************************************/
@@ -202,7 +186,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			if ($nb_ligne == 0)
 			{
 				print("<table><tr><td>") ;
-				print("aucune matiere disponible, redirection ...") ;
+				print("Aucune matiere disponible, redirection ...") ;
 				print("</td></tr>") ;
 				print("<tr><td>") ;
 				print("<meta http-equiv='refresh' content='2;url=espacereserve.php?p=connexion&w=enseignants'>");
@@ -224,7 +208,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				// fin de la liste
 			}
 		}
-
+		
 		/* enreg note ? */
 		if($_GET['a'] == 'enregnote')
 		{
@@ -304,7 +288,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				}
 			}
 		}
-
+		
 		/* eNote ? */
 		if($_GET['a'] == 'enote')
 		{
