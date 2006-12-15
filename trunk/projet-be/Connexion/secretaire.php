@@ -63,15 +63,6 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("\t\t\t</table>\n");
 		}
 		
-		/****************************************************
-		*     Partie modification (login ou mot de passe)    
-		****************************************************/
-		if($_GET['a']=='modif')
-		{
-			// on include le fichier modif
-			require("modifier.php");
-		}
-		
 		/*********************
 		*     Deconnexion     
 		*********************/

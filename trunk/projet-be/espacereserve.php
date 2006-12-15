@@ -372,25 +372,20 @@
 				print("</tr>\n");
 				print("</table>\n");
 			}
+			//la secretaire est connectee
 			elseif(isset($_SESSION['secConnecte']) && $_SESSION['secConnecte'])
 			{
 				print("<td width=\"800\" align=\"right\"><br><br>&lt; <a href=\"espacereserve.php?w=secretaire&a=logout\">D&eacute;connexion</a> &gt;</td>\n");
 				print("<table  cellspacing=\"1\" cellpadding=\"0\">\n");
+				/*
 				print("<tr>\n");
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=load\">Consulter les fichiers &agrave; t&eacute;l&eacute;charger</a></td>");
 				print("</tr>\n");
 				print("<tr>\n");
 				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=dep\">D&eacute;poser un fichier</a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=modif&b=pass\">Modifier password</a></td>");
-				print("</tr>\n");
-				print("<tr>\n");
-				print("<td align=\"center\" width=\"800\"><a href=\"espacereserve.php?w=secretaire&a=modif&b=login\">Modifier login</a></td>");
-				print("</tr>\n");
+				print("</tr>\n");*/
 				print("</table>\n");
-			}
-			
+			}			
 		}
 		else
 		{

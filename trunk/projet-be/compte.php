@@ -161,6 +161,8 @@
 	$nblogin = mysql_num_rows($res);
 	$res = mysql_query("SELECT * FROM `enseignant` WHERE login='$login' AND login !=''");
 	$nblogin += mysql_num_rows($res);
+	$res = mysql_query("SELECT * FROM `secretaire` WHERE login='$login' AND login !=''");
+	$nblogin += mysql_num_rows($res);
 	
 	// S'il y a un champ vide OU le login existe deja OU l'etudiant n'existe pas
 	if((empty($nom) OR empty($prenom) OR empty($num_etu) OR empty($mail) OR empty($password) OR empty($login) OR empty($password2) OR $password!=$password2) OR $nbcours==0 OR $nblogin!=0)
@@ -224,30 +226,10 @@
 		//$anne="2006 - 2007";
 		$res=mysql_query("select `id-diplome` from diplome where intitule='$combo'");
 		$id_diplome = DB_fetchArray($res);
-		/*mysql_query("INSERT INTO inscrit VALUES ('$num_etu','$id_diplome[0]','$anne')");
-		if(mysql_errno() != 0)
-		{
-			echo "Une erreur est survenue lors de la création du nouvel étudiant, vous allez être rediriger...";
-			print(mysql_error());
-			// echo "<script language='Javascript'>location.href='compte.php'</script>";
-		}
-		else{*/
-			$res=mysql_query("select `id-matiere` from matiere,etudiant,module,inscrit,diplome
-								 where inscrit.`id-etudiant`=etudiant.`id-etudiant`
-								 and inscrit.`id-diplome`=diplome.`id-diplome`
-								 and diplome.`id-diplome`=module.`id-diplome`
-								 and matiere.`id-module`=module.`id-module`
-								 and etudiant.`id-etudiant`='$num_etu';");
-			$chemin='etudiants/'.$num_etu.'/';
-			mkdir ($chemin, 0770);
-			while($row = DB_fetchArray($res))
-			{
-				$var=$chemin.$row[0].'/';
-				mkdir ($var, 0770);
-			}
-			echo "<table><tr><td>Votre inscription a bien &eacute;t&eacute; valid&eacute;e, vous pouvez maintenant vous connecter. Redirection...</td></tr></table>";
-			print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php\">") ;
 	
+		echo "<table><tr><td>Votre inscription a bien &eacute;t&eacute; valid&eacute;e, vous pouvez maintenant vous connecter. Redirection...</td></tr></table>";
+		print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php\">") ;
+
 	}
 	print("<center><table><tr><td><br><br><a href='espacereserve.php?'>retour</a></td></tr><tr><td>&nbsp;</td></tr></table></center>");
 ?>
