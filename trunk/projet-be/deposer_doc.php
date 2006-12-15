@@ -31,12 +31,22 @@
 				// $_FILES['nom_du_fichier']['error'] vaut 0 soit UPLOAD_ERR_OK
 				// ce qui signifie qu'il n'y a eu aucune erreur
 				$content_dir = 'Data/'; // Racine du dossier où sera déplacé le fichier
-				$id_matiere=$_POST['combo'];
-	
-				$res=mysql_query("select matiere.apogee, module.apogee from matiere,module where matiere.`id-module`=module.`id-module` and matiere.`id-matiere`='$id_matiere'");
-				$row=DB_fetchArray($res);
-	
-				$content_dir=$content_dir.$row[1]."/".$row[0]."/";
+				
+				
+				if ($_POST['module']=="")
+				{
+					$id_matiere=$_POST['combo'];	
+					$res=mysql_query("select matiere.apogee, module.apogee from matiere,module where matiere.`id-module`=module.`id-module` and matiere.`id-matiere`='$id_matiere'");
+					$row=DB_fetchArray($res);
+					$content_dir=$content_dir.$row[1]."/".$row[0]."/";
+				}
+				else
+				{
+					$id_module=$_POST['module'];
+					$res=mysql_query("select apogee from module where module.`id-module`='$id_module'");
+					$row=DB_fetchArray($res);
+					$content_dir=$content_dir.$row[0]."/";
+				}
 	
 				$tmp_file = $_FILES['fichier']['tmp_name'];
 	
@@ -112,6 +122,22 @@
 			{
 				$id_matiere=$_GET['mat'];
 				print("<input type=\"hidden\" name=\"combo\" value=\"$id_matiere\">");
+				$id_ens=$_SESSION['id-enseignant'];				
+				$res=mysql_query("select *  from module
+							where module.`id-responsable`='$id_ens'");
+				$nb=mysql_num_rows($res);
+				if ($nb != 0)
+				{
+					print("<tr><td colspan=\"2\"><dd>S&eacute;lectionner le module:</td></tr>");
+					print("<tr><td colspan=\"2\"><dd><select size=\"1\" name=\"module\">");
+					print("<option value=\"\">(Aucun)</option>");
+					while($row = DB_fetchArray($res))
+					{
+						print("<option value=\"$row[0]\">$row[2]</option>");
+					}
+					print("</select></td></tr>");
+					print("<tr><td>&nbsp;</td></tr>");
+				}
 			}
 			print("<tr><td align=\"left\" width=\"20\"><b> Titre </b></td><td align=\"left\"><input class=\"defaultInput\" name=\"titreDepot\" size=\"40\"></td></tr>\n") ;
 			print("<tr><td align=\"left\" width=\"20\"><font face=\"Arial\" color=#330033><br>Fichier </font></td>");
@@ -154,6 +180,22 @@
 		{
 			$id_matiere=$_GET['mat'];
 			print("<input type=\"hidden\" name=\"combo\" value=\"$id_matiere\">");
+			$id_ens=$_SESSION['id-enseignant'];				
+			$res=mysql_query("select *  from module
+						where module.`id-responsable`='$id_ens'");
+			$nb=mysql_num_rows($res);
+			if ($nb != 0)
+			{
+				print("<tr><td colspan=\"2\"><dd>S&eacute;lectionner le module:</td></tr>");
+				print("<tr><td colspan=\"2\"><dd><select size=\"1\" name=\"module\">");
+				print("<option value=\"\">(Aucun)</option>");
+				while($row = DB_fetchArray($res))
+				{
+					print("<option value=\"$row[0]\">$row[2]</option>");
+				}
+				print("</select></td></tr>");
+				print("<tr><td>&nbsp;</td></tr>");
+			}
 		}
 		print("<tr><td align=\"left\" width=\"20\"><b> Titre </b></td><td align=\"left\"><input class=\"defaultInput\" name=\"titreDepot\" size=\"40\"></td></tr>\n") ;
 		print("<tr><td align=\"left\" width=\"20\"><font face=\"Arial\" color=#330033><br>Fichier </font></td>");
