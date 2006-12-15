@@ -50,7 +50,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=visualisation&mat=".$_POST['matiereListe']."\">Visualisation</a></td></tr>") ;
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=note&mat=".$_POST['matiereListe']."\">Saisie des notes</a></td></tr>") ;
 			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=mail&b=form&mat=".$_POST['matiereListe']."\">Envoyer un mail a tous les etudiants</a></td></tr>") ;
-			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=mkdir&mat=".$_POST['matiereListe']."\">Cr&eacute;er un dossier de d&eacute;p&ocirc;t pour les &eacute;tudiants</a></td></tr>") ;
+			print("<tr><td align=\"center\" width=\"800\"><a href=\"espacereserve.php?p=connexion&w=enseignants&a=mkdir&b=form&mat=".$_POST['matiereListe']."\">Cr&eacute;er un dossier de d&eacute;p&ocirc;t pour les &eacute;tudiants</a></td></tr>") ;
 			print("</tr>\n") ;
 			print("</table>");
 			print("</center>");
@@ -356,9 +356,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 						and (Inscrit.`id-diplome` = Module.`id-diplome`)
 						and (Module.`id-module` = Matiere.`id-module`)
 						and (Matiere.`id-matiere` = "'.$_GET['mat'].'")');
-				$entete="From: [email=mastasushi@hotmail.fr]Masta[/email]\n";
-				$entete.="Bcc: [email=mastasushi@hotmail.fr]Masta[/email]\n";
-			//	$entete="FROM : ".$_SESSION['nom']." ".$_SESSION['prenom']." \n";
+				$entete="FROM : ".$_SESSION['nom']." ".$_SESSION['prenom']." \n";
 				while ($tableau=mysql_fetch_array($requeteMail))
 				{
 					echo $tableau[0];echo $_POST['sujet'];echo $_POST['contenu'];echo $entete;
@@ -390,7 +388,105 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		************************************/
 		if ($_GET['a'] == "mkdir")
 		{
-			$entry = readdir("/Data/UL3A01M/UL3A011/");
+			/* formulaire */
+			if($_GET['b'] == 'form')
+			{
+				print("<center><table cellspacing=\"3\" cellpadding=\"0\"\n") ;
+				print("<form method=\"post\" action=\"espacereserve.php?p=connexion&w=enseignants&a=mkdir&b=trait&mat=".$_GET['mat']."\" >\n") ;
+				print("<tr><td align=\"center\" width=\"800\" colspan=\"2\"><h2>Cr&eacute;ation d'un r&eacute;pertoire</h2></td></tr>\n") ;
+				$id_matiere=$_GET['mat'];
+				print("<input type=\"hidden\" name=\"combo\" value=\"$id_matiere\">");
+				$id_matiere=$_GET['mat'];
+				print("<input type=\"hidden\" name=\"combo\" value=\"$id_matiere\">");
+				$id_ens=$_SESSION['id-enseignant'];				
+				$res=mysql_query("select *  from module
+							where module.`id-responsable`='$id_ens'");
+				$nb=mysql_num_rows($res);
+				if ($nb != 0)
+				{
+					print("<tr><td colspan=\"2\"><dd>S&eacute;lectionner le module:</td></tr>");
+					print("<tr><td colspan=\"2\"><dd><select size=\"1\" name=\"module\">");
+					print("<option value=\"\">(Aucun)</option>");
+					while($row = DB_fetchArray($res))
+					{
+						print("<option value=\"$row[0]\">$row[2]</option>");
+					}
+					print("</select></td></tr>");
+					print("<tr><td>&nbsp;</td></tr>");
+				}
+				print("<tr><td align=\"left\"><b> Nom du dossier </b></td><td><input class=\"defaultInput\" name=\"nomDossier\" size=\"40\"></td></tr>\n") ;
+				print("<tr><td colspan=\"2\" align=\"left\"width=\"800\"><input class=\"defaultButton\" type=\"submit\" value=\"Cr&eacute;er le dossier\"\"></tr>\n") ;
+				print("</form>\n") ;
+				print("</table></center>\n") ;
+			}
+			
+			/* traitement */
+			if($_GET['b'] == 'trait')
+			{
+				if ($_POST['nomDossier']=="")
+				{
+					print("Attention, le nom du dossier doit &ecirc;tre renseign&eacute; !");
+					print("<center><table cellspacing=\"3\" cellpadding=\"0\"\n") ;
+					print("<form method=\"post\" action=\"espacereserve.php?p=connexion&w=enseignants&a=mkdir&b=trait&mat=".$_GET['mat']."\" >\n") ;
+					print("<tr><td align=\"center\" width=\"800\" colspan=\"2\"><h2>Cr&eacute;ation d'un r&eacute;pertoire</h2></td></tr>\n") ;
+					$id_matiere=$_GET['mat'];
+					print("<input type=\"hidden\" name=\"combo\" value=\"$id_matiere\">");
+					$id_matiere=$_GET['mat'];
+					print("<input type=\"hidden\" name=\"combo\" value=\"$id_matiere\">");
+					$id_ens=$_SESSION['id-enseignant'];				
+					$res=mysql_query("select *  from module
+								where module.`id-responsable`='$id_ens'");
+					$nb=mysql_num_rows($res);
+					if ($nb != 0)
+					{
+						print("<tr><td colspan=\"2\"><dd>S&eacute;lectionner le module:</td></tr>");
+						print("<tr><td colspan=\"2\"><dd><select size=\"1\" name=\"module\">");
+						print("<option value=\"\">(Aucun)</option>");
+						while($row = DB_fetchArray($res))
+						{
+							print("<option value=\"$row[0]\">$row[2]</option>");
+						}
+						print("</select></td></tr>");
+						print("<tr><td>&nbsp;</td></tr>");
+					}
+					print("<tr><td align=\"left\"><b> Nom du dossier </b></td><td><input class=\"defaultInput\" name=\"nomDossier\" size=\"40\"></td></tr>\n") ;
+					print("<tr><td colspan=\"2\" align=\"left\"width=\"800\"><input class=\"defaultButton\" type=\"submit\" value=\"Cr&eacute;er le dossier\"\"></tr>\n") ;
+					print("</form>\n") ;
+					print("</table></center>\n") ;
+				}
+				else
+				{				
+					$nomDossier = $_POST['nomDossier'];
+					$content_dir = 'Data/'; // Racine du dossier où sera déplacé le fichier
+					if ($_POST['module']=="")
+					{
+						$id_matiere=$_POST['combo'];
+						$res=mysql_query("select matiere.apogee, module.apogee from matiere,module where matiere.`id-module`=module.`id-module` and matiere.`id-matiere`='$id_matiere'");
+						$row=DB_fetchArray($res);
+						$content_dir=$content_dir.$row[1]."/".$row[0]."/";
+					}
+					else
+					{
+						$id_module=$_POST['module'];
+						$res=mysql_query("select apogee from module where module.`id-module`='$id_module'");
+						$row=DB_fetchArray($res);
+						$content_dir=$content_dir.$row[0]."/";
+					}
+					$id_ens=$_SESSION['id-enseignant'];
+					$req=mysql_query("select login from enseignant where `id-enseignant`='$id_ens'");
+					$login=DB_fetchArray($req);
+					$content_dir=$content_dir.$login[0]."/".$nomDossier."/";
+					
+					mkdir ($content_dir, 0770);
+					
+					print("<table width=\"800\" cellspacing=\"3\" cellpadding=\"0\">\n") ;
+					print("<tr>\n") ;
+					print("<td align=\"center\" width=\"800\"><br>Le dossier a bien &eacute;t&eacute; cr&eacute;&eacute;. Redirection...</td>") ;
+					print("</tr>\n") ;
+					print("</table>\n") ;
+					print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;
+				}
+			}
 			
 		}
 	}
