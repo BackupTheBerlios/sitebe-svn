@@ -83,10 +83,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 								<tr>
 									<td>
 										<select name='ue'>
-											<option value='0'>-- Choisissez une UE --</option>
 											<?php
 												dbConnect();
-												$res = dbQuery('SELECT * FROM module');
+												$res = dbQuery('SELECT * FROM module WHERE `id-responsable` = 0');
 												
 												while($tab = mysql_fetch_array($res))
 												{

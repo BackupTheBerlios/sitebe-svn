@@ -34,69 +34,164 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 			centeredInfoMessage(3, 3, "Administration des mati&egrave;res : ajout") ;
 			dbConnect() ;
 			
-			// liste des diplomes contenant un ou plusieurs modules
-			$diplomeList = dbQuery('SELECT `id-diplome`, intitule
-				FROM diplome
-				WHERE 0 < (SELECT COUNT(`id-module`)
-						FROM module
-						WHERE module.`id-diplome` = diplome.`id-diplome`
-						GROUP BY module.`id-diplome`)') ;
-				
-			$diplomeCount = mysql_num_rows($diplomeList) ;
-			$diplomeList = mysql_fetch_array($diplomeList) ;
-			
-			if ($diplomeCount == 0)
+			// si on ne connait pas encore le module
+			if (!isset($_POST['moduleID']))
 			{
-				centeredInfoMessage(2, 2, "Il faut d'abord ajouter des modules") ;
-				return ;
+				// si aucun diplome n'est defini alors on les affiche
+				if (!isset($_POST['dipID']))
+				{
+					print("\t\t\t<center><b>Choisissez un dipl&ocirc;me</b></center>\n") ;
+					$dipList = dbQuery('SELECT  intitule, `id-diplome`
+						FROM diplome
+						ORDER BY intitule') ;
+				
+					$dipCount = mysql_num_rows($dipList) ;
+			
+					// aucun diplome pour le moment
+					if ($dipCount == 0)
+					{
+						centeredInfoMessage(2, 2, "Il faut d'abord ajouter des diplomes") ;
+					}
+					else
+					{
+						print("\t\t\t<center><form action=\"admin.php?w=matieres&a=add\" method=\"post\">\n") ;
+						print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
+			
+						for ($i = 0 ; $i < $dipCount ; $i++)
+						{
+							$fDipList = mysql_fetch_array($dipList) ;
+							print("\t\t\t\t<tr>\n") ;
+							print("\t\t\t\t\t<td width=\"500\" align=\"left\"><input type=\"radio\" name=\"dipID\" value=\"{$fDipList['id-diplome']}\" onClick=\"submit()\"><b>Dipl&ocirc;me :</b> {$fDipList['intitule']}</td>\n") ;
+							print("\t\t\t\t</tr>\n") ;
+						}
+			
+			
+						print("\t\t\t\t<tr>\n") ;
+						print("\t\t\t\t\t<td width=\"500\" align=\"left\"><br><input class=\"defaultButton\" type=\"submit\" name=\"matiereAdd\" value=\"Choisir\"></td>\n") ;
+						print("\t\t\t\t</tr>\n") ;
+						print("\t\t\t</table>\n") ;
+						print("\t\t\t</form></center>\n") ;
+					}
+				}
+				// un diplome est defini, on affiche tous les modules
+				else
+				{
+					// infos sur le diplome
+					$dipInfo = dbQuery('SELECT intitule
+						FROM diplome
+						WHERE `id-diplome` = '.$_POST['dipID']) ;
+					$dipInfo = mysql_fetch_array($dipInfo) ;
+				
+					print("\t\t\t<center><b>Choisissez un module pour le dipl&ocirc;me : {$dipInfo['intitule']}</b></center>\n") ;
+				
+					$modulesList = dbQuery('SELECT `id-module`, intitule
+						FROM module 
+						WHERE `id-diplome` = '.$_POST['dipID'].'
+						ORDER BY intitule') ;
+				
+					$modulesCount = mysql_num_rows($modulesList) ;
+			
+					// aucun module pour le moment
+					if ($modulesCount == 0)
+					{
+						centeredInfoMessage(2, 2, "Il faut d'abord ajouter des modules") ;
+					}
+					else
+					{
+						print("\t\t\t<center><form action=\"admin.php?w=matieres&a=add\" method=\"post\">\n") ;
+						print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
+			
+						for ($i = 0 ; $i < $modulesCount ; $i++)
+						{
+							$fModulesList = mysql_fetch_array($modulesList) ;
+							print("\t\t\t\t<tr>\n") ;
+							print("\t\t\t\t\t<td width=\"500\" align=\"left\"><input type=\"radio\" name=\"moduleID\" value=\"{$fModulesList['id-module']}\" onClick=\"submit()\"> {$fModulesList['intitule']} </td>\n") ;
+							print("\t\t\t\t</tr>\n") ;
+						}
+			
+			
+						print("\t\t\t\t<tr>\n") ;
+						print("\t\t\t\t\t<td width=\"500\" align=\"left\"><br><input class=\"defaultButton\" type=\"submit\" name=\"matiereAdd\" value=\"Choisir\"></td>\n") ;
+						print("\t\t\t\t</tr>\n") ;
+						print("\t\t\t</table>\n") ;
+						print("\t\t\t</form></center>\n") ;
+					}
+				}					
 			}
 			
-			print("\t\t\t<center><form name=\"defaultForm\" action=\"database.php?w=matieres\" method=\"post\">\n") ;
-			print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Intitul&eacute; de la mati&egrave;re *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereIntitule\" size=\"45\"></td>") ;
-			print("\t\t\t\t</tr>\n") ;
+			// on connait le module : on cree la matiere
+			else
+			{
+				// Numeros de matiere deja utilises
+				$nomatutil = dbQuery('SELECT DISTINCT no_matiere
+					FROM matiere
+					WHERE `id-module` = '.$_POST['moduleID'].'
+					ORDER BY no_matiere') ;
+				$nomatutilcount = mysql_num_rows($nomatutil);
+				$nomatutildetail = mysql_fetch_array($nomatutil);
 				
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Coefficient *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereCoeff\"  size=\"7\" maxlength=\"7\"></td>") ;
-			print("\t\t\t\t</tr>\n") ;
-				
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Nombre d'heures *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereHeures\" size=\"7\" maxlength=\"7\"></td>") ;
-			print("\t\t\t\t</tr>\n") ;
-    
-
-            $modulesList = dbQuery('SELECT `id-module`, intitule, no_semestre
-                FROM module
-                ORDER BY no_semestre, intitule') ;
-
-                
-			print("\t\t\t\t<tr>\n") ;   
-			print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute; *</td><td width=\"100\" align=\"left\">");
-
-            
-
-            print("<select class=\"defaultInput\" name=\"matiereModule\">") ;
-
-            $modulesCount = mysql_num_rows($modulesList) ;
-
-            for ($i = 0 ; $i < $modulesCount ; $i++)
-            {
-                $fModulesList = mysql_fetch_array($modulesList) ;
-                echo "<option value=\"".$fModulesList[0]."\">s".$fModulesList[2]." - ".$fModulesList[1]."</option>\n";
-            }
-
-            print("</select></td>");
-
-            
-			print("\t\t\t\t</tr>\n") ;			
-			
-			
-			print("\t\t\t\t<tr>\n") ;
-			print("\t\t\t\t\t<td width=\"600\" align=\"left\" colspan=\"3\"><br><input type=\"hidden\" name=\"matiereAdd\" value=\"true\"><input class=\"defaultButton\" type=\"button\" name=\"addButton\" value=\"Ajouter\" onClick=\"checkMatiere('defaultForm')\"></td>\n") ;
-			print("\t\t\t\t</tr>\n") ;
-			print("\t\t\t</table>\n") ;
-			print("\t\t\t</form></center>\n") ;
+				// Verifie que l'on ait pas deja 9 matieres dans ce module
+				if ($nomatutilcount == 9)
+				{
+					centeredInfoMessage(2, 2, "Impossible de cr&eacute;er plus de 9 matieres par module") ;
+				}
+				else
+				{
+					print("\t\t\t<center><form name=\"defaultForm\" action=\"database.php?w=matieres\" method=\"post\">\n") ;
+					print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
+					print("\t\t\t\t<tr>\n") ;
+					print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Intitul&eacute; de la mati&egrave;re *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereIntitule\" size=\"45\"></td>") ;
+					print("\t\t\t\t</tr>\n") ;
+						
+					print("\t\t\t\t<tr>\n") ;
+					print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Coefficient *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereCoeff\"  size=\"7\" maxlength=\"7\"></td>") ;
+					print("\t\t\t\t</tr>\n") ;
+						
+					print("\t\t\t\t<tr>\n") ;
+					print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Nombre d'heures *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereHeures\" size=\"7\" maxlength=\"7\"></td>") ;
+					print("\t\t\t\t</tr>\n") ;
+					
+					print("\t\t\t\t<tr>\n") ;
+					print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Num&eacute;ro de matiere * </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"matiereNo\">\n") ;
+					$nbnoutil = 0;
+					for ($i = 1 ; $i < 10 ; $i++)
+					{
+						// On recupere le numéro utilise suivant si il est depasse
+						if ($nomatutildetail['no_matiere'] < $i && $nbnoutil < $nomatutilcount)
+						{
+							$nomatutildetail = mysql_fetch_array($nomatutil) ;
+						}
+						
+						// On verifie si le numero est utilise ou non
+						if ($nomatutildetail['no_matiere'] != $i)
+						{
+							print("<option value=$i>{$i}</option>\n") ;
+						}
+						else
+						{
+							$nbnoutil++;
+						}
+					}
+					print("\t\t\t\t\t</select></td>\n") ;			
+					print("\t\t\t\t</tr>\n") ;
+					
+					
+					$modulesList = mysql_fetch_array(dbQuery('SELECT `id-module`, intitule, no_semestre
+						FROM module
+						WHERE `id-module`='.$_POST['moduleID'])) ;
+					
+					print("\t\t\t\t<tr>\n") ;   
+					print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute;</td><td width=\"100\" align=\"left\">".$modulesList['intitule']." (semestre ".$modulesList['no_semestre'].")</td>");
+					print("\t\t\t\t</tr>\n") ;			
+					
+					
+					print("\t\t\t\t<tr>\n") ;
+					print("\t\t\t\t\t<td width=\"600\" align=\"left\" colspan=\"3\"><br><input type=\"hidden\" name=\"matiereAdd\" value=\"true\"><input type=\"hidden\" name=\"matiereModule\" value=".$_POST['moduleID']."><input class=\"defaultButton\" type=\"button\" name=\"addButton\" value=\"Ajouter\" onClick=\"checkMatiere('defaultForm')\"></td>\n") ;
+					print("\t\t\t\t</tr>\n") ;
+					print("\t\t\t</table>\n") ;
+					print("\t\t\t</form></center>\n") ;
+				}
+			}
 			
 			dbClose() ;
 			
@@ -244,7 +339,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				
 				
 						print("\t\t\t\t<tr>\n") ;
-						print("\t\t\t\t\t<td width=\"500\" align=\"left\"><br><input class=\"defaultButton\" type=\"submit\" name=\"matiereMod\" value=\"Choisir\"></td>\n") ;
+						print("\t\t\t\t\t<td width=\"500\" align=\"left\"><br><input type=\"hidden\" name=\"moduleID\" value=\"".$_POST['moduleID']."\"><input class=\"defaultButton\" type=\"submit\" name=\"matiereMod\" value=\"Choisir\"></td>\n") ;
 						print("\t\t\t\t</tr>\n") ;
 						print("\t\t\t</table>\n") ;
 						print("\t\t\t</form></center>\n") ;
@@ -262,7 +357,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				// connexion a la base et recuperation des infos
 				dbConnect() ;
 				
-				$matiereDetails = dbQuery('SELECT coefficient, intitule, `id-module`, `nbre-heures`
+				$matiereDetails = dbQuery('SELECT coefficient, intitule, `id-module`, `nbre-heures`, no_matiere
 					FROM matiere
 					WHERE `id-matiere` = '.$eID) ;
 					
@@ -278,6 +373,15 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 				{
 					$matiereDetails = mysql_fetch_array($matiereDetails) ;
 					
+					// Numeros de matiere deja utilises
+					$nomatutil = dbQuery('SELECT DISTINCT no_matiere
+						FROM matiere
+						WHERE `id-module` = '.$_POST['moduleID'].'
+						AND `id-matiere` <> '.$eID.'
+						ORDER BY no_matiere') ;
+					$nomatutilcount = mysql_num_rows($nomatutil);
+					$nomatutildetail = mysql_fetch_array($nomatutil);
+					
 					print("\t\t\t<center><form name=\"defaultForm\" action=\"database.php?w=matieres\" method=\"post\">\n") ;
 					print("\t\t\t<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 					print("\t\t\t\t<tr>\n") ;
@@ -292,34 +396,48 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "admin.php")))
 					print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Nombre d'heures *</b></td><td width=\"300\" colspan=\"2\" align=\"left\"><input class=\"defaultInput\" name=\"matiereHeures\" size=\"7\" maxlength=\"7\" value=\"{$matiereDetails['nbre-heures']}\"></td>") ;
 					print("\t\t\t\t</tr>\n") ;
 			
-                    $modulesList = dbQuery('SELECT `id-module`, intitule
-                        FROM module
-                        ORDER BY intitule') ;
-
-                        
-                    print("\t\t\t\t<tr>\n") ;   
-                    print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute; *</td><td width=\"100\" align=\"left\">");
-
-                    
-
-                    print("<select class=\"defaultInput\" name=\"matiereModule\">") ;
-
-                    $modulesCount = mysql_num_rows($modulesList) ;
-
-                    for ($i = 0 ; $i < $modulesCount ; $i++)
-                    {
-                        $fModulesList = mysql_fetch_array($modulesList) ;
-                        echo "<option value=\"".$fModulesList[0]."\" " . (($fModulesList[0]==$matiereDetails['id-module'])?(" selected"):("")). ">".$fModulesList[1]."</option>\n";
-                    }
-
-                    print("</select></td>");
-
-                    
-                    print("\t\t\t\t</tr>\n") ;		
-			
-			
 					print("\t\t\t\t<tr>\n") ;
-					print("\t\t\t\t\t<td width=\"600\" align=\"left\" colspan=\"3\"><br><input type=\"hidden\" name=\"matiereMod\" value=\"true\"><input type=\"hidden\" name=\"matiereID\" value=\"$eID\"><input class=\"defaultButton\" type=\"button\" name=\"modButton\" value=\"Modifier\" onClick=\"checkMatiere('defaultForm')\"></td>\n") ;
+					print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Num&eacute;ro de matiere * </b></td><td width=\"400\" align=\"left\"><select class=\"defaultInput\" name=\"matiereNo\">\n") ;
+					$nbnoutil = 0;
+					for ($i = 1 ; $i < 10 ; $i++)
+					{
+						// On recupere le numéro utilise suivant si il est depasse
+						if ($nomatutildetail['no_matiere'] < $i && $nbnoutil < $nomatutilcount)
+						{
+							$nomatutildetail = mysql_fetch_array($nomatutil) ;
+						}
+						
+						// On verifie si le numero est utilise ou non
+						if ($nomatutildetail['no_matiere'] != $i)
+						{
+							if ($matiereDetails['no_matiere'] == $i)
+							{
+								print("<option value=".$i." selected>".$i."</option>\n") ;
+							}
+							else
+							{
+								print("<option value=".$i.">".$i."</option>\n") ;
+							}
+						}
+						else
+						{
+							$nbnoutil++;
+						}
+					}
+					print("\t\t\t\t\t</select></td>\n") ;			
+					print("\t\t\t\t</tr>\n") ;
+					
+                    $modulesList = mysql_fetch_array(dbQuery('SELECT intitule, no_semestre
+                        FROM module
+						WHERE `id-module` = '.$_POST['moduleID'])) ;
+					
+                    print("\t\t\t\t<tr>\n") ;   
+                    print("\t\t\t\t\t<td width=\"300\" align=\"left\"><b> Module associ&eacute;</td><td width=\"100\" align=\"left\">".$modulesList['intitule']." (semestre".$modulesList['no_semestre'].")</td>");
+					print("\t\t\t\t</tr>\n") ;		
+					
+					
+					print("\t\t\t\t<tr>\n") ;
+					print("\t\t\t\t\t<td width=\"600\" align=\"left\" colspan=\"3\"><br><input type=\"hidden\" name=\"matiereModule\" value=\"".$_POST['moduleID']."\"><input type=\"hidden\" name=\"matiereMod\" value=\"true\"><input type=\"hidden\" name=\"matiereID\" value=\"$eID\"><input class=\"defaultButton\" type=\"button\" name=\"modButton\" value=\"Modifier\" onClick=\"checkMatiere('defaultForm')\"></td>\n") ;
 					print("\t\t\t\t</tr>\n") ;
 					print("\t\t\t</table>\n") ;
 					print("\t\t\t</form></center>\n") ;

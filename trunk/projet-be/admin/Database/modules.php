@@ -145,6 +145,20 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		// Ajout du repertoire associe
 		mkdir("../Data/".$apogee, 0755) ;
 		
+		// ajout du dossier responsable (s'il y a)
+		if($_POST['respMod'] == 'oui' && $_POST['moduleResp'] != '0')
+		{
+			// recupere le login de l'enseignant
+			$loginEns = mysql_fetch_array(dbQuery('SELECT login
+						FROM enseignant
+						WHERE `id-enseignant` = '.$_POST['moduleResp'])) ;
+			
+			if($loginEns['login'] != "")
+			{
+				mkdir("../Data/".$apogee."/".$loginEns['login'], 0755) ;
+			}
+		}
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module ajout&eacute; avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=modules\">\n") ;
@@ -217,7 +231,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$ancApogee = mysql_fetch_array($ancApogee);
 		$ancApogee = $ancApogee['apogee'];
 		
-		// Creation du code apogee
+		// Creation du code apogee du module
 		$apogee = "U".$dipCode ;
 		if ((((int)$_POST['semestre'])+($dipID*2)) == 10)
 		{
@@ -232,15 +246,106 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		{
 			$apogee = $apogee."0" ;
 		}
-		$apogee = $apogee.$_POST['moduleNo']."M" ;
+		$apogee = $apogee.$_POST['moduleNo'] ;
+		$apogeeModule = $apogee."M" ;
+		
+		// on recupere le responsable actuel
+		$respAvant = mysql_fetch_array(dbQuery('SELECT `id-responsable`
+						FROM module
+						WHERE `id-module` = '.$_POST['moduleID'])) ;
+		$respAvant = $respAvant['id-responsable'] ;
 		
 		// on ajoute sinon	
 		dbQuery('UPDATE module
-			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", no_module = '.$_POST['moduleNo'].', description = "'.$description.'", no_semestre = "'.(((int)$_POST['semestre']) + 2*$dipID).'", `id-responsable` = "'. $moduleResp . '", apogee = "'.$apogee.'", id_node = "0"
+			SET  `id-diplome` = '.$dipID.', intitule = "'.$intitule.'", no_module = '.$_POST['moduleNo'].', description = "'.$description.'", no_semestre = "'.(((int)$_POST['semestre']) + 2*$dipID).'", `id-responsable` = "'. $moduleResp . '", apogee = "'.$apogeeModule.'", id_node = "0"
 			WHERE `id-module` = '.$_POST['moduleID']) ;
 		
 		// Modification du nom du repertoire associe
-		rename("../Data/".$ancApogee, "../Data/".$apogee) ;
+		rename("../Data/".$ancApogee, "../Data/".$apogeeModule) ;
+		
+		
+		// suppression et ajout du dossier responsable s'il a change
+		if($_POST['respMod'] == 'oui' && $_POST['moduleResp'] != '0')
+		{
+			if ($respAvant == 0)
+			{
+				// recupere le login de l'enseignant
+				$loginEns = mysql_fetch_array(dbQuery('SELECT login
+							FROM enseignant
+							WHERE `id-enseignant` = '.$moduleResp)) ;
+				
+				if($loginEns['login'] != "")
+				{
+					mkdir("../Data/".$apogeeModule."/".$loginEns['login'], 0755) ;
+				}
+			}
+			else
+			{
+				if ($respAvant != $moduleResp)
+				{
+					// recupere le login de l'ancien responsable
+					$loginEns = mysql_fetch_array(dbQuery('SELECT login
+								FROM enseignant
+								WHERE `id-enseignant` = '.$respAvant)) ;
+					
+					// suppression du dossier de l'ancien responsable
+					if($loginEns['login'] != "")
+					{
+						sup_repertoire("../Data/".$apogeeModule."/".$loginEns['login']) ;
+					}
+					
+					// recupere le login du nouveau responsable
+					$loginEns = mysql_fetch_array(dbQuery('SELECT login
+								FROM enseignant
+								WHERE `id-enseignant` = '.$moduleResp)) ;
+					
+					// ajout du dossier du nouveau responsable
+					if($loginEns['login'] != "")
+					{
+						mkdir("../Data/".$apogeeModule."/".$loginEns['login'], 0755) ;
+					}
+				}
+			}
+		}
+		else
+		{
+			if ($respAvant != 0)
+			{
+				// recupere le login de l'ancien responsable
+				$loginEns = mysql_fetch_array(dbQuery('SELECT login
+							FROM enseignant
+							WHERE `id-enseignant` = '.$respAvant)) ;
+				
+				// suppression du dossier de l'ancien responsable
+				if($loginEns['login'] != "")
+				{
+					sup_repertoire("../Data/".$apogeeModule."/".$loginEns['login']) ;
+				}
+			}
+		}
+		
+		
+		// Mise a jour des codes apogee des matieres du module (s'il y a)
+		$matieresList = dbQuery('SELECT `id-matiere`, no_matiere, apogee
+                        FROM matiere
+						WHERE `id-module` = '.$_POST['moduleID']) ;
+		$matieresCount = mysql_num_rows($matieresList) ;
+		
+		// pour chaque matiere du module
+		for ($i = 0 ; $i < $matieresCount ; $i++)
+		{
+			// recupere les infos de la matiere et cree le code apogee
+			$matieresInfo = mysql_fetch_array($matieresList) ;
+			$apogeeMatiere = $apogee.$matieresInfo['no_matiere'] ;
+			
+			// change le nom du dossier
+			rename("../Data/".$apogeeModule."/".$matieresInfo['apogee'], "../Data/".$apogeeModule."/".$apogeeMatiere) ;
+			
+			// change le code apogee dans la BD
+			dbQuery('UPDATE matiere
+				SET  apogee = "'.$apogeeMatiere.'"
+				WHERE `id-matiere` = '.$matieresInfo['id-matiere']) ;
+		}
 		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Module modifi&eacute; avec succ&egrave;s, redirection...") ;

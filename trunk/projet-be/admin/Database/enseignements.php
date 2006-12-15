@@ -17,6 +17,43 @@
 */
 
 
+// Fonction permettant de supprimer l'intégralité d'un fichier
+function sup_repertoire($chemin)
+{
+	// vérifie si le nom du repertoire contient "/" à la fin
+	if ($chemin[strlen($chemin)-1] != '/') // place le pointeur en fin d'url
+	{
+		$chemin .= '/'; // rajoute '/'
+	}
+	
+	if (is_dir($chemin))
+	{
+		$sq = opendir($chemin); // lecture
+		while ($f = readdir($sq))
+		{
+			if ($f != '.' && $f != '..')
+			{
+				$fichier = $chemin.$f; // chemin fichier
+				if (is_dir($fichier))
+				{
+					sup_repertoire($fichier);  // rapel la fonction de manière récursive
+				}
+				else
+				{
+					unlink($fichier); // sup le fichier
+				}
+			}
+		}
+		closedir($sq);
+		rmdir($chemin); // sup le répertoire
+	}
+	else
+	{
+		unlink($chemin);  // sup le fichier
+	}
+}
+
+
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 {	
@@ -67,7 +104,24 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		
 		dbQuery('INSERT INTO enseignement
 			VALUES ('.$matiere.', '.$enseignant.')') ;
-				
+		
+		// recupere le login de l'enseignant
+		$loginEns = mysql_fetch_array(dbQuery('SELECT login
+					FROM enseignant
+					WHERE `id-enseignant` = '.$enseignant)) ;
+		
+		if($loginEns['login'] != "")
+		{
+			// ajout du dossier de l'enseignant
+			$moduleInfo = dbQuery('SELECT module.apogee As apogeeMod, matiere.apogee As apogeeMat
+						FROM module, matiere
+						WHERE matiere.`id-matiere` = '.$matiere.'
+						AND matiere.`id-module` = module.`id-module`') ;
+			$moduleDetail = mysql_fetch_array($moduleInfo) ;
+			mkdir("../Data/".$moduleDetail['apogeeMod']."/".$moduleDetail['apogeeMat']."/".$loginEns['login'], 0755) ;
+		}
+		
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Enseignement ajout&eacute; avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignements\">\n") ;
@@ -89,9 +143,26 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		
 		// tout est correct
 		dbConnect() ;			
-			
+		
 		foreach ($_POST['id'] as $matiere)
-		{				
+		{
+			// recupere le login de l'enseignant
+			$loginEns = mysql_fetch_array(dbQuery('SELECT login
+						FROM enseignant
+						WHERE `id-enseignant` = '.$_POST['enseignant'])) ;
+			
+			if($loginEns['login'] !="")
+			{
+				// ajout du dossier de l'enseignant
+				$moduleInfo = dbQuery('SELECT module.apogee As apogeeMod, matiere.apogee As apogeeMat
+							FROM module, matiere
+							WHERE matiere.`id-matiere` = '.$matiere.'
+							AND matiere.`id-module` = module.`id-module`') ;
+				$moduleDetail = mysql_fetch_array($moduleInfo) ;
+				sup_repertoire("../Data/".$moduleDetail['apogeeMod']."/".$moduleDetail['apogeeMat']."/".$loginEns['login']) ;
+			}
+			
+			
 			dbQuery('DELETE FROM enseignement
 				WHERE `id-matiere` = '.$matiere.' AND
 					`id-enseignant` = '.$_POST['enseignant']) ;

@@ -17,6 +17,44 @@
 */
 
 
+// Fonction permettant de supprimer l'intégralité d'un fichier
+function sup_repertoire($chemin)
+{
+	// vérifie si le nom du repertoire contient "/" à la fin
+	if ($chemin[strlen($chemin)-1] != '/') // place le pointeur en fin d'url
+	{
+		$chemin .= '/'; // rajoute '/'
+	}
+	
+	if (is_dir($chemin))
+	{
+		$sq = opendir($chemin); // lecture
+		while ($f = readdir($sq))
+		{
+			if ($f != '.' && $f != '..')
+			{
+				$fichier = $chemin.$f; // chemin fichier
+				if (is_dir($fichier))
+				{
+					sup_repertoire($fichier);  // rapel la fonction de manière récursive
+				}
+				else
+				{
+					unlink($fichier); // sup le fichier
+				}
+			}
+		}
+		closedir($sq);
+		rmdir($chemin); // sup le répertoire
+	}
+	else
+	{
+		unlink($chemin);  // sup le fichier
+	}
+}
+
+
+
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 {	
@@ -66,16 +104,25 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			VALUES (NULL, "'.$nom.'", "'.$prenom.'", "'.$mail.'", "'.$login.'", "'.$mdp.'")') ;
 		
 		// Dans le cas ou on choisi que l'enseignant sera responsable d'une UE on doit ajouter un tuple dans la base
-		// dans la table resp-module
+		// dans la table resp-module, et creer le dossier correspondant (si le login est defini)
 		if(isset($_POST['respUe']))
 		{
 			if($_POST['respUe'] == 'oui')
 			{
 				$idProf = mysql_insert_id();
 				$req = "UPDATE module
-						SET `id-module` = ".$idUe."
-						WHERE `id-responsable` = ".$idProf ;
+						SET `id-responsable` = ".$idProf."
+						WHERE `id-module` = ".$idUe ;
 				dbQuery($req);
+				
+				// cree le dossier d'espace reserve si le login est defini
+				if($login != "")
+				{
+					$moduleInfo = mysql_fetch_array(dbQuery('SELECT apogee
+						FROM module
+						WHERE `id-module` = '.$idUe)) ;
+					mkdir("../Data/".$moduleInfo['apogee']."/".$login, 0755) ;
+				}
 			}
 		}else{
 			print("Erreur le champ demandé n'existe pas !");
@@ -125,11 +172,103 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			return ;
 		}
 		
+		$EnsInfo = mysql_fetch_array(dbQuery('SELECT login
+						FROM enseignant
+						WHERE `id-enseignant` = '.$_POST['enseignantID'])) ;
+		
 		// on met a jour l'enseignant
 		dbQuery('UPDATE enseignant
 			SET nom = "'.$nom.'", prenom = "'.$prenom.'", mail = "'.$mail.'", login = "'.$login.'", mdp = "'.$mdp.'"
 			WHERE `id-enseignant` = '.$_POST['enseignantID']) ;
-
+		
+		if($login == "" && $EnsInfo['login'] != "")
+		{
+			// Si on supprime le login, alors on supprime tous les dossiers
+			// on supprime le dossier de responsable
+			$moduleInfo = dbQuery('SELECT apogee
+						FROM module
+						WHERE `id-responsable` = '.$_POST['enseignantID']) ;
+			$moduleCount = mysql_num_rows($moduleInfo) ;
+			if($moduleCount != 0)
+			{
+				$moduleDetail = mysql_fetch_array($moduleInfo) ;
+				sup_repertoire("../Data/".$moduleDetail['apogee']."/".$EnsInfo['login']) ;
+			}
+			
+			// on supprime les dossiers d'enseignement
+			$moduleInfo = dbQuery('SELECT module.apogee As apogeeMod, matiere.apogee As apogeeMat
+						FROM module, matiere, enseignement
+						WHERE enseignement.`id-enseignant` = '.$_POST['enseignantID'].'
+						AND enseignement.`id-matiere` = matiere.`id-matiere`
+						AND matiere.`id-module` = module.`id-module`') ;
+			$moduleCount = mysql_num_rows($moduleInfo) ;
+			for($i = 0 ; $i < $moduleCount ; $i++)
+			{
+				$moduleDetail = mysql_fetch_array($moduleInfo) ;
+				sup_repertoire("../Data/".$moduleDetail['apogeeMod']."/".$moduleDetail['apogeeMat']."/".$EnsInfo['login']) ;
+			}
+		}
+		else
+		{
+			if($login != "" && $EnsInfo['login'] == "")
+			{
+				// Si on ajoute le login, alors on ajoute tous les dossiers
+				// on ajoute le dossier de responsable
+				$moduleInfo = dbQuery('SELECT apogee
+							FROM module
+							WHERE `id-responsable` = '.$_POST['enseignantID']) ;
+				$moduleCount = mysql_num_rows($moduleInfo) ;
+				if($moduleCount != 0)
+				{
+					$moduleDetail = mysql_fetch_array($moduleInfo) ;
+					mkdir("../Data/".$moduleDetail['apogee']."/".$login, 0755) ;
+				}
+				
+				// on ajoute les dossiers d'enseignement
+				$moduleInfo = dbQuery('SELECT module.apogee As apogeeMod, matiere.apogee As apogeeMat
+							FROM module, matiere, enseignement
+							WHERE enseignement.`id-enseignant` = '.$_POST['enseignantID'].'
+							AND enseignement.`id-matiere` = matiere.`id-matiere`
+							AND matiere.`id-module` = module.`id-module`') ;
+				$moduleCount = mysql_num_rows($moduleInfo) ;
+				for($i = 0 ; $i < $moduleCount ; $i++)
+				{
+					$moduleDetail = mysql_fetch_array($moduleInfo) ;
+					mkdir("../Data/".$moduleDetail['apogeeMod']."/".$moduleDetail['apogeeMat']."/".$login, 0755) ;
+				}
+			}
+			else
+			{
+				if($login != "" && $EnsInfo['login'] != "")
+				{
+					// Si on modifie le login, alors on modifie tous les dossiers
+					// on modifie le dossier de responsable
+					$moduleInfo = dbQuery('SELECT apogee
+								FROM module
+								WHERE `id-responsable` = '.$_POST['enseignantID']) ;
+					$moduleCount = mysql_num_rows($moduleInfo) ;
+					if($moduleCount != 0)
+					{
+						$moduleDetail = mysql_fetch_array($moduleInfo) ;
+						rename("../Data/".$moduleDetail['apogee']."/".$EnsInfo['login'], "../Data/".$moduleDetail['apogee']."/".$login) ;
+					}
+					
+					// on modifie les dossiers d'enseignement
+					$moduleInfo = dbQuery('SELECT module.apogee As apogeeMod, matiere.apogee As apogeeMat
+								FROM module, matiere, enseignement
+								WHERE enseignement.`id-enseignant` = '.$_POST['enseignantID'].'
+								AND enseignement.`id-matiere` = matiere.`id-matiere`
+								AND matiere.`id-module` = module.`id-module`') ;
+					$moduleCount = mysql_num_rows($moduleInfo) ;
+					for($i = 0 ; $i < $moduleCount ; $i++)
+					{
+						$moduleDetail = mysql_fetch_array($moduleInfo) ;
+						rename("../Data/".$moduleDetail['apogeeMod']."/".$moduleDetail['apogeeMat']."/".$EnsInfo['login'], "../Data/".$moduleDetail['apogeeMod']."/".$moduleDetail['apogeeMat']."/".$login) ;
+					}
+				}
+			}
+		}
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Enseignant modifi&eacute; avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=enseignants\">\n") ;		
@@ -155,7 +294,40 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			dbConnect() ;
 			// on supprime les enseignants
 			foreach ($_POST['id'] as $idKey)
-			{	
+			{
+				// recupere le login de l'enseignant
+				$loginEns = mysql_fetch_array(dbQuery('SELECT login
+							FROM enseignant
+							WHERE `id-enseignant` = '.$idKey)) ;
+				
+				// on supprime le dossier de responsable
+				if($loginEns['login'] !="")
+				{
+					$moduleInfo = dbQuery('SELECT apogee
+								FROM module
+								WHERE `id-responsable` = '.$idKey) ;
+					$moduleCount = mysql_num_rows($moduleInfo) ;
+					if($moduleCount != 0)
+					{
+						$moduleDetail = mysql_fetch_array($moduleInfo) ;
+						sup_repertoire("../Data/".$moduleDetail['apogee']."/".$loginEns['login']) ;
+					}
+				}
+				
+				// on supprime les dossiers d'enseignement
+				$moduleInfo = dbQuery('SELECT module.apogee As apogeeMod, matiere.apogee As apogeeMat
+							FROM module, matiere, enseignement
+							WHERE enseignement.`id-enseignant` = '.$idKey.'
+							AND enseignement.`id-matiere` = matiere.`id-matiere`
+							AND matiere.`id-module` = module.`id-module`') ;
+				$moduleCount = mysql_num_rows($moduleInfo) ;
+				for($i = 0 ; $i < $moduleCount ; $i++)
+				{
+					$moduleDetail = mysql_fetch_array($moduleInfo) ;
+					sup_repertoire("../Data/".$moduleDetail['apogeeMod']."/".$moduleDetail['apogeeMat']."/".$loginEns['login']) ;
+				}
+				
+				// suppression dans la BD
 				dbQuery('DELETE
 					FROM enseignant						
 					WHERE `id-enseignant` = '.$idKey) ;

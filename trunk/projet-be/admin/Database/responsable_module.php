@@ -17,6 +17,43 @@
 */
 
 
+// Fonction permettant de supprimer l'intégralité d'un fichier
+function sup_repertoire($chemin)
+{
+	// vérifie si le nom du repertoire contient "/" à la fin
+	if ($chemin[strlen($chemin)-1] != '/') // place le pointeur en fin d'url
+	{
+		$chemin .= '/'; // rajoute '/'
+	}
+	
+	if (is_dir($chemin))
+	{
+		$sq = opendir($chemin); // lecture
+		while ($f = readdir($sq))
+		{
+			if ($f != '.' && $f != '..')
+			{
+				$fichier = $chemin.$f; // chemin fichier
+				if (is_dir($fichier))
+				{
+					sup_repertoire($fichier);  // rapel la fonction de manière récursive
+				}
+				else
+				{
+					unlink($fichier); // sup le fichier
+				}
+			}
+		}
+		closedir($sq);
+		rmdir($chemin); // sup le répertoire
+	}
+	else
+	{
+		unlink($chemin);  // sup le fichier
+	}
+}
+
+
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 {	
@@ -82,7 +119,21 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		dbQuery('UPDATE module
 				SET `id-responsable` = "'.$enseignant.'"
 				WHERE `id-module` = "'.$module.'"') ;
-				
+		
+		// recupere le login de l'enseignant
+		$loginEns = mysql_fetch_array(dbQuery('SELECT login
+					FROM enseignant
+					WHERE `id-enseignant` = '.$enseignant)) ;
+		
+		if($loginEns['login'] != "")
+		{
+			// recupere le code apogee du module
+			$moduleInfo = mysql_fetch_array(dbQuery('SELECT apogee
+						FROM module
+						WHERE `id-module` = '.$module)) ;
+			mkdir("../Data/".$moduleInfo['apogee']."/".$loginEns['login'], 0755) ;
+		}
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Responsabilit&eacute; ajout&eacute;e avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
@@ -118,7 +169,36 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		dbQuery('UPDATE `module`
 			SET `id-responsable` = '.$responsable.'
 			WHERE `id-module` = '.$module) ;
-				
+		
+		if ($enseignant != $responsable)
+		{
+			$moduleInfo = mysql_fetch_array(dbQuery('SELECT apogee
+							FROM module
+							WHERE `id-module` = '.$module)) ;
+			
+			// recupere le login de l'ancien responsable
+			$loginEns = mysql_fetch_array(dbQuery('SELECT login
+						FROM enseignant
+						WHERE `id-enseignant` = '.$enseignant)) ;
+			
+			// suppression du dossier de l'ancien responsable
+			if($loginEns['login'] != "")
+			{
+				sup_repertoire("../Data/".$moduleInfo['apogee']."/".$loginEns['login']) ;
+			}
+			
+			// recupere le login du nouveau responsable
+			$loginEns = mysql_fetch_array(dbQuery('SELECT login
+						FROM enseignant
+						WHERE `id-enseignant` = '.$responsable)) ;
+			
+			// ajout du dossier du nouveau responsable
+			if($loginEns['login'] != "")
+			{
+				mkdir("../Data/".$moduleInfo['apogee']."/".$loginEns['login'], 0755) ;
+			}
+		}
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Responsable module modifi&eacute; avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
@@ -130,7 +210,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 	
 	// dernier cas : suppression
 	elseif (isset($_POST['respModDel']))
-	{		
+	{
 		// aucun choix defini
 		if (!isset($_POST['id']))
 		{
@@ -140,16 +220,27 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		}
 		
 		dbConnect() ;			
-						
+		
+		// on recupere le login du responsable a supprimer
+		$respMod = mysql_fetch_array(dbQuery('SELECT login, apogee
+			FROM module, enseignant
+			WHERE enseignant.`id-enseignant` = module.`id-responsable`
+			AND module.`id-module` = '.$_POST['id'])) ;
+		
 		dbQuery('UPDATE `module`
 			SET `id-responsable` = 0
 			WHERE `id-module` = '.$_POST['id']);
 		
-			
+		// on supprime le dossier du responsable
+		if($respMod['login'] != "")
+		{
+			sup_repertoire("../Data/".$respMod['apogee']."/".$respMod['login']) ;
+		}
+		
 		dbClose() ;
 		centeredInfoMessage(3, 3, "Responsable supprim&eacute;e avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=responsable_module\">\n") ;
-			
+		
 	} // end of menuDel
 		
 	// cas critique : action inconnue ou erronee : message erreur et redirection

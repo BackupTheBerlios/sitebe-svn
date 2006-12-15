@@ -17,6 +17,43 @@
 */
 
 
+// Fonction permettant de supprimer l'intégralité d'un fichier
+function sup_repertoire($chemin)
+{
+	// vérifie si le nom du repertoire contient "/" à la fin
+	if ($chemin[strlen($chemin)-1] != '/') // place le pointeur en fin d'url
+	{
+		$chemin .= '/'; // rajoute '/'
+	}
+	
+	if (is_dir($chemin))
+	{
+		$sq = opendir($chemin); // lecture
+		while ($f = readdir($sq))
+		{
+			if ($f != '.' && $f != '..')
+			{
+				$fichier = $chemin.$f; // chemin fichier
+				if (is_dir($fichier))
+				{
+					sup_repertoire($fichier);  // rapel la fonction de manière récursive
+				}
+				else
+				{
+					unlink($fichier); // sup le fichier
+				}
+			}
+		}
+		closedir($sq);
+		rmdir($chemin); // sup le répertoire
+	}
+	else
+	{
+		unlink($chemin);  // sup le fichier
+	}
+}
+
+
 // !!! on s'assure toujours que l'utilisateur est bien loggue...
 if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 {	
@@ -34,8 +71,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$coeff = (float)$coeff ;
 			
 		$heures = trim($_POST['matiereHeures']) ;
-			
+		
 		$moduleID = trim($_POST['matiereModule']) ;
+		
+		$no = trim($_POST['matiereNo']) ;
 							
 				
 		// on verifie si la matiere existe deja
@@ -54,9 +93,35 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			return ;
 		}
 		
+		// on recupere les infos sur le module (pour le code apogee)
+		$moduleInfo = mysql_fetch_array(dbQuery('SELECT code AS dipCode, no_module, no_semestre, apogee
+			FROM module, diplome
+			WHERE `id-module` = '.$moduleID.'
+			AND module.`id-diplome` = diplome.`id-diplome`')) ;
+		
+		// Creation du code apogee
+		$apogee = "U".$moduleInfo['dipCode'] ;
+		if ($moduleInfo['no_semestre'] == 10)
+		{
+			$apogee = $apogee."A" ;
+		}
+		else
+		{
+			$apogee = $apogee.$moduleInfo['no_semestre'] ;
+		}
+		$apogee = $apogee."A" ;
+		if ($moduleInfo['no_module'] < 10)
+		{
+			$apogee = $apogee."0" ;
+		}
+		$apogee = $apogee.$moduleInfo['no_module'].$no ;
+		
 		dbQuery('INSERT INTO matiere
-			VALUES (NULL, '.$moduleID.', 0, '.$coeff.', "'.$intitule.'",'.$heures.', 0,0,0,"")') ;
-					
+			VALUES (NULL, '.$moduleID.', '.$no.', '.$coeff.', "'.$intitule.'",'.$heures.', 0,0,0,"'.$apogee.'")') ;
+		
+		// Ajout du repertoire associe
+		mkdir("../Data/".$moduleInfo['apogee']."/".$apogee, 0755) ;
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Mati&egrave;re ajout&eacute;e avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=matieres\">\n") ;
@@ -80,14 +145,16 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 		$heures = trim($_POST['matiereHeures']) ;
 			
 		$moduleID = trim($_POST['matiereModule']) ;
+		
+		$no = trim($_POST['matiereNo']) ;
 							
 					
 		// on verifie si la matiere existe deja
 		$matiereInfo = dbQuery('SELECT COUNT(`id-matiere`) AS matNumb
 			FROM matiere
-			WHERE intitule = "'.$intitule.'" AND 
-			`id-module` = '.$moduleID.' AND
-			`id-matiere` != '.$_POST['matiereID']) ;
+			WHERE intitule = "'.$intitule.'"
+			AND `id-module` = '.$moduleID.'
+			AND `id-matiere` != '.$_POST['matiereID']) ;
 				
 		$matiereInfo = mysql_fetch_array($matiereInfo) ; 
 			
@@ -99,10 +166,37 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			return ;
 		}
 		
+		// on recupere les infos sur le module (pour le code apogee)
+		$moduleInfo = mysql_fetch_array(dbQuery('SELECT code AS dipCode, no_module, no_semestre, module.apogee AS apogeeMod, matiere.apogee AS apogeeMat
+			FROM module, diplome, matiere
+			WHERE matiere.`id-matiere` = '.$_POST['matiereID'].'
+			AND module.`id-module` = matiere.`id-module`
+			AND module.`id-diplome` = diplome.`id-diplome`')) ;
+		
+		// Creation du code apogee
+		$apogee = "U".$moduleInfo['dipCode'] ;
+		if ($moduleInfo['no_semestre'] == 10)
+		{
+			$apogee = $apogee."A" ;
+		}
+		else
+		{
+			$apogee = $apogee.$moduleInfo['no_semestre'] ;
+		}
+		$apogee = $apogee."A" ;
+		if ($moduleInfo['no_module'] < 10)
+		{
+			$apogee = $apogee."0" ;
+		}
+		$apogee = $apogee.$moduleInfo['no_module'].$no ;
+		
 		dbQuery('UPDATE matiere
-			SET `id-module` = '.$moduleID.', intitule = "'.$intitule.'", coefficient = '.$coeff.', `nbre-heures` = '.$heures.'
+			SET intitule = "'.$intitule.'", coefficient = '.$coeff.', `nbre-heures` = '.$heures.', no_matiere = '.$no.', apogee = "'.$apogee.'"
 			WHERE `id-matiere` = '.$_POST['matiereID']) ;
-					
+		
+		// Modification du nom du repertoire associe
+		rename("../Data/".$moduleInfo['apogeeMod']."/".$moduleInfo['apogeeMat'], "../Data/".$moduleInfo['apogeeMod']."/".$apogee) ;
+		
 		// felicitations et redirection
 		centeredInfoMessage(3, 3, "Mati&egrave;re modifi&eacute;e avec succ&egrave;s, redirection...") ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=admin.php?w=matieres\">\n") ;
@@ -127,7 +221,13 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			
 			
 		foreach ($_POST['id'] as $idKey)
-		{					
+		{
+			$apogee = dbQuery('SELECT module.apogee AS apogeeMod, matiere.apogee AS apogeeMat
+				FROM module, matiere						
+				WHERE matiere.`id-matiere` = '.$idKey.'
+				AND	matiere.`id-module` = module.`id-module`') ;
+			$apogee = mysql_fetch_array($apogee) ;
+							
 			dbQuery('DELETE
 				FROM matiere						
 				WHERE `id-matiere` = '.$idKey) ;
@@ -145,6 +245,9 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "database.php")))
 			dbQuery('DELETE
 				FROM evaluation						
 				WHERE `id-matiere` = '.$idKey) ;
+			
+			// On supprime le dossier lié a la matiere
+			sup_repertoire("../Data/".$apogee['apogeeMod']."/".$apogee['apogeeMat']) ;
 		}
 		
 		
