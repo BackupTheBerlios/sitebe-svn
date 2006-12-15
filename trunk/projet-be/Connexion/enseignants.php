@@ -82,12 +82,11 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 				print("<tr>\n") ;
 				print("<td width=\"600\" align=\"center\"> ");
 				print "Aucun fichier d&eacute;pos&eacute; pour ".$_SESSION['diplome']." !" ;
-				print("</td></tr>") ;
-				print("</table>") ;
+				print("</td></tr>\n") ;
 			}
 			else
 			{
-				print("<center><form name=\"deleteForm\" action=\"espacereserve.php?w=enseignants\" method=\"post\" onSubmit=\"return checkItemsToDelete($fichCount)\">\n") ;
+				print("<center><form name=\"deleteForm\" action=\"espacereserve.php?w=enseignants&a=su\" method=\"post\" onSubmit=\"return checkItemsToDelete($fichCount)\">\n") ;
 				print("<table cellspacing=\"3\" cellpadding=\"0\">\n") ;
 				for ($i = 0 ; $i < $fichCount ; $i++)
 				{
@@ -487,17 +486,10 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 					print("<meta http-equiv=\"refresh\" content=\"3;url=espacereserve.php?p=connexion&w=etudiants\">\n") ;
 				}
 			}
-			
 		}
-	}
-
-	if($_GET['a']=='visu')
-	{
-		print("<table align='center'><tr><td><a href=\"{$_GET['fichier']}\">Visualiser</a></td></tr></table>");
-		fopen(realpath($_GET['fichier']), 'r');
-	}
+	}	
 	if (isset($_POST['fileUndep']))
-	{
+	{		
 		// aucun choix defini
 		if (!isset($_POST['id']))
 		{
@@ -512,9 +504,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 			$requette = ("select * from fichier WHERE `id-fichier` = ".$idKey);
 			$res = db_query($requette);
 			$ligne = mysql_fetch_array($res);
-			$chaine = explode(" ",$_SESSION['diplome']);
-			$finalchaine = $chaine[0]."".$chaine[1];
-			@unlink("Data/Telechargement/{$finalchaine}/".$ligne['URL']);
+			unlink($ligne['URL']);
 			$req = "delete from fichier where `id-fichier` ='".$idKey."'";
 			$ress = DB_query($req);
 		}
@@ -522,7 +512,7 @@ if (is_numeric(strpos($_SERVER['PHP_SELF'], "espacereserve.php")))
 		print "Fichiers(s) supprim&eacute;(s) avec succ&egrave;s, redirection" ;
 		print("<meta http-equiv=\"refresh\" content=\"2;url=espacereserve.php?p=connexion&w=enseignants\">\n") ;
 		print("</td></tr></table>") ;
-	} //fin du if suppression
+	}
 	print("<center><table><tr><td><br><br><a href='espacereserve.php?p=connexion&w=enseignants'>retour</a></td></tr></table></center>");
 }
 else
