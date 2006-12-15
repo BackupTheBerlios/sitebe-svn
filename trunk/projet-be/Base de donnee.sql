@@ -270,7 +270,8 @@ CREATE TABLE `fichier` (
   `id-fichier` int(4) NOT NULL auto_increment,
   `titre` varchar(40) NOT NULL default '',
   `id-diplome` int(2) NOT NULL default '0',
-  `id-prop` int(8) NOT NULL default '0',
+  `id-etu` int(8) NOT NULL default '0',
+  `id-ens` tinyint(2) NOT NULL default '0',
   `URL` varchar(100) NOT NULL default '',
   `commentaire` text,
   PRIMARY KEY  (`id-fichier`)
