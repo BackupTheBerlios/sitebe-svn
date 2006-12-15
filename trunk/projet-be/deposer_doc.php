@@ -49,9 +49,14 @@
 				}
 	
 				$tmp_file = $_FILES['fichier']['tmp_name'];
-	
+				
+				$res=mysql_query("select max(`id-fichier`)+1 from fichier ");
+				$row=DB_fetchArray($res);
+				$id_fic = $row[0];
+				
+				
 				// on copie le fichier dans le dossier de destination
-				$name_file = $_FILES['fichier']['name'];
+				$name_file = $id_fic."_".$_FILES['fichier']['name'];
 	
 				if ($_GET['w']=='etudiants')
 				{
